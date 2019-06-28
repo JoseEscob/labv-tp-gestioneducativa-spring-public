@@ -1,0 +1,48 @@
+
+body{
+background-color: #D7DBDD
+}
+
+.footer{
+	float:left;
+	height:80px
+}
+
+.div-derecho{
+	float:left; 
+	width: 65%;
+	height:400px;
+	background-color:white
+}
+
+.form{
+	margin-left:50px; 
+	margin-top:50px;
+}
+
+.vertical-menu {
+	margin-top:50px;
+    width: 35%;
+    float:left;
+    color: white;
+}
+
+.vertical-menu a {
+    background-color: #eee; /* Grey background color */
+    color: black; /* Black text color */
+    display: block; /* Make the links appear below each other */
+    padding: 12px; /* Add some padding */
+    text-decoration: none; /* Remove underline from links */
+}
+
+.vertical-menu a:hover {
+  
+    background-color: #ccc; 
+}
+
+.vertical-menu a.active {
+	background-color: #4CAF50;
+	height: 17px;
+     /* Add a green color to the "active/current" link */
+   
+}
