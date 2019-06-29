@@ -19,8 +19,16 @@
 
 	<!-- Para que lea los metodos anotados con @Transactional -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
+	<!-- Beans de conexion NUEVOS -->
+	<bean id="serviceUsuarioBeanX" class="frgp.utn.edu.ar.servicioImpl.UsuarioServiceImplX">
+		<property name="dataAccess" ref="dataAccessBeanUsuarioX"></property>
+	</bean>
 	
-	
+	<bean id="dataAccessBeanUsuarioX" class="frgp.utn.edu.ar.daoImpl.UsuarioDAOImplX" 
+		scope="singleton"> 
+		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
+	</bean>
+
 	<!-- Beans de conexion -->
 	<bean id="serviceUsuarioBean" class="frgp.utn.edu.ar.servicioImpl.UsuarioServicioImpl">
 		<property name="dataAccess" ref="dataAccessBeanUsuario"></property>

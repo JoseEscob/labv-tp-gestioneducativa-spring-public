@@ -6,6 +6,6 @@
   <a href="abrirAltaProductos.html">Agregar productos</a>
   <a href="ListarProductos.html">Listado de productos</a>
   <a href="abrirUsuarios.html">ABML Usuarios</a>
-
+<a href="admListarUsuarios.html">Listar Usuarios</a>
 </div>
 
