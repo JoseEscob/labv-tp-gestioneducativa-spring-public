@@ -76,6 +76,8 @@
 				<value>frgp.utn.edu.ar.dominio.Usuarios</value>
 				<value>frgp.utn.edu.ar.dominio.TipoProducto</value>
 				<value>frgp.utn.edu.ar.dominio.Producto</value>
+				<value>frgp.utn.edu.ar.dominio.Usuario</value>
+				<value>frgp.utn.edu.ar.dominio.TipoUsuario</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
