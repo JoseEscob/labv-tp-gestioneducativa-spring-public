@@ -25,7 +25,7 @@ public class ConstantesDAO {
 	public static final String TipoUsuarios = "TipoUsuarios";
 	public static final String Usuario = "Usuario";
 	public static final String Cursos = "Cursos";      
-	public static final String CursosCalificaciones = "cursosCalificaciones";//"CursosCalificaciones";
+	public static final String CursosCalificaciones = "CursosCalificaciones";
 	public static final String CursosAsistencias = "CursosAsistencias";
 }
 	

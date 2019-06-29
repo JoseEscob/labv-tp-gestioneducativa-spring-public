@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -15,7 +16,7 @@ import javax.persistence.Table;
 import utils.constantes.ConstantesDAO;
 
 @Entity
-@Table(name = ConstantesDAO.Usuario)
+@Table(name = ConstantesDAO.Usuario, indexes = { @Index(columnList = "dni", name = "dniIndex") })
 public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +34,7 @@ public class Usuario {
 	private String apellido;
 
 	@Column(name = "dni")
+	//@Index(name = "dniIndex") 
 	private String dni;
 
 	@Column(name = "calleNombre")
