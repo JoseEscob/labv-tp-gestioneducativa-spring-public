@@ -53,7 +53,7 @@ public class CursoController {
 			// 4- informar resultados
 			message = String.format("Se cargaron los datos del formulario");
 			objInfoMessage = new InfoMessage(true, message);
-			paginaJsp = "UsuarioAlta";
+			paginaJsp = "MateriaAlta";
 		} catch (Exception e) {
 			objInfoMessage = new InfoMessage(false, e.getMessage());
 			LOG.warning(e.getMessage());

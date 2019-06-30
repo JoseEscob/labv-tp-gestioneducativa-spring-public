@@ -11,7 +11,7 @@ import frgp.utn.edu.ar.dominio.Curso;
 import utils.constantes.ConstantesDAO;
 
 public class CursoDAOImpl implements ICursoDAO {
-	private final String fromTable = String.format("FROM %s", ConstantesDAO.Cursos);
+	private final String fromTable = String.format("FROM %s", ConstantesDAO.Curso);
 	private HibernateTemplate hibernateTemplate = null;
 
 	public void setSessionFactory(SessionFactory sessionFactory) {

@@ -1,4 +1,6 @@
 
+
+	
 	
 	
 Estructura Web Diseño[2019-06-30 00:11]
@@ -21,3 +23,6 @@ Alta Usuario v1 [2019-06-30 18:20 ]
  - Se verifica la carga del desplegable del formulario de "AltaUsuario"
 
 
+Alta Materia/Curso v1 [2019-06-30 19:42 ]
+ - Se corrigen las referencias de carga del formulario de "AltaMateria" 
+ 

@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import utils.constantes.ConstantesDAO;
 
 @Entity
-@Table(name = ConstantesDAO.Cursos, indexes = { @Index(columnList = "dniProfesor", name = "dniIndex") })
+@Table(name = ConstantesDAO.Curso, indexes = { @Index(columnList = "dniProfesor", name = "dniIndex") })
 public class Curso {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
