@@ -22,9 +22,12 @@ public class Constantes {
 	public final static String REGISTROEXITOSO = "Se registraron los datos de forma exitosa";
 	public final static String logJSPAccion = "JSP - Acción: ";
 	public final static String RedireccionandoA = "Redireccionando a: ";
-	public final static String indexJsp = "/index.jsp";
+	public final static String indexJsp = "/index";// "/index.jsp";
 	public final static String usuarioSinPermisos = "Usted no tiene permisos para realizar esta accción";
 	public final static String msgSesionFinalizada = "Su sesión fue cerrada exitosamente. Hasta luego";
 	public final static String msgUsuarioPermisosAlumn = "El usuario logueado debe ser un alumno";
 	public final static String msgUsuarioPermisosProfe = "El usuario logueado debe ser un profesor";
+
+	//
+	public final static String html = ".html";
 }

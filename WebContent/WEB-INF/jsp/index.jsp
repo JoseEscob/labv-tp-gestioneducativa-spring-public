@@ -16,21 +16,14 @@
   <link href="<%=ConstantesJSP.jspLogin_bootstrapMin_css%>" rel="stylesheet">
 
   <!-- Custom fonts for this template -->
-  <link href="<%=ConstantesJSP.jspLogin_fontAwe_all_min_css%>" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+<%--   <link href="<%=ConstantesJSP.jspLogin_fontAwe_all_min_css%>" rel="stylesheet" type="text/css"> --%>
+  <link href="<%=ConstantesJSP.jspLogin_Monserrat_css%>" rel="stylesheet" type="text/css">
+  <link href="<%=ConstantesJSP.jspLogin_Italic_css%>" rel="stylesheet" type="text/css">
 
   <!-- Plugin CSS -->
   <link href="<%=ConstantesJSP.jspLogin_magnific_popup%>" rel="stylesheet" type="text/css">
-    
-
-  <!-- Custom styles for this template -->
-  <link href="css/freelancer.min.css" rel="stylesheet">
-  <link href="vendor/fontawesome-free/css/fontawesome.min.css" rel="stylesheet">
-  
   <link rel="shortcut icon" type="image/png" href="img/profile.png"/>
   <link href="<%=ConstantesJSP.jspLogin_freelancer_min_css%>" rel="stylesheet">
-  <link href="<%=ConstantesJSP.jspLogin_fontAwe_min_css%>" rel="stylesheet">
   
   <link rel="shortcut icon" type="image/png" href="<%=ConstantesJSP.jspLogin_img_profilepng%>"/>
 </head>
@@ -82,13 +75,6 @@
       </div>
     </div>
   </footer>
-
-  <!-- Scroll to Top Button (Only visible on small and extra-small screen sizes) -->
-  <div class="scroll-to-top d-lg-none position-fixed ">
-    <a class="js-scroll-trigger d-block text-center text-white rounded" href="#page-top">
-      <i class="fa fa-chevron-up"></i>
-    </a>
-  </div>
 
 
 

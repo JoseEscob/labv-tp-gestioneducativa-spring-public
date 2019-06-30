@@ -6,7 +6,7 @@
 <meta charset="ISO-8859-1">
 </head>
 <body>
-	<form action="UsuarioServlet" method="post">
+	<form action="iniciarSesion.html" method="post">
 		<div class="modal-header">
 			<h4 class="modal-title">Iniciar Sesión</h4>
 			<button type="button" class="close" data-dismiss="modal"
@@ -31,11 +31,8 @@
 			</div>
 		</div>
 		<div class="modal-footer">
-			<label class="checkbox-inline pull-left"><input type="hidden"
-				name="accionPOST" value="iniciarSesion"></input> <input
-				type="submit" class="btn btn-primary pull-right"
-				id="btnIniciarSesion" name="btnLogin" value="Iniciar Sesión"
-				onKeyPress="return checkSubmit(event)"></input>
+			<input type="submit" class="btn btn-primary pull-right"
+				id="btnIniciarSesion" name="btnLogin" value="Iniciar Sesión"></input>
 		</div>
 	</form>
 </body>

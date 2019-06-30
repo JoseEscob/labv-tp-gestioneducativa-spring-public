@@ -1,6 +1,17 @@
 
+	
 Estructura Web Diseño[2019-06-30 00:11]
 
 - Se agrega referencia de recursos
 - Se cambia versión de web.xml relacionado al DynamicWebProject de ProjectFacets
 - Se reemplaza nombre de proyecto
+
+
+Login Usuario v1 [2019-06-30 15:02 josee]
+
+ - Se preapran funcionalidades DAO
+ - Se obtienen valores por POST 
+ - Se agregan referencias de Session (Queda validar)
+ - Se elimina fontAwesome de Google y recursos no necesarios de Web-Design
+
+

@@ -2,14 +2,14 @@ package frgp.utn.edu.ar.servicioImpl;
 
 import java.util.ArrayList;
 
-import frgp.utn.edu.ar.dao.IConnectable;
+import frgp.utn.edu.ar.dao.IUsuarioDAO;
 import frgp.utn.edu.ar.dominio.Usuario;
-import frgp.utn.edu.ar.servicio.IService;
+import frgp.utn.edu.ar.servicio.IUsuarioService;
 
-public class UsuarioServiceImplX implements IService<Usuario> {
-	private IConnectable<Usuario> dataAccess = null;
+public class UsuarioServiceImplX implements IUsuarioService {
+	private IUsuarioDAO<Usuario> dataAccess = null;
 
-	public void setDataAccess(IConnectable<Usuario> dataAccess) {
+	public void setDataAccess(IUsuarioDAO<Usuario> dataAccess) {
 		this.dataAccess = dataAccess;
 	}
 
@@ -49,4 +49,7 @@ public class UsuarioServiceImplX implements IService<Usuario> {
 		return 0;
 	}
 
+	public Usuario getUsuarioByLogin(String correoUsuario, String claveUsuario) throws Exception {
+		return dataAccess.getUsuarioByLogin(correoUsuario, claveUsuario);
+	}
 }

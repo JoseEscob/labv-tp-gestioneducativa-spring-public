@@ -20,23 +20,13 @@
 	rel="stylesheet">
 
 <!-- Custom fonts for this template -->
-<link href="<%=ConstantesJSP.jspLogin_fontAwe_all_min_css%>"
-	rel="stylesheet" type="text/css">
-<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
-	rel="stylesheet" type="text/css">
-<link
-	href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic"
-	rel="stylesheet" type="text/css">
+
+  <link href="<%=ConstantesJSP.jspLogin_Monserrat_css%>" rel="stylesheet" type="text/css">
+  <link href="<%=ConstantesJSP.jspLogin_Italic_css%>" rel="stylesheet" type="text/css">
 
 <!-- Plugin CSS -->
 <link href="<%=ConstantesJSP.jspLogin_magnific_popup%>" rel="stylesheet"
 	type="text/css">
-
-
-<!-- Custom styles for this template -->
-<link href="css/freelancer.min.css" rel="stylesheet">
-<link href="vendor/fontawesome-free/css/fontawesome.min.css"
-	rel="stylesheet">
 
 <link href="<%=ConstantesJSP.jspLogin_freelancer_min_css%>"
 	rel="stylesheet">
@@ -66,7 +56,7 @@
 				<ul class="navbar-nav ml-auto">
 					<c:choose>
 						<c:when
-							test="${sessionScope.sessionUser.idTipoUsuario eq Constantes.idTipoUsuarioAlumn}">
+							test="${sessionScope.sessionUser.getObjTipoUsuario().idTipoUsuario eq Constantes.idTipoUsuarioAlumn}">
 							<li class="nav-item"><a href="InicioAlumno.jsp">&nbsp;Inicio</a></li>
 							<li class="nav-item mx-0 mx-lg-1"><a
 								class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger">
@@ -75,7 +65,7 @@
 									Perfil</a> <a href="UsuarioServlet?accionGET=cerrarSesion">&nbsp;Salir</a></li>
 						</c:when>
 						<c:when
-							test="${sessionScope.sessionUser.idTipoUsuario eq Constantes.idTipoUsuarioProfe}">
+							test="${sessionScope.sessionUser.getObjTipoUsuario().idTipoUsuario eq Constantes.idTipoUsuarioProfe}">
 							<li class="nav-item"><a href="InicioProfesor.jsp">&nbsp;Inicio</a></li>
 							<li class="nav-item"><a
 								class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger">
@@ -84,7 +74,7 @@
 									Perfil</a> <a href="UsuarioServlet?accionGET=cerrarSesion">&nbsp;Salir</a></li>
 						</c:when>
 						<c:when
-							test="${sessionScope.sessionUser.idTipoUsuario eq Constantes.idTipoUsuarioAdmin}">
+							test="${sessionScope.sessionUser.getObjTipoUsuario().idTipoUsuario eq Constantes.idTipoUsuarioAdmin}">
 							<li class="nav-item"><a href="InicioAdministrador.jsp">&nbsp;Inicio</a></li>
 							<li class="nav-item"><a
 								class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger">

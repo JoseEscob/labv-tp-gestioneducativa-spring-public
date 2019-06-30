@@ -2,7 +2,7 @@ package frgp.utn.edu.ar.daoImpl;
 
 import java.util.ArrayList;
 
-import frgp.utn.edu.ar.dao.IConnectable;
+import frgp.utn.edu.ar.dao.IUsuarioDAO;
 import frgp.utn.edu.ar.dominio.Usuario;
 import utils.constantes.ConstantesDAO;
 
@@ -11,7 +11,7 @@ import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-public class UsuarioDAOImplX implements IConnectable<Usuario> {
+public class UsuarioDAOImplX implements IUsuarioDAO<Usuario> {
 	private HibernateTemplate hibernateTemplate = null;
 	private final String fromTable = String.format("FROM %s", ConstantesDAO.Usuario);
 
@@ -74,4 +74,16 @@ public class UsuarioDAOImplX implements IConnectable<Usuario> {
 		return 0;
 	}
 
+	public Usuario getUsuarioByLogin(String correoUsuario, String claveUsuario) throws Exception {
+		Usuario objUsuario = null;
+		if (getAll().size() > 0) {
+			String queryHQL = String.format("%s WHERE lower(mail) = lower('%s')", fromTable, correoUsuario);			
+			objUsuario = (Usuario) this.hibernateTemplate.find(queryHQL).get(0);
+			if (objUsuario == null)
+				throw new Exception("El correo electrónico ingresado no se encontró en los registros");
+			if (!(claveUsuario.equals(objUsuario.getClave())))
+				throw new Exception("La clave ingresada no es la correcta");
+		}
+		return objUsuario;
+	}
 }
