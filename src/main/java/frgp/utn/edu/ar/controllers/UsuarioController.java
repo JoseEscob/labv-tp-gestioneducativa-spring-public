@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 
-import org.springframework.web.bind.annotation.PathVariable;
+// import org.springframework.web.bind.annotation.PathVariable; // utilizado para parámetros por url
 import frgp.utn.edu.ar.dominio.Usuario;
+import frgp.utn.edu.ar.servicio.ITipoUsuarioService;
 import frgp.utn.edu.ar.servicio.IUsuarioService;
 import utils.InfoMessage;
 import utils.LOG;
@@ -23,21 +24,24 @@ import utils.excepciones.ValidacionException;
 public class UsuarioController {
 	private String paginaJsp;
 	@Autowired
-	public IUsuarioService service;
+	public IUsuarioService serviceUsuario;
 
-	@SuppressWarnings("unchecked")
+	@Autowired
+	public ITipoUsuarioService serviceTipoUsuario;
+
 	public void init(ServletConfig config) {
 		ApplicationContext ctx = WebApplicationContextUtils
 				.getRequiredWebApplicationContext(config.getServletContext());
 
-		this.service = (IUsuarioService) ctx.getBean("serviceUsuarioBeanX");
+		this.serviceUsuario = (IUsuarioService) ctx.getBean("serviceUsuarioBeanX");
+		this.serviceTipoUsuario = (ITipoUsuarioService) ctx.getBean("serviceTipoUsuario");
 	}
 
 	@RequestMapping("/admListarUsuarios.html")
 	public ModelAndView admListarUsuarios() {
 		try {
 			ModelAndView MV = new ModelAndView();
-			MV.addObject("listaUsuarios", this.service.getAll());
+			MV.addObject("listaUsuarios", this.serviceUsuario.getAll());
 			MV.setViewName("admListarUsuarios");
 			return MV;
 		} catch (Exception e) {
@@ -63,7 +67,7 @@ public class UsuarioController {
 			String correoUsuario = txtLoginUsuario;
 			String claveUsuario = txtLoginClave;
 			// 2- validar informacion obtenida JSP
-			objUsuario = service.getUsuarioByLogin(correoUsuario, claveUsuario);
+			objUsuario = serviceUsuario.getUsuarioByLogin(correoUsuario, claveUsuario);
 			// 3- verificar resultado
 			if (objUsuario == null)
 				throw new ValidacionException("El usuario no está registrado");
@@ -91,10 +95,25 @@ public class UsuarioController {
 			}
 		} catch (Exception e) {
 			objInfoMessage = new InfoMessage(false, e.getMessage());
+			LOG.warning(e.getMessage());
 			paginaJsp = Constantes.indexJsp;
 		}
 		MV.addObject("objInfoMessage", objInfoMessage);
 		MV.setViewName(paginaJsp);
 		return MV;
 	}
+
+	@RequestMapping("/altaUsuarioLoad.html")
+	public ModelAndView altaUsuarioLoad() {
+		try {
+			ModelAndView MV = new ModelAndView();
+			MV.addObject("listaTipoUsuarios", serviceTipoUsuario.getAll());
+			MV.setViewName("UsuarioAlta");
+			return MV;
+		} catch (Exception e) {
+			LOG.warning(e.getMessage());
+			return null;
+		}
+	}
+
 }

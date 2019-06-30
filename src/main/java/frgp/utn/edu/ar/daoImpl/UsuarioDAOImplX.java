@@ -34,10 +34,8 @@ public class UsuarioDAOImplX implements IUsuarioDAO<Usuario> {
 	@Override
 	public int getMax() throws Exception {
 		int maxID = 0;
-		if (getAll().size() > 0) {
-			String queryHQL = String.format("SELECT MAX(user.idUsuario) %s user", fromTable);
-			maxID = (int) this.hibernateTemplate.find(queryHQL).get(0);
-		}
+		String queryHQL = String.format("SELECT MAX(user.idUsuario) %s user", fromTable);
+		maxID = (int) this.hibernateTemplate.find(queryHQL).get(0);
 		return maxID;
 	}
 
@@ -59,7 +57,7 @@ public class UsuarioDAOImplX implements IUsuarioDAO<Usuario> {
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public boolean remove(int idUsuario) throws Exception {
+	public boolean delete(int idUsuario) throws Exception {
 		boolean estado = false;
 		Usuario obj = new Usuario();
 		obj.setIdUsuario(idUsuario);
@@ -68,22 +66,14 @@ public class UsuarioDAOImplX implements IUsuarioDAO<Usuario> {
 		return estado;
 	}
 
-	@Override
-	public int delete(Usuario obj) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
 	public Usuario getUsuarioByLogin(String correoUsuario, String claveUsuario) throws Exception {
 		Usuario objUsuario = null;
-		if (getAll().size() > 0) {
-			String queryHQL = String.format("%s WHERE lower(mail) = lower('%s')", fromTable, correoUsuario);			
-			objUsuario = (Usuario) this.hibernateTemplate.find(queryHQL).get(0);
-			if (objUsuario == null)
-				throw new Exception("El correo electrónico ingresado no se encontró en los registros");
-			if (!(claveUsuario.equals(objUsuario.getClave())))
-				throw new Exception("La clave ingresada no es la correcta");
-		}
+		String queryHQL = String.format("%s WHERE lower(mail) = lower('%s')", fromTable, correoUsuario);
+		objUsuario = (Usuario) this.hibernateTemplate.find(queryHQL).get(0);
+		if (objUsuario == null)
+			throw new Exception("El correo electrónico ingresado no se encontró en los registros");
+		if (!(claveUsuario.equals(objUsuario.getClave())))
+			throw new Exception("La clave ingresada no es la correcta");
 		return objUsuario;
 	}
 }

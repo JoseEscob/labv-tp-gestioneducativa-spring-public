@@ -29,6 +29,35 @@
 		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
 	</bean>
 
+	<!-- Service/DAO: TipoUsuario -->
+	<bean id="serviceTipoUsuario" class="frgp.utn.edu.ar.servicioImpl.TipoUsuarioServiceImpl">
+		<property name="dataAccess" ref="dataAccessTipoUsuario"></property>
+	</bean>
+	<bean id="dataAccessTipoUsuario" class="frgp.utn.edu.ar.daoImpl.TipoUsuarioDAOImpl" 
+		scope="singleton"> 
+		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
+	</bean>
+
+	<!-- Service/DAO: TipoPeriodo -->
+	<bean id="serviceTipoPeriodo" class="frgp.utn.edu.ar.servicioImpl.TipoPeriodoServiceImpl">
+		<property name="dataAccess" ref="dataAccessTipoPeriodo"></property>
+	</bean>
+	<bean id="dataAccessTipoPeriodo" class="frgp.utn.edu.ar.daoImpl.TipoPeriodoDAOImpl" 
+		scope="singleton"> 
+		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
+	</bean>
+
+	<!-- Service/DAO: Curso -->
+	<bean id="serviceCurso" class="frgp.utn.edu.ar.servicioImpl.CursoServiceImpl">
+		<property name="dataAccess" ref="dataAccessCurso"></property>
+	</bean>
+	<bean id="dataAccessCurso" class="frgp.utn.edu.ar.daoImpl.CursoDAOImpl" 
+		scope="singleton"> 
+		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
+	</bean>
+
+
+
 	<!-- Beans de conexion -->
 	<bean id="serviceUsuarioBean" class="frgp.utn.edu.ar.servicioImpl.UsuarioServicioImpl">
 		<property name="dataAccess" ref="dataAccessBeanUsuario"></property>

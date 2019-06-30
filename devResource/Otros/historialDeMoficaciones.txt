@@ -1,5 +1,6 @@
 
 	
+	
 Estructura Web Diseño[2019-06-30 00:11]
 
 - Se agrega referencia de recursos
@@ -13,5 +14,10 @@ Login Usuario v1 [2019-06-30 15:02 josee]
  - Se obtienen valores por POST 
  - Se agregan referencias de Session (Queda validar)
  - Se elimina fontAwesome de Google y recursos no necesarios de Web-Design
+
+Alta Usuario v1 [2019-06-30 18:20 ]
+ 
+ - Se preparan DAOs e Interfaces de TipoUsuario, TipoPeriodo y Cursos
+ - Se verifica la carga del desplegable del formulario de "AltaUsuario"
 
 

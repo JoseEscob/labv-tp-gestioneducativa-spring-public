@@ -17,9 +17,9 @@ public interface IUsuarioService {
 
 	public boolean update(Usuario obj) throws Exception;
 
-	public boolean remove(int id) throws Exception;
+	public boolean delete(int id) throws Exception;
 
-	public int delete(Usuario obj) throws Exception;
+	//public int delete(Usuario obj) throws Exception;
 
 	public Usuario getUsuarioByLogin(String correoUsuario, String claveUsuario) throws Exception;
 }

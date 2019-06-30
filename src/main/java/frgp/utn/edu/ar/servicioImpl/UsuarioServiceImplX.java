@@ -39,14 +39,8 @@ public class UsuarioServiceImplX implements IUsuarioService {
 	}
 
 	@Override
-	public boolean remove(int id) throws Exception {
-		return this.dataAccess.remove(id);
-	}
-
-	@Override
-	public int delete(Usuario obj) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	public boolean delete(int id) throws Exception {
+		return this.dataAccess.delete(id);
 	}
 
 	public Usuario getUsuarioByLogin(String correoUsuario, String claveUsuario) throws Exception {
