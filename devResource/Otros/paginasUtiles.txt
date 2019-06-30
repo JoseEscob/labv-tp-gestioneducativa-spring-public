@@ -14,7 +14,7 @@ https://stackoverflow.com/questions/34699338/how-to-generate-the-web-xml-deploym
 
 2) "web.xml"	ESCUCHAS 
 	en WebContent/WEB-INF  Copiar el contenido del archivo (Recomendado no modificar para seguir las convenciones):
-	<welcome-file>		petición a iniciar
+	<welcome-file>		peticiï¿½n a iniciar
 	<servlet> 			tiene el dispatcher Servlet para redireccionar
 	<context-param> 	Se debe encontrar"applicationContext.xml"
 	<listener>			hace de "oreja" al escuchar las peticiones
@@ -28,14 +28,14 @@ https://stackoverflow.com/questions/34699338/how-to-generate-the-web-xml-deploym
 		
 3.3) Esta etiqueta sirve para definir los recursos como archivos css, js, etc...
 	<mvc:resources location="/web-design/**" mapping="/web-design/**"/>
+(https://www.youtube.com/watch?v=h9N2fU_cDgg)
 
-
-Ejecución-Spring
+Ejecuciï¿½n-Spring
 1) "web.xml"     
 	<welcome-file>IrLogin.html</welcome-file>
 
 2) Controlador mapeado 	@RequestMapping("IrLogin.html")
-3) ModelAndView								=	Servlet-comparación igualdades/equivalencias
+3) ModelAndView								=	Servlet-comparaciï¿½n igualdades/equivalencias
 	agrega un objeto 						
 	y setea la vista a la que tiene que ir (El nombre del jsp) 
 	---------------------------------------------------------------------------------
@@ -65,11 +65,11 @@ Ejecución-Spring
 	</bean>
 	---------------------------------------------------------------------------------
 
-7) El bean envía a UsuarioDaoImpl el parámetro "sessionFactory" para setear HibernateTemplate
-8) Seteada la conexión
+7) El bean envï¿½a a UsuarioDaoImpl el parï¿½metro "sessionFactory" para setear HibernateTemplate
+8) Seteada la conexiï¿½n
 
-CONEXIÓN DE BBDD
-1) La conexión está dada por los configuración de los siguientes beans:
+CONEXIï¿½N DE BBDD
+1) La conexiï¿½n estï¿½ dada por los configuraciï¿½n de los siguientes beans:
 	1.1)<bean id="sessionFactoryBean"
 			class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 			<property name="dataSource" ref="dataSourceBean" />
@@ -84,7 +84,7 @@ CONEXIÓN DE BBDD
 				<property name="password" value="root" />
 			</bean>	
 			
-2) el transaction manager es el que tiene a configuración del "sessionFactory"
+2) el transaction manager es el que tiene a configuraciï¿½n del "sessionFactory"
 	<!-- Transaction Manager -->
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
@@ -99,7 +99,7 @@ CONEXIÓN DE BBDD
 
 PASAJE DE DATOS POST Y GET
 POST
-	1) Envía los datos que están dentro de una etiqueta <form> 
+	1) Envï¿½a los datos que estï¿½n dentro de una etiqueta <form> 
 		obtiene los datos en variables que tengan el mismo nombre que tiene el atributo "name" 
 
 			<form action="altaUsuario.html" method="post">
@@ -114,7 +114,7 @@ POST
 		public ModelAndView validarUsuario(String nombreU, String passU){
 
 
-	0) 	También se puede obtener como un objeto si su clase tiene el constructor con parámetros
+	0) 	Tambiï¿½n se puede obtener como un objeto si su clase tiene el constructor con parï¿½metros
 		@RequestMapping(value ="/altaUsuario.html" , method= { RequestMethod.GET, RequestMethod.POST})
 		public ModelAndView validarUsuario(Usuario objUsuario){
 
