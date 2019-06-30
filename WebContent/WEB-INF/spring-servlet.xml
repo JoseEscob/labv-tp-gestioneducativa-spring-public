@@ -25,6 +25,8 @@
 
 <!--  Defino en donde van a estar los controladores -->
 
+<mvc:resources location="/web-design/**" mapping="/web-design/**"/>
+
 </beans>
 
 

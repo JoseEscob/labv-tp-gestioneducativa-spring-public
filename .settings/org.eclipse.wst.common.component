@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="Clase11_Lab5_SpringMVC__II">
+    <wb-module deploy-name="Spring-Hibernate">
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
-        <property name="java-output-path" value="/Clase11_Lab5_SpringMVC__II/build/classes"/>
-        <property name="context-root" value="Clase11_Lab5_SpringMVC__II"/>
+        <property name="java-output-path" value="/Labv-tp-gestioneducativa-spring/build/classes"/>
+        <property name="context-root" value="Spring-Hibernate"/>
     </wb-module>
 </project-modules>

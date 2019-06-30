@@ -39,4 +39,11 @@ public class UsuarioController {
 			return null;
 		}
 	}
+	
+	@RequestMapping("/inicio.html")
+	public ModelAndView inicio() {
+		ModelAndView MV = new ModelAndView();
+		MV.setViewName("index");
+		return MV;
+	}
 }
