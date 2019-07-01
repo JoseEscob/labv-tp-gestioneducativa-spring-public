@@ -76,4 +76,31 @@ public class UsuarioDAOImplX implements IUsuarioDAO<Usuario> {
 			throw new Exception("La clave ingresada no es la correcta");
 		return objUsuario;
 	}
+
+	/**
+	 * Valida que no se repitan los campos:
+	 * <ol>
+	 * <li>IdUsuario</li>
+	 * <li>DNI</li>
+	 * <li>Mail</li>
+	 * </ol>
+	 * 
+	 * @param objUsuario
+	 * @throws Exception
+	 */
+	public void validarCamposUnicos(Usuario objUsuario) throws Exception {
+		ArrayList<Usuario> listaUsuariosDB;
+		listaUsuariosDB = this.getAll();
+
+		for (Usuario dbObj : listaUsuariosDB) {
+			if (objUsuario.getIdUsuario() != dbObj.getIdUsuario()) {
+				// verificar si otros usuarios tienen ese dni o mail
+				if (objUsuario.getDni().equalsIgnoreCase(dbObj.getDni()))
+					throw new Exception("ERROR DB: El DNI ingresado ya se encuentra registrado en el sistema");
+
+				if (objUsuario.getMail().equalsIgnoreCase(dbObj.getMail()))
+					throw new Exception("ERROR DB: El mail ingresado ya se encuentra registrado en el sistema");
+			}
+		}
+	}
 }

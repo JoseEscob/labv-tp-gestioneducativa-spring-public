@@ -15,7 +15,7 @@
 			<%@ include file="mostrarInfoMessage.jsp"%>
 		</div>
 	</div>
-	<form method="POST" action="UsuarioServlet">
+	<form method="POST" action="altaUsuarioSave.html">
 
 		<div class="container">
 			<div class="row">
@@ -102,7 +102,6 @@
 				<div class="row col-md-12">
 					<div class="col-md-6 form-group"></div>
 					<div class="col-md-6 form-group" align="right">
-						<input type="hidden" name="accionPOST" value="altaUsuario"></input>
 						<input type="submit" class="btn btn-primary" name="btnGuardar"
 							value="Guardar"></input>
 					</div>

@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import java.util.Date;
 import java.util.Locale;
@@ -16,6 +17,7 @@ import org.joda.time.Years;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
+import frgp.utn.edu.ar.dominio.Usuario;
 import utils.constantes.Constantes;
 import utils.excepciones.ValidacionException;
 
@@ -23,7 +25,12 @@ import utils.excepciones.ValidacionException;
  * Funciona como clase para implementar funciones reutilizables
  */
 public class Utilitario {
-	// new Object(){}.getClass().getEnclosingMethod().getName();
+	public static void verificarQueElUsuarioLogueadoSeaAdmin(HttpSession session) throws ValidacionException {
+		Usuario objUsuarioLogueado = ORSesion.getUsuarioBySession(session);
+		if (objUsuarioLogueado.getObjTipoUsuario().getIdTipoUsuario() != Constantes.idTipoUsuarioAdmin)
+			throw new ValidacionException(Constantes.usuarioSinPermisos);
+	}
+
 	/// *********************** SERVLET *****************************///
 	public static void validarParametrosObligatoriosDeUnJSP(HttpServletRequest request, String[] listaNombreParametros,
 			String[] listaNombreCampos) throws ValidacionException {
@@ -105,7 +112,7 @@ public class Utilitario {
 		return dateFormat.format(date); // 2016/11/16 12:08:43
 	}
 
-	public static java.sql.Date getCurrentDateAndHoursSQL()  throws Exception{
+	public static java.sql.Date getCurrentDateAndHoursSQL() throws Exception {
 		try {
 			java.text.DateFormat dateFormat = new java.text.SimpleDateFormat(Constantes.yyyyMMddHHmmss);
 			java.util.Date date = new java.util.Date();
@@ -118,10 +125,11 @@ public class Utilitario {
 		}
 	}
 
-	public static java.util.Date getCurrentDateAndHoursJavaUtil() throws Exception{
+	public static java.util.Date getCurrentDateAndHoursJavaUtil() throws Exception {
 		try {
-			//java.text.DateFormat dateFormat = new java.text.SimpleDateFormat(Constantes.yyyyMMddHHmmss);
-			//java.util.Date date = new java.util.Date();
+			// java.text.DateFormat dateFormat = new
+			// java.text.SimpleDateFormat(Constantes.yyyyMMddHHmmss);
+			// java.util.Date date = new java.util.Date();
 			return new java.util.Date();
 		} catch (Exception e) {
 			throw e;

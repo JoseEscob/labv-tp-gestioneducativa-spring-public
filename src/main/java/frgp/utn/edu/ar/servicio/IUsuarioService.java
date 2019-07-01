@@ -22,4 +22,6 @@ public interface IUsuarioService {
 	//public int delete(Usuario obj) throws Exception;
 
 	public Usuario getUsuarioByLogin(String correoUsuario, String claveUsuario) throws Exception;
+
+	public void validarCamposUnicos(Usuario objUsuario) throws Exception;
 }

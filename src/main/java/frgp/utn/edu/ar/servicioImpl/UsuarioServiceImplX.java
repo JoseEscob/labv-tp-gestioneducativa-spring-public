@@ -46,4 +46,8 @@ public class UsuarioServiceImplX implements IUsuarioService {
 	public Usuario getUsuarioByLogin(String correoUsuario, String claveUsuario) throws Exception {
 		return dataAccess.getUsuarioByLogin(correoUsuario, claveUsuario);
 	}
+
+	public void validarCamposUnicos(Usuario objUsuario) throws Exception {
+		dataAccess.validarCamposUnicos(objUsuario);
+	}
 }

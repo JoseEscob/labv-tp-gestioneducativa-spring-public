@@ -18,5 +18,5 @@ public interface IUsuarioDAO<T> {
 	public boolean delete(int id) throws Exception;
 
 	public Usuario getUsuarioByLogin(String correoUsuario, String claveUsuario) throws Exception;
-
+	public void validarCamposUnicos(Usuario objUsuario) throws Exception;
 }

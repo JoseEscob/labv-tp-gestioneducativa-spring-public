@@ -19,6 +19,7 @@ import frgp.utn.edu.ar.servicio.IUsuarioService;
 import utils.InfoMessage;
 import utils.LOG;
 import utils.ORSesion;
+import utils.Utilitario;
 import utils.constantes.Constantes;
 import utils.excepciones.ValidacionException;
 
@@ -76,7 +77,7 @@ public class UsuarioController {
 				throw new ValidacionException("El usuario no está registrado");
 			// 4- Se guarda una variable SESSION
 			ORSesion.nuevaSesion(session, objUsuario);
-			//MV.addObject(Constantes.sessionUser, objUsuario);
+			// MV.addObject(Constantes.sessionUser, objUsuario);
 			// 5- Informar estado
 			objInfoMessage = new InfoMessage(true, "Login exitoso");
 
@@ -139,4 +140,32 @@ public class UsuarioController {
 		}
 	}
 
+	@RequestMapping(value = "/altaUsuarioSave" + Constantes.html, method = RequestMethod.POST)
+	public ModelAndView altaUsuario(Usuario objUsuario, HttpSession session) {
+		ModelAndView MV = new ModelAndView();
+
+		String message = null;
+		InfoMessage objInfoMessage = new InfoMessage();
+		try {
+			// 1- verificar que el usuario tenga permisos de administrador
+			Utilitario.verificarQueElUsuarioLogueadoSeaAdmin(session);
+			// 2- validar campos
+			// TODO implementar método por request
+			// 3- insertar en BBDD y verificar estado de transacción
+			serviceUsuario.validarCamposUnicos(objUsuario);
+			if (!(serviceUsuario.insert(objUsuario) > 0))
+				throw new ValidacionException("SQL: Ocurrió un error al guardar el usuario");
+			// 4- informar resultados
+			message = String.format("Se registró al usuario exitosamente su ID es : %d", objUsuario.getIdUsuario());
+			objInfoMessage = new InfoMessage(true, message);
+			paginaJsp = Constantes.indexJsp;
+		} catch (Exception e) {
+			objInfoMessage = new InfoMessage(false, e.getMessage());
+			LOG.warning(e.getMessage());
+			paginaJsp = Constantes.indexJsp;
+		}
+		MV.addObject("objInfoMessage", objInfoMessage);
+		MV.setViewName(paginaJsp);
+		return MV;
+	}
 }
