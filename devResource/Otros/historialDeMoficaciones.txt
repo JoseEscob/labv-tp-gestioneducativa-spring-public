@@ -1,28 +1,28 @@
 
 
-	
-	
-	
-Estructura Web Diseño[2019-06-30 00:11]
+Session Usuario [2019-06-30 22:41]
+ - Se agrega gestión de inicio y cierre de session con HttpSession 
 
-- Se agrega referencia de recursos
-- Se cambia versión de web.xml relacionado al DynamicWebProject de ProjectFacets
-- Se reemplaza nombre de proyecto
+
+Alta Materia/Curso v1 [2019-06-30 19:42 ]
+ - Se corrigen las referencias de carga del formulario de "AltaMateria" 
+	
+
+Alta Usuario v1 [2019-06-30 18:20 ]
+ - Se preparan DAOs e Interfaces de TipoUsuario, TipoPeriodo y Cursos
+ - Se verifica la carga del desplegable del formulario de "AltaUsuario"
 
 
 Login Usuario v1 [2019-06-30 15:02 josee]
-
  - Se preapran funcionalidades DAO
  - Se obtienen valores por POST 
  - Se agregan referencias de Session (Queda validar)
  - Se elimina fontAwesome de Google y recursos no necesarios de Web-Design
 
-Alta Usuario v1 [2019-06-30 18:20 ]
- 
- - Se preparan DAOs e Interfaces de TipoUsuario, TipoPeriodo y Cursos
- - Se verifica la carga del desplegable del formulario de "AltaUsuario"
+	
+Estructura Web Diseño[2019-06-30 00:11]
+- Se agrega referencia de recursos
+- Se cambia versión de web.xml relacionado al DynamicWebProject de ProjectFacets
+- Se reemplaza nombre de proyecto
 
 
-Alta Materia/Curso v1 [2019-06-30 19:42 ]
- - Se corrigen las referencias de carga del formulario de "AltaMateria" 
- 

@@ -5,6 +5,9 @@ Tomcat 8
 https://stackoverflow.com/questions/8520267/http-status-404-the-requested-resource-is-not-available
 http://javasolutionsguide.blogspot.com/2016/07/TomcatNoResourcesThatCanBeAddedOrRemoved.html
 
+Spring Session Attributes
+	http://fruzenshtein.com/spring-mvc-session-advanced/
+
 
 Spring
 1) Crear proyecto

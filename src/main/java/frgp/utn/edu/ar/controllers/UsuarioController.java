@@ -1,12 +1,14 @@
 package frgp.utn.edu.ar.controllers;
 
 import javax.servlet.ServletConfig;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
+//import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -16,11 +18,12 @@ import frgp.utn.edu.ar.servicio.ITipoUsuarioService;
 import frgp.utn.edu.ar.servicio.IUsuarioService;
 import utils.InfoMessage;
 import utils.LOG;
+import utils.ORSesion;
 import utils.constantes.Constantes;
 import utils.excepciones.ValidacionException;
 
 @Controller
-@SessionAttributes(Constantes.sessionUser)
+//@SessionAttributes(Constantes.sessionUser)
 public class UsuarioController {
 	private String paginaJsp;
 	@Autowired
@@ -58,7 +61,7 @@ public class UsuarioController {
 	}
 
 	@RequestMapping(value = "/iniciarSesion" + Constantes.html, method = RequestMethod.POST)
-	public ModelAndView iniciarSesion(String txtLoginUsuario, String txtLoginClave) {
+	public ModelAndView iniciarSesion(String txtLoginUsuario, String txtLoginClave, HttpSession session) {
 		Usuario objUsuario;
 		InfoMessage objInfoMessage = new InfoMessage();
 		ModelAndView MV = new ModelAndView();
@@ -72,8 +75,8 @@ public class UsuarioController {
 			if (objUsuario == null)
 				throw new ValidacionException("El usuario no está registrado");
 			// 4- Se guarda una variable SESSION
-			// ORSesion.nuevaSesion(request, objUsuario);
-			MV.addObject(Constantes.sessionUser, objUsuario);
+			ORSesion.nuevaSesion(session, objUsuario);
+			//MV.addObject(Constantes.sessionUser, objUsuario);
 			// 5- Informar estado
 			objInfoMessage = new InfoMessage(true, "Login exitoso");
 
@@ -100,6 +103,26 @@ public class UsuarioController {
 		}
 		MV.addObject("objInfoMessage", objInfoMessage);
 		MV.setViewName(paginaJsp);
+		return MV;
+	}
+
+	@RequestMapping(value = "/cerrarSesion" + Constantes.html, method = RequestMethod.GET)
+	public ModelAndView cerrarSesion(HttpSession session) {
+		ModelAndView MV = new ModelAndView();
+
+		InfoMessage objInfoMessage = new InfoMessage();
+		try {
+			if (ORSesion.sesionActiva(session)) {
+				ORSesion.cerrarSesion(session);
+				objInfoMessage = new InfoMessage(true, Constantes.msgSesionFinalizada);
+			} else
+				throw new ValidacionException("La sesión no fue iniciada. No se pudo finalizar");
+		} catch (Exception e) {
+			objInfoMessage = new InfoMessage(false, e.getMessage());
+		}
+
+		MV.addObject("objInfoMessage", objInfoMessage);
+		MV.setViewName(Constantes.indexJsp);
 		return MV;
 	}
 

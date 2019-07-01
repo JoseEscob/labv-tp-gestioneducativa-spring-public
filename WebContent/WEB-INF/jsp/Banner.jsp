@@ -27,10 +27,7 @@
 <!-- Plugin CSS -->
 <link href="<%=ConstantesJSP.jspLogin_magnific_popup%>" rel="stylesheet"
 	type="text/css">
-
 <link href="<%=ConstantesJSP.jspLogin_freelancer_min_css%>"
-	rel="stylesheet">
-<link href="<%=ConstantesJSP.jspLogin_fontAwe_min_css%>"
 	rel="stylesheet">
 
 <link rel="shortcut icon" type="image/png"
@@ -62,7 +59,7 @@
 								class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger">
 									${sessionScope.sessionUser.nombre } - Alumno</a> <a
 								href="UsuarioServlet?accionGET=modificarUsuarioLogueadoLoad">&nbsp;Editar
-									Perfil</a> <a href="UsuarioServlet?accionGET=cerrarSesion">&nbsp;Salir</a></li>
+									Perfil</a> <a href="cerrarSesion.html">&nbsp;Salir</a></li>
 						</c:when>
 						<c:when
 							test="${sessionScope.sessionUser.getObjTipoUsuario().idTipoUsuario eq Constantes.idTipoUsuarioProfe}">
@@ -71,7 +68,7 @@
 								class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger">
 									${sessionScope.sessionUser.nombre } - Profe</a><a
 								href="UsuarioServlet?accionGET=modificarUsuarioLogueadoLoad">&nbsp;Editar
-									Perfil</a> <a href="UsuarioServlet?accionGET=cerrarSesion">&nbsp;Salir</a></li>
+									Perfil</a> <a href="cerrarSesion.html">&nbsp;Salir</a></li>
 						</c:when>
 						<c:when
 							test="${sessionScope.sessionUser.getObjTipoUsuario().idTipoUsuario eq Constantes.idTipoUsuarioAdmin}">
@@ -80,7 +77,7 @@
 								class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger">
 									${sessionScope.sessionUser.nombre } - Admin</a><a
 								href="UsuarioServlet?accionGET=modificarUsuarioLogueadoLoad">&nbsp;Editar
-									Perfil</a> <a href="UsuarioServlet?accionGET=cerrarSesion">&nbsp;Salir</a></li>
+									Perfil</a> <a href="cerrarSesion.html">&nbsp;Salir</a></li>
 						</c:when>
 						<c:otherwise>
 							<li class="nav-item"><a class="nav-link "
