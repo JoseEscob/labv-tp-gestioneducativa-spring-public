@@ -1,4 +1,5 @@
-
+DAO/Service: TipoExamen [2019-07-01 14:46]
+ - Se agregan DAO y Servicio de tipo de Examen 
 
 Session Usuario [2019-06-30 22:41]
  - Se agrega gestión de inicio y cierre de session con HttpSession 

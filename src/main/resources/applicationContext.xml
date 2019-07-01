@@ -56,7 +56,14 @@
 		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
 	</bean>
 
-
+	<!-- Service/DAO: TipoExamen -->
+	<bean id="serviceTipoExamen" class="frgp.utn.edu.ar.servicioImpl.TipoExamenServiceImpl">
+		<property name="dataAccess" ref="dataAccessTipoExamen"></property>
+	</bean>
+	<bean id="dataAccessTipoExamen" class="frgp.utn.edu.ar.daoImpl.TipoExamenDAOImpl" 
+		scope="singleton"> 
+		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
+	</bean>
 
 	<!-- Beans de conexion -->
 	<bean id="serviceUsuarioBean" class="frgp.utn.edu.ar.servicioImpl.UsuarioServicioImpl">
