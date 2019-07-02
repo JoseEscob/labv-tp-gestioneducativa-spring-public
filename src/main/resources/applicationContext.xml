@@ -21,10 +21,10 @@
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	<!-- Beans de conexion NUEVOS -->
 	<!-- Service/DAO: Usuario -->
-	<bean id="serviceUsuario" class="frgp.utn.edu.ar.servicioImpl.UsuarioServiceImplX">
+	<bean id="serviceUsuario" class="frgp.utn.edu.ar.servicioImpl.UsuarioServiceImpl">
 		<property name="dataAccess" ref="dataAccessBeanUsuario"></property>
 	</bean>
-	<bean id="dataAccessBeanUsuario" class="frgp.utn.edu.ar.daoImpl.UsuarioDAOImplX" 
+	<bean id="dataAccessBeanUsuario" class="frgp.utn.edu.ar.daoImpl.UsuarioDAOImpl" 
 		scope="singleton"> 
 		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
 	</bean>

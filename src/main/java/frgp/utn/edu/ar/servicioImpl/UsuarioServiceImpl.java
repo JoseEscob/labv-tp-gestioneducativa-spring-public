@@ -6,7 +6,7 @@ import frgp.utn.edu.ar.dao.IUsuarioDAO;
 import frgp.utn.edu.ar.dominio.Usuario;
 import frgp.utn.edu.ar.servicio.IUsuarioService;
 
-public class UsuarioServiceImplX implements IUsuarioService {
+public class UsuarioServiceImpl implements IUsuarioService {
 	private IUsuarioDAO<Usuario> dataAccess = null;
 
 	public void setDataAccess(IUsuarioDAO<Usuario> dataAccess) {

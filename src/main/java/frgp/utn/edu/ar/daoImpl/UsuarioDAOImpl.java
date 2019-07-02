@@ -11,7 +11,7 @@ import org.springframework.orm.hibernate4.HibernateTemplate;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-public class UsuarioDAOImplX implements IUsuarioDAO<Usuario> {
+public class UsuarioDAOImpl implements IUsuarioDAO<Usuario> {
 	private HibernateTemplate hibernateTemplate = null;
 	private final String fromTable = String.format("FROM %s", ConstantesDAO.Usuario);
 

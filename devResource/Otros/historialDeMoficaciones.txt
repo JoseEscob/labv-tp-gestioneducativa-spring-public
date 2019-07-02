@@ -1,5 +1,8 @@
- - *Se borra ejemplo de Usuarios*
+Reestructura - Borrado de ejemplos usuario v2 [2019-07-01 23:22]
+ - Se renombran Implementaciones de Usuarios
 
+Borrado de ejemplos usuario v1 [2019-07-01 23:22]
+ - *Se borra ejemplo de Usuarios*
 
 Listado de usuarios [2019-07-01 23:00]
  - Se modifica listado de usuarios
