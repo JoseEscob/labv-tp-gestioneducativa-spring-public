@@ -74,7 +74,7 @@ public class UserController {
 	}
 	
      
-	@RequestMapping(value ="/eliminarUsuario.html" , method= { RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value ="/eliminarUsuario_.html" , method= { RequestMethod.GET, RequestMethod.POST})
 	public ModelAndView eliminarUsuario(Integer id, String nombreU, String passU){
 		ModelAndView MV = new ModelAndView();
 		service.eliminarUsuario(id);

@@ -10,10 +10,15 @@
 <title>Lista de Usuarios</title>
 </head>
 <body>
-	<%@ include file="Menu.jsp"%>
-
-	<!-- 	<div class="container"> -->
-	<div class="div-derecho">
+	<%@ include file="Banner.jsp"%>
+	<div class="container">
+		<h2>Lista de Usuarios</h2>
+		<hr />
+		<div class="row">
+			<%@ include file="mostrarInfoMessage.jsp"%>
+		</div>
+	</div>
+	<div class="container">
 
 		<table id="grdUsuarios" class="table table-striped table-bordered">
 			<thead>
@@ -26,7 +31,6 @@
 					<th>mail</th>
 					<th>nroTelefono</th>
 					<th>direccion</th>
-					<!-- <th>idTipoUsuario</th> -->
 					<th>TipoUsuario</th>
 					<th>Acciones</th>
 				</tr>
@@ -37,7 +41,6 @@
 						<td>${objUsuario.idUsuario}</td>
 						<td>${objUsuario.nombre}</td>
 						<td>${objUsuario.apellido}</td>
-						<!--<td>${objUsuario.fechaNac}</td>-->
 						<td><fmt:formatDate value="${objUsuario.fechaNac}"
 								pattern="yyyy-MM-dd" /></td>
 						<td>${objUsuario.dni}</td>
@@ -47,11 +50,10 @@
 						<td>${objUsuario.objTipoUsuario.descripcion}</td>
 						<td>
 							<div>
-								<form action="UsuarioServlet" method="POST">
+								<form action="eliminarUsuario.html" method="POST">
 									<input type="hidden" value="${objUsuario.idUsuario}"
-										name="idUsuarioToDelete" /> <input type="hidden"
-										name="accionPOST" value="eliminarUsuario"></input> <input
-										type="submit" value="Eliminar" class="btn btn-danger" />
+										name="idUsuarioToDelete" /> <input type="submit"
+										value="Eliminar" class="btn btn-danger" />
 								</form>
 							</div>
 							<div>
@@ -61,6 +63,12 @@
 										name="accionPOST" value="modificarUsuarioLoad"></input> <input
 										type="submit" value="Modificar" class="btn btn-info" />
 								</form>
+							</div>
+							
+							<div>
+								<a href="<c:url value='/select-user-${objUsuario.idUsuario}' />" class="btn btn-primary" >
+									Ver Perfil
+								</a>
 							</div>
 						</td>
 					</tr>

@@ -21,8 +21,10 @@
 
 <!-- Custom fonts for this template -->
 
-  <link href="<%=ConstantesJSP.jspLogin_Monserrat_css%>" rel="stylesheet" type="text/css">
-  <link href="<%=ConstantesJSP.jspLogin_Italic_css%>" rel="stylesheet" type="text/css">
+<link href="<%=ConstantesJSP.jspLogin_Monserrat_css%>" rel="stylesheet"
+	type="text/css">
+<link href="<%=ConstantesJSP.jspLogin_Italic_css%>" rel="stylesheet"
+	type="text/css">
 
 <!-- Plugin CSS -->
 <link href="<%=ConstantesJSP.jspLogin_magnific_popup%>" rel="stylesheet"
@@ -45,39 +47,37 @@
 			<button
 				class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded"
 				type="button" data-toggle="collapse" data-target="#navbarResponsive"
-				aria-controls="navbarResponsive" aria-expanded="true"
-				aria-label="Toggle navigation">
-				Menu <i class="fas fa-bars"></i>
-			</button>
+				aria-controls="navbarResponsive" aria-expanded="true">
+				Menu</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
 					<c:choose>
 						<c:when
 							test="${sessionScope.sessionUser.getObjTipoUsuario().idTipoUsuario eq Constantes.idTipoUsuarioAlumn}">
-							<li class="nav-item"><a href="InicioAlumno.jsp">&nbsp;Inicio</a></li>
+							<li class="nav-item"><a href="InicioAlumno.html">&nbsp;Inicio</a></li>
 							<li class="nav-item mx-0 mx-lg-1"><a
 								class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger">
 									${sessionScope.sessionUser.nombre } - Alumno</a> <a
-								href="UsuarioServlet?accionGET=modificarUsuarioLogueadoLoad">&nbsp;Editar
-									Perfil</a> <a href="cerrarSesion.html">&nbsp;Salir</a></li>
+								href="modificarUsuarioLogueadoLoad.html">&nbsp;Editar Perfil</a>
+								<a href="cerrarSesion.html">&nbsp;Salir</a></li>
 						</c:when>
 						<c:when
 							test="${sessionScope.sessionUser.getObjTipoUsuario().idTipoUsuario eq Constantes.idTipoUsuarioProfe}">
-							<li class="nav-item"><a href="InicioProfesor.jsp">&nbsp;Inicio</a></li>
+							<li class="nav-item"><a href="InicioProfesor.html">&nbsp;Inicio</a></li>
 							<li class="nav-item"><a
 								class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger">
 									${sessionScope.sessionUser.nombre } - Profe</a><a
-								href="UsuarioServlet?accionGET=modificarUsuarioLogueadoLoad">&nbsp;Editar
-									Perfil</a> <a href="cerrarSesion.html">&nbsp;Salir</a></li>
+								href="modificarUsuarioLogueadoLoad.html">&nbsp;Editar Perfil</a>
+								<a href="cerrarSesion.html">&nbsp;Salir</a></li>
 						</c:when>
 						<c:when
 							test="${sessionScope.sessionUser.getObjTipoUsuario().idTipoUsuario eq Constantes.idTipoUsuarioAdmin}">
-							<li class="nav-item"><a href="InicioAdministrador.jsp">&nbsp;Inicio</a></li>
+							<li class="nav-item"><a href="InicioAdministrador.html">&nbsp;Inicio</a></li>
 							<li class="nav-item"><a
 								class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger">
 									${sessionScope.sessionUser.nombre } - Admin</a><a
-								href="UsuarioServlet?accionGET=modificarUsuarioLogueadoLoad">&nbsp;Editar
-									Perfil</a> <a href="cerrarSesion.html">&nbsp;Salir</a></li>
+								href="modificarUsuarioLogueadoLoad.html">&nbsp;Editar Perfil</a>
+								<a href="cerrarSesion.html">&nbsp;Salir</a></li>
 						</c:when>
 						<c:otherwise>
 							<li class="nav-item"><a class="nav-link "

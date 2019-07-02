@@ -6,13 +6,13 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;// utilizado para parámetros por url
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 //import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 
-// import org.springframework.web.bind.annotation.PathVariable; // utilizado para parámetros por url
 import frgp.utn.edu.ar.dominio.Usuario;
 import frgp.utn.edu.ar.servicio.ITipoUsuarioService;
 import frgp.utn.edu.ar.servicio.IUsuarioService;
@@ -41,10 +41,33 @@ public class UsuarioController {
 		this.serviceTipoUsuario = (ITipoUsuarioService) ctx.getBean("serviceTipoUsuario");
 	}
 
+	@RequestMapping("/inicio.html")
+	public ModelAndView inicio() {
+		return new ModelAndView("index");
+	}
+
+	@RequestMapping("/InicioAlumno.html")
+	public ModelAndView InicioAlumno() {
+		return new ModelAndView("InicioAlumno");
+	}
+
+	@RequestMapping("/InicioProfesor.html")
+	public ModelAndView InicioProfesor() {
+		return new ModelAndView("InicioProfesor");
+	}
+
+	@RequestMapping("/InicioAdministrador.html")
+	public ModelAndView InicioAdministrador() {
+		return new ModelAndView("InicioAdministrador");
+	}
+
 	@RequestMapping("/admListarUsuarios.html")
-	public ModelAndView admListarUsuarios() {
+	public ModelAndView admListarUsuarios(HttpSession session) {
 		try {
 			ModelAndView MV = new ModelAndView();
+			// 1- verificar que el usuario tenga permisos de administrador
+			Utilitario.verificarQueElUsuarioLogueadoSeaAdmin(session);
+			// 2- devolver resultados obtenidos
 			MV.addObject("listaUsuarios", this.serviceUsuario.getAll());
 			MV.setViewName("admListarUsuarios");
 			return MV;
@@ -52,13 +75,6 @@ public class UsuarioController {
 			LOG.warning(e.getMessage());
 			return null;
 		}
-	}
-
-	@RequestMapping("/inicio.html")
-	public ModelAndView inicio() {
-		ModelAndView MV = new ModelAndView();
-		MV.setViewName("index");
-		return MV;
 	}
 
 	@RequestMapping(value = "/iniciarSesion" + Constantes.html, method = RequestMethod.POST)
@@ -162,6 +178,86 @@ public class UsuarioController {
 		} catch (Exception e) {
 			objInfoMessage = new InfoMessage(false, e.getMessage());
 			LOG.warning(e.getMessage());
+			paginaJsp = Constantes.indexJsp;
+		}
+		MV.addObject("objInfoMessage", objInfoMessage);
+		MV.setViewName(paginaJsp);
+		return MV;
+	}
+
+	@RequestMapping(value = "/modificarUsuarioLogueadoLoad" + Constantes.html, method = RequestMethod.GET)
+	public ModelAndView modificarUsuarioLogueadoLoad(HttpSession session) {
+		// 0- declaracion de variables locales
+		String message = null;
+		InfoMessage objInfoMessage = new InfoMessage();
+		ModelAndView MV = new ModelAndView();
+		try {
+			// 1- Recuperar info de la sesión del usuario
+			Usuario objUsuario = ORSesion.getUsuarioBySession(session);
+			// 2- validar la informacion recuperada
+			if (objUsuario == null)
+				throw new ValidacionException("La sesión no fue iniciada");
+			// 3- pasar las variables al jsp a cargar
+			MV.addObject("listaTipoUsuarios", serviceTipoUsuario.getAll());
+			MV.addObject("objUsuario", objUsuario);
+			// 4- informar resultados
+			message = String.format("Se cargaron los datos del usuario");
+			objInfoMessage = new InfoMessage(true, message);
+			paginaJsp = "/UsuarioViewModif";
+		} catch (Exception e) {
+			objInfoMessage = new InfoMessage(false, e.getMessage());
+			paginaJsp = Constantes.indexJsp;
+		}
+		MV.addObject("objInfoMessage", objInfoMessage);
+		MV.setViewName(paginaJsp);
+		return MV;
+	}
+
+	@RequestMapping(value = "/eliminarUsuario.html", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView eliminarUsuario(int idUsuarioToDelete, HttpSession session) {
+		// 0- declaracion de variables locales
+		ModelAndView MV = new ModelAndView();
+		String message = null;
+		InfoMessage objInfoMessage = new InfoMessage();
+		try {
+			// 1- Verificar permisos del usuario logueado
+			Utilitario.verificarQueElUsuarioLogueadoSeaAdmin(session);
+			// 2- Ejecutar transacción DB y devolver las respuestas
+			if (!serviceUsuario.delete(idUsuarioToDelete))
+				throw new ValidacionException(
+						"Ocurrió un error al intentar eliminar al usuario con ID: " + idUsuarioToDelete);
+			// 3- informar resultados
+			message = String.format("Se eliminó al usuario con ID: %d", idUsuarioToDelete);
+			objInfoMessage = new InfoMessage(true, message);
+		} catch (Exception e) {
+			objInfoMessage = new InfoMessage(false, e.getMessage());
+		}
+		MV.addObject("objInfoMessage", objInfoMessage);
+		MV.setViewName(Constantes.indexJsp);
+		return MV;
+	}
+
+	@RequestMapping(value = { "/select-user-{idUsuarioToView}" }, method = RequestMethod.GET)
+	public ModelAndView selectUser(@PathVariable int idUsuarioToView) {
+		// 0- declaracion de variables locales
+		String message = null;
+		InfoMessage objInfoMessage = new InfoMessage();
+		ModelAndView MV = new ModelAndView();
+		try {
+			// 1- Recuperar info del usuario seleccionado
+			Usuario objUsuario = serviceUsuario.get(idUsuarioToView);
+			// 2- validar la informacion recuperada
+			if (objUsuario == null)
+				throw new ValidacionException("No se encontró al usuario con ID: " + idUsuarioToView);
+			// 3- pasar las variables al jsp a cargar
+			MV.addObject("listaTipoUsuarios", serviceTipoUsuario.getAll());
+			MV.addObject("objUsuario", objUsuario);
+			// 4- informar resultados
+			message = String.format("Se cargaron los datos del usuario a visualizar");
+			objInfoMessage = new InfoMessage(true, message);
+			paginaJsp = "/UsuarioViewModifAdmin";
+		} catch (Exception e) {
+			objInfoMessage = new InfoMessage(false, e.getMessage());
 			paginaJsp = Constantes.indexJsp;
 		}
 		MV.addObject("objInfoMessage", objInfoMessage);

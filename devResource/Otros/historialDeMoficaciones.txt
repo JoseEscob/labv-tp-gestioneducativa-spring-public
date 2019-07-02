@@ -1,3 +1,11 @@
+ - *Se borra ejemplo de Usuarios*
+
+
+Listado de usuarios [2019-07-01 23:00]
+ - Se modifica listado de usuarios
+ - Se implementa funcionalidad de obtener id por parámetro url
+
+
 DAO/Service: TipoExamen [2019-07-01 14:46]
  - Se agregan DAO y Servicio de tipo de Examen 
 
