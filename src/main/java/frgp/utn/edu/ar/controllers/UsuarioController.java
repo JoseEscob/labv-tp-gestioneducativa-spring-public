@@ -37,7 +37,7 @@ public class UsuarioController {
 		ApplicationContext ctx = WebApplicationContextUtils
 				.getRequiredWebApplicationContext(config.getServletContext());
 
-		this.serviceUsuario = (IUsuarioService) ctx.getBean("serviceUsuarioBeanX");
+		this.serviceUsuario = (IUsuarioService) ctx.getBean("serviceUsuario");
 		this.serviceTipoUsuario = (ITipoUsuarioService) ctx.getBean("serviceTipoUsuario");
 	}
 

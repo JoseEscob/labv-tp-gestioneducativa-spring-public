@@ -20,11 +20,11 @@
 	<!-- Para que lea los metodos anotados con @Transactional -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	<!-- Beans de conexion NUEVOS -->
-	<bean id="serviceUsuarioBeanX" class="frgp.utn.edu.ar.servicioImpl.UsuarioServiceImplX">
-		<property name="dataAccess" ref="dataAccessBeanUsuarioX"></property>
+	<!-- Service/DAO: Usuario -->
+	<bean id="serviceUsuario" class="frgp.utn.edu.ar.servicioImpl.UsuarioServiceImplX">
+		<property name="dataAccess" ref="dataAccessBeanUsuario"></property>
 	</bean>
-	
-	<bean id="dataAccessBeanUsuarioX" class="frgp.utn.edu.ar.daoImpl.UsuarioDAOImplX" 
+	<bean id="dataAccessBeanUsuario" class="frgp.utn.edu.ar.daoImpl.UsuarioDAOImplX" 
 		scope="singleton"> 
 		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
 	</bean>
@@ -66,16 +66,6 @@
 	</bean>
 
 	<!-- Beans de conexion -->
-	<bean id="serviceUsuarioBean" class="frgp.utn.edu.ar.servicioImpl.UsuarioServicioImpl">
-		<property name="dataAccess" ref="dataAccessBeanUsuario"></property>
-	</bean>
-	
-	<bean id="dataAccessBeanUsuario" class="frgp.utn.edu.ar.daoImpl.UsuarioDaoImpl" 
-		scope="singleton"> 
-		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
-	</bean>
-	
-	
 	<bean id="serviceProductoBean" class="frgp.utn.edu.ar.servicioImpl.ProductoServicioImpl">
 		<property name="dataAccess" ref="dataAccessBeanProducto"></property>
 	</bean>	
@@ -117,9 +107,9 @@
 		<!-- En esta propiedad deberian agregarse todas las clases anotadas con JPA. -->
 		<property name="annotatedClasses">
 			<list>
-				<value>frgp.utn.edu.ar.dominio.Usuarios</value>
 				<value>frgp.utn.edu.ar.dominio.TipoProducto</value>
 				<value>frgp.utn.edu.ar.dominio.Producto</value>
+				
 				<value>frgp.utn.edu.ar.dominio.TipoUsuario</value>
 				<value>frgp.utn.edu.ar.dominio.Usuario</value>
 				<value>frgp.utn.edu.ar.dominio.TipoPeriodo</value>
