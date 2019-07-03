@@ -7,7 +7,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="utils.constantes.ConstantesJSP"%>
 <%@ page import="utils.constantes.Constantes"%>
-
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
 <!-- IMPORTS DE BANNER -->

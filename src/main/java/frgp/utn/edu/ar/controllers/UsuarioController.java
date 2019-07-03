@@ -6,6 +6,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;// utilizado para parámetros por url
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -157,9 +159,14 @@ public class UsuarioController {
 	}
 
 	@RequestMapping(value = "/altaUsuarioSave" + Constantes.html, method = RequestMethod.POST)
-	public ModelAndView altaUsuario(Usuario objUsuario, HttpSession session) {
-		ModelAndView MV = new ModelAndView();
+	public ModelAndView altaUsuario(
+			@ModelAttribute("objUsuario") frgp.utn.edu.ar.dominio.validacion.Usuario objUsuarioParam,
+			HttpSession session, BindingResult result) {
+		if (result.hasErrors()) {
+			return new ModelAndView(Constantes.indexJsp);
+		}
 
+		ModelAndView MV = new ModelAndView();
 		String message = null;
 		InfoMessage objInfoMessage = new InfoMessage();
 		try {
@@ -168,6 +175,8 @@ public class UsuarioController {
 			// 2- validar campos
 			// TODO implementar método por request
 			// 3- insertar en BBDD y verificar estado de transacción
+			Usuario objUsuario = null;
+
 			serviceUsuario.validarCamposUnicos(objUsuario);
 			if (!(serviceUsuario.insert(objUsuario) > 0))
 				throw new ValidacionException("SQL: Ocurrió un error al guardar el usuario");
