@@ -55,7 +55,7 @@ public class Usuario {
 	@Column(name = "clave")
 	private String clave;
 
-	@Column(name = "habilitado")
+	@Column(name = "habilitado", columnDefinition = "boolean default true")
 	private boolean habilitado;
 
 	public Usuario() {

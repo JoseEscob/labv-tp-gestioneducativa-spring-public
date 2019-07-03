@@ -10,6 +10,8 @@ package utils.constantes;
 public class Constantes {
 	// Utilizados como variables
 	public final static String DDMMYYYY = "dd/MM/yyyy";// "dd/MM/yyyy";"
+	public final static String YYYYMMDD = "yyyy/MM/dd";
+	public final static String YYYYMMDD_Guiones = "yyyy-MM-dd";
 	public final static String yyyyMMddHHmmss = "yyyy/MM/dd HH:mm:ss";// "dd/MM/yyyy";"
 	public final static String sessionUser = "sessionUser";
 	public final static String accionGET = "accionGET";

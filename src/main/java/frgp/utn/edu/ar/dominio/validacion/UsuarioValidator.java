@@ -17,37 +17,38 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import frgp.utn.edu.ar.dominio.TipoUsuario;
+import utils.constantes.Constantes;
 import utils.constantes.ConstantesDAO;
 
 @Entity
 @Table(name = ConstantesDAO.Usuario, indexes = { @Index(columnList = "dni", name = "dniIndex") })
-public class Usuario {
+public class UsuarioValidator {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "idUsuario", updatable = false, nullable = false)
 	private Integer idUsuario;
 
+	@NotNull(message = "Por favor seleccione un opción para el tipo de usuario")
 	private int idTipoUsuario;
 
-	@Column(name = "nombre")
+	@NotNull(message = "Por favor complete el campo: nombre", nullable = false)
 	private String nombre;
 
-	@Column(name = "apellido")
+	@NotNull(message = "Por favor complete el campo: apellido")
 	private String apellido;
-
-	@Column(name = "dni")
-	// @Index(name = "dniIndex")
+	
+	@Size(min = 5, max = 10, message = "El dni debe tener al menos {min} y un máximo de {max} digitos. Valor ingresado [${validatedValue}]")
 	private String dni;
 
-	@Column(name = "calleNombre")
+	@Size(min = 3, message = "El nombre de la calle no es válido, debe tener al menos {min} caracteres. Valor ingresado [${validatedValue}]")
 	private String calleNombre;
 
-	@Column(name = "calleAltura")
+	@Size(min = 1, max = 10, message = "La altura debe tener al menos {min} digito. Valor ingresado [${validatedValue}]")
 	private String calleAltura;
 
-	@NotNull
+	@NotNull(message = "")
 	@Past
-	@Column(name = "fechaNac")
+	@DateTimeFormat(pattern = Constantes.YYYYMMDD_Guiones) // "dd-mmm-yyyy"
 	private Date fechaNacimiento;
 
 	public Date getFechaNacimiento() {
@@ -58,19 +59,20 @@ public class Usuario {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 
-	@Column(name = "nroTelefono")
+	
 	private String nroTelefono;
 
-	@Column(name = "mail")
+	
+	@NotNull
+	@Pattern(regexp=".+@.+\\.[a-z]+", message="Por favor ingrese un correo electrónico válido. Valor ingresado [${validatedValue}]")
 	private String mail;
 
-	@Column(name = "clave")
+	@Size(min = 5, max = 20, message = "La contraseña ingresada no es válida, debe tener al menos {min} y un máximo de {max} caracteres. Valor ingresado [${validatedValue}]")
 	private String clave;
 
-	@Column(name = "habilitado")
 	private boolean habilitado;
 
-	public Usuario() {
+	public UsuarioValidator() {
 		super();
 	}
 
@@ -121,7 +123,6 @@ public class Usuario {
 	public void setCalleAltura(String calleAltura) {
 		this.calleAltura = calleAltura;
 	}
-
 
 	public String getNroTelefono() {
 		return nroTelefono;

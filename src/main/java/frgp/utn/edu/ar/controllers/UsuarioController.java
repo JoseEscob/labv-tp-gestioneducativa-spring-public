@@ -160,12 +160,13 @@ public class UsuarioController {
 
 	@RequestMapping(value = "/altaUsuarioSave" + Constantes.html, method = RequestMethod.POST)
 	public ModelAndView altaUsuario(
-			@ModelAttribute("objUsuario") frgp.utn.edu.ar.dominio.validacion.Usuario objUsuarioParam,
+			@ModelAttribute("objUsuario") frgp.utn.edu.ar.dominio.validacion.UsuarioValidator objUsuarioValidator,
 			HttpSession session, BindingResult result) {
 		if (result.hasErrors()) {
 			return new ModelAndView(Constantes.indexJsp);
 		}
 
+		Utilitario.validarObjetoClasePorValidator(objUsuarioValidator);
 		ModelAndView MV = new ModelAndView();
 		String message = null;
 		InfoMessage objInfoMessage = new InfoMessage();

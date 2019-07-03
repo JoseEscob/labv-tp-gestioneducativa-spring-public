@@ -8,6 +8,9 @@ import java.util.concurrent.TimeUnit;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import javax.validation.Validation;
+import javax.validation.Validator;
+
 import java.util.Date;
 import java.util.Locale;
 
@@ -25,6 +28,18 @@ import utils.excepciones.ValidacionException;
  * Funciona como clase para implementar funciones reutilizables
  */
 public class Utilitario {
+
+	public static void validarObjetoClasePorValidator(T obj) throws ValidacionException {
+		StringBuilder mensajeError = "";
+		Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+		Set<ConstraintViolation<T>> constraintViolations = validator.validate(obj);
+		for (ConstraintViolation<Object> cv : constraintViolations) {
+			System.out.println(String.format("Error here! property: [%s], value: [%s], message: [%s]",
+					cv.getPropertyPath(), cv.getInvalidValue(), cv.getMessage()));
+			throw new ValidacionException(cv.getMessage());
+		}
+	}
+
 	public static void verificarQueElUsuarioLogueadoSeaAdmin(HttpSession session) throws ValidacionException {
 		Usuario objUsuarioLogueado = ORSesion.getUsuarioBySession(session);
 		if (objUsuarioLogueado.getObjTipoUsuario().getIdTipoUsuario() != Constantes.idTipoUsuarioAdmin)
