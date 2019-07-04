@@ -55,6 +55,7 @@ create table cursosCalificaciones(
     idTipoExamen int not null,
     nota int not null,
     fechaCalif date not null,
+    fechaUltModif date not null,
     constraint pk_cursos_calif primary key(idCursoCalif),
     constraint fk_usuarios_Alumno foreign key(dniAlumno) references Usuario(dni),
     constraint fk_cursos_calif  foreign key(idCurso) references cursos(idCurso),

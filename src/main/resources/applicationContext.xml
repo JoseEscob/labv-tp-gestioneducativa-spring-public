@@ -64,6 +64,15 @@
 		scope="singleton"> 
 		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
 	</bean>
+	
+	<!-- Service/DAO: CursosCalificaciones -->
+	<bean id="serviceCursosCalificaciones" class="frgp.utn.edu.ar.servicioImpl.CursosCalificacionesServiceImpl">
+		<property name="dataAccess" ref="dataAccessCursosCalificaciones"></property>
+	</bean>
+	<bean id="dataAccessCursosCalificaciones" class="frgp.utn.edu.ar.daoImpl.CursosCalificacionesDAOImpl" 
+		scope="singleton"> 
+		<property name="sessionFactory" ref="sessionFactoryBean"></property> 
+	</bean>
 
 	<!-- Beans de conexion -->
 	<bean id="serviceProductoBean" class="frgp.utn.edu.ar.servicioImpl.ProductoServicioImpl">

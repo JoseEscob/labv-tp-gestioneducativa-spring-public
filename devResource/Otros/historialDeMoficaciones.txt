@@ -1,3 +1,10 @@
+Calificacion - Materias v1 [2019-07-04 18:02 je95744]
+ - Se preparan formularios de listado y modificación de calificaciones
+ - Se preparan DAO/Service de CursosCalificaciones
+ - Se modifica clase Usuario para que tenga listas de Calificaciones y Cursos
+ - Se sube DER y un ejemplo html para girar texto
+
+
 Usuario Validaciones - Alta Usuario [2019-07-03 16:21 ]
  - Se agregan mensajes de validacion a la clase UsuarioValidator
  - Se prepara método para validar las constraints utilizadas en clases Validator

@@ -1,6 +1,8 @@
 package frgp.utn.edu.ar.dominio;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -34,7 +36,7 @@ public class Usuario {
 	private String apellido;
 
 	@Column(name = "dni")
-	//@Index(name = "dniIndex") 
+	// @Index(name = "dniIndex")
 	private String dni;
 
 	@Column(name = "calleNombre")
@@ -57,6 +59,10 @@ public class Usuario {
 
 	@Column(name = "habilitado", columnDefinition = "boolean default true")
 	private boolean habilitado;
+
+	//fetch=FetchType.LAZY
+	List<Curso> listaCursos = new ArrayList<Curso>();
+	List<CursosCalificaciones> listaCursosCalificaciones = new ArrayList<CursosCalificaciones>();
 
 	public Usuario() {
 		super();
@@ -158,4 +164,19 @@ public class Usuario {
 		this.habilitado = habilitado;
 	}
 
+	public List<Curso> getListaCursos() {
+		return listaCursos;
+	}
+
+	public void setListaCursos(List<Curso> listaCursos) {
+		this.listaCursos = listaCursos;
+	}
+
+	public List<CursosCalificaciones> getListaCursosCalificaciones() {
+		return listaCursosCalificaciones;
+	}
+
+	public void setListaCursosCalificaciones(List<CursosCalificaciones> listaCursosCalificaciones) {
+		this.listaCursosCalificaciones = listaCursosCalificaciones;
+	}
 }
