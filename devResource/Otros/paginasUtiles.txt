@@ -3,6 +3,7 @@ Sublime
 	http://www.seanbehan.com/how-to-create-a-date-time-snippet-in-sublime-text-2-dynamic-signature-with-time-stamp/
 	Sublime-Plugin installPackageControl
 	https://stackoverflow.com/questions/26014966/sublime-3-error-installing-package-control#answer-26020689
+	https://www.shopify.com/partners/blog/sublime-text-plugins-2018
 
 Tomcat 8
 https://stackoverflow.com/questions/8520267/http-status-404-the-requested-resource-is-not-available
@@ -31,7 +32,10 @@ Hibernate
 	https://stackoverflow.com/questions/31318788/cascadetype-vs-fetchtype
 	https://thoughts-on-java.org/best-practices-many-one-one-many-associations-mappings/
 
-
+Table HTML - Add rows
+	https://www.encodedna.com/javascript/dynamically-add-remove-rows-to-html-table-using-javascript-and-save-data.htm
+	http://javahonk.com/spring-mvc-add-multiple-rows/
+	
 Spring
 1) Crear proyecto
 

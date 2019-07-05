@@ -29,8 +29,7 @@ import utils.excepciones.ValidacionException;
  */
 public class Utilitario {
 
-	public static void validarObjetoClasePorValidator(T obj) throws ValidacionException {
-		StringBuilder mensajeError = "";
+	public static <T> void validarObjetoClasePorValidator(T obj) throws ValidacionException {
 		Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 		Set<ConstraintViolation<T>> constraintViolations = validator.validate(obj);
 		for (ConstraintViolation<Object> cv : constraintViolations) {

@@ -274,40 +274,5 @@ public class UsuarioController {
 		MV.setViewName(paginaJsp);
 		return MV;
 	}
-	
-	@RequestMapping("/cargarMateriasUsuarioAlumno.html")
-	public ModelAndView cargarMateriasUsuarioAlumno() {
-		// El jsp muestra los datos del objeto sessionUser
-		return new ModelAndView("cargarMateriasUsuarioAlumno");
-	}
-	
-	@RequestMapping(value = "/cargarMateriasUsuarioLoad" + Constantes.html, method = RequestMethod.GET)
-	public ModelAndView cargarMateriasUsuarioLoad(HttpSession session) {
-		// 0- declaracion de variables locales
-		String message = null;
-		InfoMessage objInfoMessage = new InfoMessage();
-		ModelAndView MV = new ModelAndView();
-		try {
-			// 1- Recuperar info de la sesión del usuario
-			Usuario objUsuario = ORSesion.getUsuarioBySession(session);
-			// 2- validar la informacion recuperada
-			if (objUsuario == null)
-				throw new ValidacionException("La sesión no fue iniciada");
-			// 3- pasar las variables al jsp a cargar
-			MV.addObject("listaTipoUsuarios", serviceTipoUsuario.getAll());
-			MV.addObject("objUsuario", objUsuario);
-			// 4- informar resultados
-			message = String.format("Se cargaron los datos del usuario");
-			objInfoMessage = new InfoMessage(true, message);
-			paginaJsp = "/UsuarioViewModif";
-		} catch (Exception e) {
-			objInfoMessage = new InfoMessage(false, e.getMessage());
-			paginaJsp = Constantes.indexJsp;
-		}
-		MV.addObject("objInfoMessage", objInfoMessage);
-		MV.setViewName(paginaJsp);
-		return MV;
-	}
-	
 
 }

@@ -2,6 +2,7 @@ package frgp.utn.edu.ar.controllers;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpSession;
+import javax.xml.ws.RequestWrapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -40,6 +41,11 @@ public class CalificacionController {
 		this.serviceTipoExamen = (ITipoExamenService) ctx.getBean("serviceTipoExamen");
 	}
 
+	@RequestMapping(value = "/inscribirAlumnos.html", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView inscribirAlumnos() {
+		
+	}
+	
 	/*
 	 * altaCalificacion.html
 	 * 
@@ -62,11 +68,11 @@ public class CalificacionController {
 			CursosCalificaciones objCalificacion = serviceCursosCalificaciones.get(idCursoCalifToUpdate);
 			if (objCalificacion == null)
 				throw new ValidacionException("No se encontró la calificación con ID: " + idCursoCalifToUpdate);
-			
+
 			// 3- Guardar valor obtenido
 			MV.addObject("objCalificacion", objCalificacion);
 			MV.addObject("listaTiposExamen", serviceTipoExamen.getAll());
-			
+
 			// 4- informar resultados
 			paginaJsp = "CalificacionModif";
 			message = String.format("Se cargaron los datos de la calificación con ID: %d", idCursoCalifToUpdate);
@@ -79,4 +85,5 @@ public class CalificacionController {
 		MV.setViewName(paginaJsp);
 		return MV;
 	}
+
 }

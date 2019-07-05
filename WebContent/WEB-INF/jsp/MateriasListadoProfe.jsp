@@ -29,10 +29,9 @@
 						<%@ include file="_filaMateriasBody.jsp"%>
 						<td>
 							<div>
-								<form action="CalificacionServlet" method="POST">
+								<form action="calificacionListadoProfeLoad.html" method="POST">
 									<input type="hidden" value="${objCurso.idCurso}"
-										name="idCursoToView" /> <input type="hidden"
-										name="accionPOST" value="listarCalificacionesXMateriaProfe"></input>
+										name="idCursoToViewCalificaciones" /> 
 									<input type="submit" value="Ver calificaciones"
 										class="btn btn-info" />
 								</form>

@@ -1,5 +1,7 @@
 package frgp.utn.edu.ar.controllers;
 
+import java.util.List;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpSession;
 
@@ -32,7 +34,6 @@ public class CursoController {
 	@Autowired
 	private ITipoPeriodoService serviceTipoPeriodo;
 
-
 	public void init(ServletConfig config) {
 		ApplicationContext ctx = WebApplicationContextUtils
 				.getRequiredWebApplicationContext(config.getServletContext());
@@ -55,10 +56,10 @@ public class CursoController {
 			MV.addObject("listaPeriodos", serviceTipoPeriodo.getAll());
 			int idCurso = serviceCurso.getMax() + 1;
 			// 2- guardar la información recuperada en las variables
-			Curso objCursos = new Curso();
-			objCursos.setIdCurso(idCurso);
+			Curso objMateriaCurso = new Curso();
+			objMateriaCurso.setIdCurso(idCurso);
 			// 3- pasar las variables al jsp a cargar
-			MV.addObject("objCursos", objCursos);
+			MV.addObject("objMateriaCurso", objMateriaCurso);
 			// 4- informar resultados
 			message = String.format("Se cargaron los datos del formulario");
 			objInfoMessage = new InfoMessage(true, message);
@@ -70,6 +71,49 @@ public class CursoController {
 		}
 		MV.addObject("objInfoMessage", objInfoMessage);
 		MV.setViewName(paginaJsp);
+		return MV;
+	}
+
+	@RequestMapping(value = "/altaMateriaCurso.html", method = RequestMethod.POST)
+	public ModelAndView altaMateriaCurso(String nombreCurso, int anio, int idPeriodo, String dniProfesor) {
+		String message = null;
+		InfoMessage objInfoMessage = new InfoMessage();
+		ModelAndView MV = new ModelAndView();
+		try {
+			// 1- validar datos cargados por JSP (Cliente)
+			if (nombreCurso.isEmpty())
+				throw new ValidacionException("Por favor complete el nombre de la materia/ curso");
+			if (dniProfesor.isEmpty())
+				throw new ValidacionException("Por favor complete el dni del profesor de la materia/ curso");
+			// 2- guardar la información recuperada en las variables
+			Curso objMateriaCurso = new Curso();
+			objMateriaCurso.setNombreCurso(nombreCurso);
+			objMateriaCurso.setAnio(anio);
+			objMateriaCurso.setIdTipoPeriodo(idPeriodo);
+			objMateriaCurso.setDNIProfesor(dniProfesor);
+			// 3- insertar en BBDD y verificar estado de transacción
+			int idGenerado = serviceCurso.insert(objMateriaCurso);
+			if (!(idGenerado > 0))
+				throw new ValidacionException("SQL: Ocurrió un error al guardar la materia/ curso");
+			// 4- informar resultados
+			message = String.format("Se registró la materia con éxito. ID: " + idGenerado);
+			objInfoMessage = new InfoMessage(true, message);
+		} catch (Exception e) {
+			objInfoMessage = new InfoMessage(false, e.getMessage());
+			LOG.warning(e.getMessage());
+		}
+		MV.addObject("objInfoMessage", objInfoMessage);
+		MV.setViewName(Constantes.indexJsp);
+		return MV;
+	}
+
+	@RequestMapping("/listarMateriasCursosProfe.html") // , method = { RequestMethod.GET, RequestMethod.POST }
+	public ModelAndView listarMateriasCursosProfe(HttpSession session) {
+		// 1- Recuperar info de la sesión del usuario
+		Usuario objUsuario = ORSesion.getUsuarioBySession(session);
+		ModelAndView MV = new ModelAndView();
+		MV.addObject("listaCursos", objUsuario.getListaCursos());
+		MV.setViewName("MateriasListadoProfe");
 		return MV;
 	}
 
@@ -86,11 +130,18 @@ public class CursoController {
 			if (objUsuario == null)
 				throw new ValidacionException("La sesión no fue iniciada");
 			// 3- pasar las variables al jsp a cargar
-			MV.addObject("objUsuario", objUsuario);
+			// TODO getAllByProfe - Usuario.listaCursos
+			List<Curso> listaCursos;
+			serviceCurso.getAll().stream().forEach(item -> {
+				if (item.getObjUsuarioProfe().getDni().equals(objUsuario.getDni()))
+					listaCursos.add(item);
+			});
+			// MV.addObject("objUsuario", objUsuario);
+			MV.addObject("listaCursos", listaCursos);
 			// 4- informar resultados
 			message = String.format("Se cargaron las materias del usuario");
 			objInfoMessage = new InfoMessage(true, message);
-			paginaJsp = "/MateriasListadoProfe"; //TODO preparar vista
+			paginaJsp = "/MateriasListadoProfe"; // TODO preparar vista
 		} catch (Exception e) {
 			objInfoMessage = new InfoMessage(false, e.getMessage());
 			paginaJsp = Constantes.indexJsp;
@@ -100,5 +151,26 @@ public class CursoController {
 		return MV;
 	}
 
+	@RequestMapping(value = "/calificacionListadoProfeLoad.html", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView calificacionListadoProfeLoad(int idCursoToViewCalificaciones, HttpSession session) {
+		// 0- declaracion de variables locales
+		String message = null;
+		InfoMessage objInfoMessage = new InfoMessage();
+		ModelAndView MV = new ModelAndView();
+		try {
+			MV.addObject("objCurso", serviceCurso.get(idCursoToViewCalificaciones));
+			MV.addObject("objUsuario", ORSesion.getUsuarioBySession(session));
+
+			message = String.format("Se cargaron las calificaciones del curso %d ", idCursoToViewCalificaciones);
+			objInfoMessage = new InfoMessage(true, message);
+			paginaJsp = "/CalificacionListadoProfe";
+		} catch (Exception e) {
+			objInfoMessage = new InfoMessage(false, e.getMessage());
+			paginaJsp = Constantes.indexJsp;
+		}
+		MV.addObject("objInfoMessage", objInfoMessage);
+		MV.setViewName(paginaJsp);
+		return MV;
+	}
 
 }

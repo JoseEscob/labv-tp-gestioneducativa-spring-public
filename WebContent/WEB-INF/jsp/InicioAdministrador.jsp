@@ -32,8 +32,13 @@
 			</a>
 		</div>
 		<div>
-			<a href="admListarCursos.html" class="btn btn-info"
-				data-toggle="tooltip" title="Dar de alta una materia/curso">&nbsp;Listar Materias/Cursos
+			<a href="cargarMateriasUsuarioLoad.html" class="btn btn-info"
+				data-toggle="tooltip" title="Dar de alta una materia/curso">&nbsp;Listar Materias/Cursos-ADMIN
+			</a>
+		</div>
+		<div>
+			<a href="listarMateriasCursosProfe.html" class="btn btn-info"
+				data-toggle="tooltip" title="Dar de alta una materia/curso">&nbsp;Listar Materias/Cursos-PROFE
 			</a>
 		</div>
 	</div>

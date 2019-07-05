@@ -31,7 +31,7 @@ public class Curso {
 	private TipoPeriodo objTipoPeriodo;
 
 	@OneToOne(cascade = { CascadeType.ALL })
-	@JoinColumn(name = "dniProfesor", referencedColumnName = "dni") 
+	@JoinColumn(name = "dniProfesor", referencedColumnName = "dni")
 	private Usuario objUsuarioProfe;
 
 	public Curso() {
@@ -85,6 +85,15 @@ public class Curso {
 
 	public void setObjUsuarioProfe(Usuario objUsuarioProfe) {
 		this.objUsuarioProfe = objUsuarioProfe;
+	}
+
+	////// Métodos de usuario //////
+	public void setIdTipoPeriodo(int idPeriodo) {
+		this.objTipoPeriodo.setIdPeriodo(idPeriodo);
+	}
+	
+	public void setDNIProfesor(String dniProfesor) {
+		objUsuarioProfe.setDni(dniProfesor);
 	}
 
 }

@@ -1,3 +1,8 @@
+Calificacion - Materia v2 AltaModif[2019-07-05 16:23 je95744]
+ - Se prepara circuito de modificaciones de calificaciones
+ * Probar "cargarMateriasUsuarioLoad" y "listarMateriasCursosProfe"
+	
+
 Calificacion - Materias v1 [2019-07-04 18:02 je95744]
  - Se preparan formularios de listado y modificación de calificaciones
  - Se preparan DAO/Service de CursosCalificaciones
