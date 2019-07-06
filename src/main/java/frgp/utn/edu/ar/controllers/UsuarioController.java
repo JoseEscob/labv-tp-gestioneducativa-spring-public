@@ -16,6 +16,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 
 import frgp.utn.edu.ar.dominio.Usuario;
+import frgp.utn.edu.ar.dominio.validacion.UsuarioValidator;
 import frgp.utn.edu.ar.servicio.ITipoUsuarioService;
 import frgp.utn.edu.ar.servicio.IUsuarioService;
 import utils.InfoMessage;
@@ -158,9 +159,24 @@ public class UsuarioController {
 		}
 	}
 
+	private Usuario obtenerUsuarioDeObjetoValidator(UsuarioValidator objUsuarioValidator) throws Exception {
+		Usuario objUsuario = new Usuario();
+		objUsuario.setObjTipoUsuario(serviceTipoUsuario.get(objUsuarioValidator.getIdTipoUsuario()));
+		objUsuario.setNombre(objUsuarioValidator.getNombre());
+		objUsuario.setApellido(objUsuarioValidator.getApellido());
+		objUsuario.setDni(objUsuarioValidator.getDni());
+		objUsuario.setCalleNombre(objUsuarioValidator.getCalleNombre());
+		objUsuario.setCalleAltura(objUsuarioValidator.getCalleAltura());
+		objUsuario.setFechaNac(objUsuarioValidator.getFechaNac());
+		objUsuario.setNroTelefono(objUsuarioValidator.getNroTelefono());
+		objUsuario.setMail(objUsuarioValidator.getMail());
+		objUsuario.setClave(objUsuarioValidator.getClave());
+		objUsuario.setHabilitado(objUsuarioValidator.getHabilitado());
+		return objUsuario;
+	}
+
 	@RequestMapping(value = "/altaUsuarioSave" + Constantes.html, method = RequestMethod.POST)
-	public ModelAndView altaUsuario(
-			@ModelAttribute("objUsuario") frgp.utn.edu.ar.dominio.validacion.UsuarioValidator objUsuarioValidator,
+	public ModelAndView altaUsuario(@ModelAttribute("objUsuario") UsuarioValidator objUsuarioValidator,
 			HttpSession session, BindingResult result) {
 		if (result.hasErrors()) {
 			return new ModelAndView(Constantes.indexJsp);
@@ -175,15 +191,15 @@ public class UsuarioController {
 			// 2- validar campos
 			Utilitario.validarObjetoClasePorValidator(objUsuarioValidator);
 
-			// TODO implementar método por request
 			// 3- insertar en BBDD y verificar estado de transacción
-			Usuario objUsuario = null;
-
+			Usuario objUsuario = obtenerUsuarioDeObjetoValidator(objUsuarioValidator);
 			serviceUsuario.validarCamposUnicos(objUsuario);
-			if (!(serviceUsuario.insert(objUsuario) > 0))
+
+			int idGenerado = serviceUsuario.insert(objUsuario);
+			if (!(idGenerado > 0))
 				throw new ValidacionException("SQL: Ocurrió un error al guardar el usuario");
 			// 4- informar resultados
-			message = String.format("Se registró al usuario exitosamente su ID es : %d", objUsuario.getIdUsuario());
+			message = String.format("Se registró al usuario exitosamente su ID es : %d", idGenerado);
 			objInfoMessage = new InfoMessage(true, message);
 			paginaJsp = Constantes.indexJsp;
 		} catch (Exception e) {

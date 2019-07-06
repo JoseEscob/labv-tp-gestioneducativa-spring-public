@@ -51,7 +51,7 @@ public class UsuarioValidator {
 	@DateTimeFormat(pattern = Constantes.YYYYMMDD_Guiones) // "dd-mmm-yyyy"
 	private Date fechaNac;
 
-	public Date getFechaNacimiento() {
+	public Date getFechaNac() {
 		return fechaNac;
 	}
 
@@ -148,7 +148,7 @@ public class UsuarioValidator {
 		this.clave = clave;
 	}
 
-	public boolean isHabilitado() {
+	public boolean getHabilitado() {
 		return habilitado;
 	}
 

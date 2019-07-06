@@ -1,3 +1,12 @@
+Alta Usuario v3 [2019-07-05 22:58 josee]
+ - Se termina de dar de alta a un usuario (Sin listas de cursos/calificaciones como atributos)
+ - Se realizan pruebas de javax.validator y obtención de datos
+
+Materia Alta finalizado [2019-07-05 22:30 josee]
+ - Se agregan validaciones y cargas de objetos referencias para completar la carga de una Materia/Curso
+ - Se agrega validator a Pom, ya valida las constraints definidas en la clase validator
+ - Se agrega método de obtención usuario por DNI
+
 Calificacion - Materia v2 AltaModif[2019-07-05 16:23 je95744]
  - Se prepara circuito de modificaciones de calificaciones
  * Probar "cargarMateriasUsuarioLoad" y "listarMateriasCursosProfe"
