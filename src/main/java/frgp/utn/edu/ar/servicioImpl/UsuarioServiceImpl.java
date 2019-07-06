@@ -50,4 +50,9 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	public void validarCamposUnicos(Usuario objUsuario) throws Exception {
 		dataAccess.validarCamposUnicos(objUsuario);
 	}
+
+	@Override
+	public Usuario getUsuarioByDNI(String dni) throws Exception {
+		return dataAccess.getUsuarioByDNI(dni);
+	}
 }

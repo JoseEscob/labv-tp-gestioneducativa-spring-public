@@ -166,7 +166,6 @@ public class UsuarioController {
 			return new ModelAndView(Constantes.indexJsp);
 		}
 
-		Utilitario.validarObjetoClasePorValidator(objUsuarioValidator);
 		ModelAndView MV = new ModelAndView();
 		String message = null;
 		InfoMessage objInfoMessage = new InfoMessage();
@@ -174,6 +173,8 @@ public class UsuarioController {
 			// 1- verificar que el usuario tenga permisos de administrador
 			Utilitario.verificarQueElUsuarioLogueadoSeaAdmin(session);
 			// 2- validar campos
+			Utilitario.validarObjetoClasePorValidator(objUsuarioValidator);
+
 			// TODO implementar método por request
 			// 3- insertar en BBDD y verificar estado de transacción
 			Usuario objUsuario = null;

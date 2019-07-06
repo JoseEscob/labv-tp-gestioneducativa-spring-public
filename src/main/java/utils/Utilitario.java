@@ -7,12 +7,13 @@ import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
+import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 
 import java.util.Date;
 import java.util.Locale;
+import java.util.Set;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
@@ -32,7 +33,7 @@ public class Utilitario {
 	public static <T> void validarObjetoClasePorValidator(T obj) throws ValidacionException {
 		Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 		Set<ConstraintViolation<T>> constraintViolations = validator.validate(obj);
-		for (ConstraintViolation<Object> cv : constraintViolations) {
+		for (ConstraintViolation<T> cv : constraintViolations) {
 			System.out.println(String.format("Error here! property: [%s], value: [%s], message: [%s]",
 					cv.getPropertyPath(), cv.getInvalidValue(), cv.getMessage()));
 			throw new ValidacionException(cv.getMessage());

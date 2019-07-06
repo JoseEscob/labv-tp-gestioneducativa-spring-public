@@ -36,6 +36,7 @@ public class Curso {
 
 	public Curso() {
 		super();
+		
 	}
 
 	public Curso(Integer idCurso, String nombreCurso, int anio, TipoPeriodo objTipoPeriodo, Usuario objUsuarioProfe) {
@@ -91,7 +92,7 @@ public class Curso {
 	public void setIdTipoPeriodo(int idPeriodo) {
 		this.objTipoPeriodo.setIdPeriodo(idPeriodo);
 	}
-	
+
 	public void setDNIProfesor(String dniProfesor) {
 		objUsuarioProfe.setDni(dniProfesor);
 	}

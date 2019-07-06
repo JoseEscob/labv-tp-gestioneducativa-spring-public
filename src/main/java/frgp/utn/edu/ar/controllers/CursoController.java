@@ -1,5 +1,6 @@
 package frgp.utn.edu.ar.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletConfig;
@@ -14,11 +15,14 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 
 import frgp.utn.edu.ar.dominio.Curso;
+import frgp.utn.edu.ar.dominio.Usuario;
+import frgp.utn.edu.ar.dominio.TipoPeriodo;
 import frgp.utn.edu.ar.dominio.CursosCalificaciones;
 import frgp.utn.edu.ar.dominio.Usuario;
 import frgp.utn.edu.ar.servicio.ICursoService;
 import frgp.utn.edu.ar.servicio.ICursosCalificacionesService;
 import frgp.utn.edu.ar.servicio.ITipoPeriodoService;
+import frgp.utn.edu.ar.servicio.IUsuarioService;
 import utils.InfoMessage;
 import utils.LOG;
 import utils.ORSesion;
@@ -33,12 +37,15 @@ public class CursoController {
 	private ICursoService serviceCurso;
 	@Autowired
 	private ITipoPeriodoService serviceTipoPeriodo;
+	@Autowired
+	public IUsuarioService serviceUsuario;
 
 	public void init(ServletConfig config) {
 		ApplicationContext ctx = WebApplicationContextUtils
 				.getRequiredWebApplicationContext(config.getServletContext());
 		this.serviceCurso = (ICursoService) ctx.getBean("serviceCurso");
 		this.serviceTipoPeriodo = (ITipoPeriodoService) ctx.getBean("serviceTipoPeriodo");
+		this.serviceUsuario = (IUsuarioService) ctx.getBean("serviceUsuario");
 	}
 
 	@RequestMapping(value = "")
@@ -85,12 +92,17 @@ public class CursoController {
 				throw new ValidacionException("Por favor complete el nombre de la materia/ curso");
 			if (dniProfesor.isEmpty())
 				throw new ValidacionException("Por favor complete el dni del profesor de la materia/ curso");
+
+			Usuario objUsuarioProfe = serviceUsuario.getUsuarioByDNI(dniProfesor);
+			if (objUsuarioProfe.getObjTipoUsuario().getIdTipoUsuario() != Constantes.idTipoUsuarioProfe)
+				throw new ValidacionException("El DNI ingresado debe corresponder a un profesor");
+			TipoPeriodo objTipoPeriodo = serviceTipoPeriodo.get(idPeriodo);
 			// 2- guardar la información recuperada en las variables
 			Curso objMateriaCurso = new Curso();
 			objMateriaCurso.setNombreCurso(nombreCurso);
 			objMateriaCurso.setAnio(anio);
-			objMateriaCurso.setIdTipoPeriodo(idPeriodo);
-			objMateriaCurso.setDNIProfesor(dniProfesor);
+			objMateriaCurso.setObjTipoPeriodo(objTipoPeriodo);
+			objMateriaCurso.setObjUsuarioProfe(objUsuarioProfe);
 			// 3- insertar en BBDD y verificar estado de transacción
 			int idGenerado = serviceCurso.insert(objMateriaCurso);
 			if (!(idGenerado > 0))
@@ -112,7 +124,7 @@ public class CursoController {
 		// 1- Recuperar info de la sesión del usuario
 		Usuario objUsuario = ORSesion.getUsuarioBySession(session);
 		ModelAndView MV = new ModelAndView();
-		MV.addObject("listaCursos", objUsuario.getListaCursos());
+		// MV.addObject("listaCursos", objUsuario.getListaCursos());
 		MV.setViewName("MateriasListadoProfe");
 		return MV;
 	}
@@ -131,12 +143,12 @@ public class CursoController {
 				throw new ValidacionException("La sesión no fue iniciada");
 			// 3- pasar las variables al jsp a cargar
 			// TODO getAllByProfe - Usuario.listaCursos
-			List<Curso> listaCursos;
+			List<Curso> listaCursos = new ArrayList<Curso>();
 			serviceCurso.getAll().stream().forEach(item -> {
 				if (item.getObjUsuarioProfe().getDni().equals(objUsuario.getDni()))
 					listaCursos.add(item);
 			});
-			// MV.addObject("objUsuario", objUsuario);
+			MV.addObject("objUsuario", objUsuario);
 			MV.addObject("listaCursos", listaCursos);
 			// 4- informar resultados
 			message = String.format("Se cargaron las materias del usuario");

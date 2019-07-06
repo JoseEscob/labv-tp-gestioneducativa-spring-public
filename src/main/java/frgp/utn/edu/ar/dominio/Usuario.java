@@ -61,9 +61,9 @@ public class Usuario {
 	private boolean habilitado;
 
 	//fetch=FetchType.LAZY
-	List<Curso> listaCursos = new ArrayList<Curso>();
+	/*List<Curso> listaCursos = new ArrayList<Curso>();
 	List<CursosCalificaciones> listaCursosCalificaciones = new ArrayList<CursosCalificaciones>();
-
+*/
 	public Usuario() {
 		super();
 	}
@@ -163,7 +163,7 @@ public class Usuario {
 	public void setHabilitado(boolean habilitado) {
 		this.habilitado = habilitado;
 	}
-
+/*
 	public List<Curso> getListaCursos() {
 		return listaCursos;
 	}
@@ -179,4 +179,5 @@ public class Usuario {
 	public void setListaCursosCalificaciones(List<CursosCalificaciones> listaCursosCalificaciones) {
 		this.listaCursosCalificaciones = listaCursosCalificaciones;
 	}
+	*/
 }

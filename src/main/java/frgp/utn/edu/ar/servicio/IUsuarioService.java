@@ -24,4 +24,7 @@ public interface IUsuarioService {
 	public Usuario getUsuarioByLogin(String correoUsuario, String claveUsuario) throws Exception;
 
 	public void validarCamposUnicos(Usuario objUsuario) throws Exception;
+	
+	public Usuario getUsuarioByDNI(String dni) throws Exception;
+
 }

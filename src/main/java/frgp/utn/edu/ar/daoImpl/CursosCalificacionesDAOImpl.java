@@ -60,7 +60,7 @@ public class CursosCalificacionesDAOImpl implements ICursosCalificacionesDAO {
 	public boolean delete(int id) throws Exception {
 		boolean estado = false;
 		CursosCalificaciones obj = new CursosCalificaciones();
-		obj.setIdCurso(id);
+		obj.setIdCursoCalif(id);
 		this.hibernateTemplate.delete(obj);
 		estado = true;
 		return estado;

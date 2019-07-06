@@ -66,6 +66,17 @@ public class UsuarioDAOImpl implements IUsuarioDAO<Usuario> {
 		return estado;
 	}
 
+	@Override
+	public Usuario getUsuarioByDNI(String dni) throws Exception {
+		Usuario objUsuario = null;
+		String queryHQL = String.format("%s WHERE lower(dni) = lower('%s')", fromTable, dni);
+		objUsuario = (Usuario) this.hibernateTemplate.find(queryHQL).get(0);
+		if (objUsuario == null)
+			throw new Exception("No se encontró al usuario con DNI: " + dni);
+		return objUsuario;
+	}
+
+	@Override
 	public Usuario getUsuarioByLogin(String correoUsuario, String claveUsuario) throws Exception {
 		Usuario objUsuario = null;
 		String queryHQL = String.format("%s WHERE lower(mail) = lower('%s')", fromTable, correoUsuario);

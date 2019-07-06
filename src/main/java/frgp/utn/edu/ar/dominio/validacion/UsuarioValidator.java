@@ -2,21 +2,21 @@ package frgp.utn.edu.ar.dominio.validacion;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Index;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
-import frgp.utn.edu.ar.dominio.TipoUsuario;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import utils.constantes.Constantes;
 import utils.constantes.ConstantesDAO;
 
@@ -31,7 +31,7 @@ public class UsuarioValidator {
 	@NotNull(message = "Por favor seleccione un opción para el tipo de usuario")
 	private int idTipoUsuario;
 
-	@NotNull(message = "Por favor complete el campo: nombre", nullable = false)
+	@NotNull(message = "Por favor complete el campo: nombre")
 	private String nombre;
 
 	@NotNull(message = "Por favor complete el campo: apellido")
@@ -49,14 +49,14 @@ public class UsuarioValidator {
 	@NotNull(message = "")
 	@Past
 	@DateTimeFormat(pattern = Constantes.YYYYMMDD_Guiones) // "dd-mmm-yyyy"
-	private Date fechaNacimiento;
+	private Date fechaNac;
 
 	public Date getFechaNacimiento() {
-		return fechaNacimiento;
+		return fechaNac;
 	}
 
-	public void setFechaNacimiento(Date fechaNacimiento) {
-		this.fechaNacimiento = fechaNacimiento;
+	public void setFechaNac(Date fechaNac) {
+		this.fechaNac = fechaNac;
 	}
 
 	

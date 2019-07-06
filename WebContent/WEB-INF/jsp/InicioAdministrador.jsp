@@ -41,6 +41,11 @@
 				data-toggle="tooltip" title="Dar de alta una materia/curso">&nbsp;Listar Materias/Cursos-PROFE
 			</a>
 		</div>
+		<div>
+			<a href="altaCalificacionLoad.html" class="btn btn-primary"
+				data-toggle="tooltip" title="Calificar">&nbsp;Alta Calificación
+			</a>
+		</div>
 	</div>
 
 </body>

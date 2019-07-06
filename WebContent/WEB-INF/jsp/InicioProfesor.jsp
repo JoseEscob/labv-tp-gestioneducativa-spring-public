@@ -20,11 +20,9 @@
 	<div class="container">
 
 		<div>
-			<c:url value="CalificacionServlet" var="url_altaCalificacionLoad">
-				<c:param name="accionGET" value="altaCalificacionLoad" />
-			</c:url>
-			<a href="${url_altaCalificacionLoad}" class="btn btn-warning"
-				data-toggle="tooltip" title="Nuevo usuario"> Alta Calificacion </a>
+			<a href="altaCalificacionLoad.html" class="btn btn-primary"
+				data-toggle="tooltip" title="Calificar">&nbsp;Alta Calificación
+			</a>
 		</div>
 
 		<div>
