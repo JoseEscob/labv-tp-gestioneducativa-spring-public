@@ -17,4 +17,6 @@ public interface ICursoDAO {
 	public boolean update(Curso obj) throws Exception;
 
 	public boolean delete(int id) throws Exception;
+
+	public ArrayList<Curso> getAllByDNIProfe(String dniProfesor) throws Exception;
 }

@@ -17,4 +17,6 @@ public interface ICursosCalificacionesDAO {
 	public boolean update(CursosCalificaciones obj) throws Exception;
 
 	public boolean delete(int id) throws Exception;
+
+	public ArrayList<CursosCalificaciones> getAllByID(int id) throws Exception;
 }

@@ -17,4 +17,6 @@ public interface ICursosCalificacionesService {
 
 	public boolean delete(int id) throws Exception;
 
+	public ArrayList<CursosCalificaciones> getAllByID(int id) throws Exception;
+
 }

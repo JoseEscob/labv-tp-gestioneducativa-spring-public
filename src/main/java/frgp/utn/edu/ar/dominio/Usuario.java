@@ -1,8 +1,7 @@
 package frgp.utn.edu.ar.dominio;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,7 +18,12 @@ import utils.constantes.ConstantesDAO;
 
 @Entity
 @Table(name = ConstantesDAO.Usuario, indexes = { @Index(columnList = "dni", name = "dniIndex") })
-public class Usuario {
+public class Usuario implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1874606339020233110L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "idUsuario", updatable = false, nullable = false)
@@ -60,12 +64,26 @@ public class Usuario {
 	@Column(name = "habilitado", columnDefinition = "boolean default true")
 	private boolean habilitado;
 
-	//fetch=FetchType.LAZY
-	/*List<Curso> listaCursos = new ArrayList<Curso>();
-	List<CursosCalificaciones> listaCursosCalificaciones = new ArrayList<CursosCalificaciones>();
-*/
 	public Usuario() {
 		super();
+	}
+
+	public Usuario(Integer idUsuario, TipoUsuario objTipoUsuario, String nombre, String apellido, String dni,
+			String calleNombre, String calleAltura, Date fechaNac, String nroTelefono, String mail, String clave,
+			boolean habilitado) {
+		super();
+		this.idUsuario = idUsuario;
+		this.objTipoUsuario = objTipoUsuario;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.dni = dni;
+		this.calleNombre = calleNombre;
+		this.calleAltura = calleAltura;
+		this.fechaNac = fechaNac;
+		this.nroTelefono = nroTelefono;
+		this.mail = mail;
+		this.clave = clave;
+		this.habilitado = habilitado;
 	}
 
 	public Integer getIdUsuario() {
@@ -163,21 +181,5 @@ public class Usuario {
 	public void setHabilitado(boolean habilitado) {
 		this.habilitado = habilitado;
 	}
-/*
-	public List<Curso> getListaCursos() {
-		return listaCursos;
-	}
 
-	public void setListaCursos(List<Curso> listaCursos) {
-		this.listaCursos = listaCursos;
-	}
-
-	public List<CursosCalificaciones> getListaCursosCalificaciones() {
-		return listaCursosCalificaciones;
-	}
-
-	public void setListaCursosCalificaciones(List<CursosCalificaciones> listaCursosCalificaciones) {
-		this.listaCursosCalificaciones = listaCursosCalificaciones;
-	}
-	*/
 }

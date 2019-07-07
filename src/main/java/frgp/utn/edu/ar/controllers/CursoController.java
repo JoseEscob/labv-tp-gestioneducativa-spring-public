@@ -21,6 +21,7 @@ import frgp.utn.edu.ar.dominio.CursosCalificaciones;
 import frgp.utn.edu.ar.dominio.Usuario;
 import frgp.utn.edu.ar.servicio.ICursoService;
 import frgp.utn.edu.ar.servicio.ICursosCalificacionesService;
+import frgp.utn.edu.ar.servicio.ITipoExamenService;
 import frgp.utn.edu.ar.servicio.ITipoPeriodoService;
 import frgp.utn.edu.ar.servicio.IUsuarioService;
 import utils.InfoMessage;
@@ -39,6 +40,8 @@ public class CursoController {
 	private ITipoPeriodoService serviceTipoPeriodo;
 	@Autowired
 	public IUsuarioService serviceUsuario;
+	@Autowired
+	private ICursosCalificacionesService serviceCursosCalificaciones;
 
 	public void init(ServletConfig config) {
 		ApplicationContext ctx = WebApplicationContextUtils
@@ -46,6 +49,7 @@ public class CursoController {
 		this.serviceCurso = (ICursoService) ctx.getBean("serviceCurso");
 		this.serviceTipoPeriodo = (ITipoPeriodoService) ctx.getBean("serviceTipoPeriodo");
 		this.serviceUsuario = (IUsuarioService) ctx.getBean("serviceUsuario");
+		this.serviceCursosCalificaciones = (ICursosCalificacionesService) ctx.getBean("serviceCursosCalificaciones");
 	}
 
 	@RequestMapping(value = "")
@@ -119,13 +123,32 @@ public class CursoController {
 		return MV;
 	}
 
-	@RequestMapping("/listarMateriasCursosProfe.html") // , method = { RequestMethod.GET, RequestMethod.POST }
+	@RequestMapping(value = "/listarMateriasCursosProfe" + Constantes.html, method = RequestMethod.GET)
 	public ModelAndView listarMateriasCursosProfe(HttpSession session) {
-		// 1- Recuperar info de la sesión del usuario
-		Usuario objUsuario = ORSesion.getUsuarioBySession(session);
+		// 0- declaracion de variables locales
+		String message = null;
+		InfoMessage objInfoMessage = new InfoMessage();
 		ModelAndView MV = new ModelAndView();
-		// MV.addObject("listaCursos", objUsuario.getListaCursos());
-		MV.setViewName("MateriasListadoProfe");
+		try {
+			// 1- Recuperar info de la sesión del usuario
+			Usuario objUsuario = ORSesion.getUsuarioBySession(session);
+			// 2- validar la informacion recuperada
+			if (objUsuario == null)
+				throw new ValidacionException("La sesión no fue iniciada");
+			// 3- pasar las variables al jsp a cargar
+			// TODO getAllByProfe - Usuario.listaCursos
+			List<Curso> listaCursos = serviceCurso.getAllByDNIProfe(objUsuario.getDni());
+			MV.addObject("listaCursos", listaCursos);
+			// 4- informar resultados
+			message = String.format("Se cargaron las materias del usuario");
+			objInfoMessage = new InfoMessage(true, message);
+			paginaJsp = "/MateriasListadoProfe"; // TODO preparar vista
+		} catch (Exception e) {
+			objInfoMessage = new InfoMessage(false, e.getMessage());
+			paginaJsp = Constantes.indexJsp;
+		}
+		MV.addObject("objInfoMessage", objInfoMessage);
+		MV.setViewName(paginaJsp);
 		return MV;
 	}
 
@@ -142,13 +165,7 @@ public class CursoController {
 			if (objUsuario == null)
 				throw new ValidacionException("La sesión no fue iniciada");
 			// 3- pasar las variables al jsp a cargar
-			// TODO getAllByProfe - Usuario.listaCursos
-			List<Curso> listaCursos = new ArrayList<Curso>();
-			serviceCurso.getAll().stream().forEach(item -> {
-				if (item.getObjUsuarioProfe().getDni().equals(objUsuario.getDni()))
-					listaCursos.add(item);
-			});
-			MV.addObject("objUsuario", objUsuario);
+			List<Curso> listaCursos = serviceCurso.getAll();
 			MV.addObject("listaCursos", listaCursos);
 			// 4- informar resultados
 			message = String.format("Se cargaron las materias del usuario");
@@ -171,7 +188,8 @@ public class CursoController {
 		ModelAndView MV = new ModelAndView();
 		try {
 			MV.addObject("objCurso", serviceCurso.get(idCursoToViewCalificaciones));
-			MV.addObject("objUsuario", ORSesion.getUsuarioBySession(session));
+			MV.addObject("listaCursosCalificaciones",
+					serviceCursosCalificaciones.getAllByID(idCursoToViewCalificaciones));
 
 			message = String.format("Se cargaron las calificaciones del curso %d ", idCursoToViewCalificaciones);
 			objInfoMessage = new InfoMessage(true, message);

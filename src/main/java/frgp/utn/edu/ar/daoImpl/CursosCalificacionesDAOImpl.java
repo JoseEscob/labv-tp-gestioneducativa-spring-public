@@ -66,4 +66,11 @@ public class CursosCalificacionesDAOImpl implements ICursosCalificacionesDAO {
 		return estado;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayList<CursosCalificaciones> getAllByID(int id) throws Exception {
+		String queryHQL = String.format(" %s WHERE idCurso = %s", fromTable, id);
+		return (ArrayList<CursosCalificaciones>) this.hibernateTemplate.find(queryHQL);
+	}
+
 }

@@ -66,4 +66,11 @@ public class CursoDAOImpl implements ICursoDAO {
 		return estado;
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayList<Curso> getAllByDNIProfe(String dniProfesor) throws Exception {
+		String queryHQL = String.format("%s WHERE dniProfesor = %s", fromTable, dniProfesor);
+		return (ArrayList<Curso>) this.hibernateTemplate.find(queryHQL);
+	}
+
 }

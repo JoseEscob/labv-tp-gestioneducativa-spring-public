@@ -42,7 +42,7 @@
 		<div class="col-md-6 form-group">
 			<span style="color: RED"> </span><label>ID Curso </label> <input
 				type="text" name="idCurso" class="form-control"
-				value="${objCalificacion.idCurso}"
+				value="${objCalificacion.objCurso.idCurso}"
 				onkeypress="return soloNros(event)" maxlength="50" required readonly>
 		</div>
 	</div>
@@ -51,7 +51,7 @@
 			<font color="red">* </font><label>DNI Alumno </label> <input
 				type="text" name="dniAlumno" class="form-control"
 				onkeypress="return soloNros(event)"
-				value="${objCalificacion.getObjUsuarioAlumn().dniAlumno}"
+				value="${objCalificacion.getObjUsuarioAlumn().dni}"
 				maxlength="15" required>
 		</div>
 		<div class="col-md-6 form-group">

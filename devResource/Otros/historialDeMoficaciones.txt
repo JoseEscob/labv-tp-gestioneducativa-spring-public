@@ -1,3 +1,7 @@
+Listar Materias/Calificaciones [2019-07-06 23:38 josee]
+ - Se prepara y verifica la carga de materias por usuario (Admin/logueado))
+ - Se verifica que también se carguen las calificaciones de la materia seleccionada
+
 Alta Usuario v3 [2019-07-05 22:58 josee]
  - Se termina de dar de alta a un usuario (Sin listas de cursos/calificaciones como atributos)
  - Se realizan pruebas de javax.validator y obtención de datos

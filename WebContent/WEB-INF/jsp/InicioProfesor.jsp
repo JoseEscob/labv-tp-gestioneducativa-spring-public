@@ -24,13 +24,10 @@
 				data-toggle="tooltip" title="Calificar">&nbsp;Alta Calificación
 			</a>
 		</div>
-
 		<div>
-			<c:url value="MateriaCursoServlet" var="url_listarCursosProfe">
-				<c:param name="accionGET" value="listarCursosProfe" />
-			</c:url>
-			<a href="${url_listarCursosProfe}" class="btn btn-info"> Listado
-				de Materias/Cursos distados por mí</a>
+			<a href="listarMateriasCursosProfe.html" class="btn btn-info"
+				data-toggle="tooltip" title="Dar de alta una materia/curso">&nbsp;Listar
+				Materias/Cursos-PROFE </a>
 		</div>
 	</div>
 </body>

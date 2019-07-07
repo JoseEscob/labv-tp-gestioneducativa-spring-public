@@ -58,11 +58,11 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach items="${objUsuario.listaCursosCalificaciones}"
+					<c:forEach items="${listaCursosCalificaciones}"
 						var="objCalificacion">
 						<tr>
 							<td>${objCalificacion.idCursoCalif}</td>
-							<td>${objCalificacion.getObjUsuarioAlumn().dniAlumno}</td>
+							<td>${objCalificacion.getObjUsuarioAlumn().dni}</td>
 							<td>${objCalificacion.getObjUsuarioAlumn().nombre}</td>
 							<td>${objCalificacion.getObjTipoExamen().idTipoExamen}</td>
 							<td>${objCalificacion.getObjTipoExamen().descripcion}</td>

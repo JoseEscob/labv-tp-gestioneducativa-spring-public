@@ -43,4 +43,9 @@ public class CursoServiceImpl implements ICursoService {
 		return dataAccess.delete(id);
 	}
 
+	@Override
+	public ArrayList<Curso> getAllByDNIProfe(String dniProfesor) throws Exception {
+		return dataAccess.getAllByDNIProfe(dniProfesor);
+	}
+
 }

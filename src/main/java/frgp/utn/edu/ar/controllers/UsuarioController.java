@@ -82,7 +82,6 @@ public class UsuarioController {
 
 	@RequestMapping(value = "/iniciarSesion" + Constantes.html, method = RequestMethod.POST)
 	public ModelAndView iniciarSesion(String txtLoginUsuario, String txtLoginClave, HttpSession session) {
-		Usuario objUsuario;
 		InfoMessage objInfoMessage = new InfoMessage();
 		ModelAndView MV = new ModelAndView();
 		try {
@@ -90,7 +89,7 @@ public class UsuarioController {
 			String correoUsuario = txtLoginUsuario;
 			String claveUsuario = txtLoginClave;
 			// 2- validar informacion obtenida JSP
-			objUsuario = serviceUsuario.getUsuarioByLogin(correoUsuario, claveUsuario);
+			Usuario objUsuario = serviceUsuario.getUsuarioByLogin(correoUsuario, claveUsuario);
 			// 3- verificar resultado
 			if (objUsuario == null)
 				throw new ValidacionException("El usuario no está registrado");
@@ -239,7 +238,8 @@ public class UsuarioController {
 		MV.setViewName(paginaJsp);
 		return MV;
 	}
-
+//TODO modificarUsuarioByAdmin
+	
 	@RequestMapping(value = "/eliminarUsuario.html", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView eliminarUsuario(int idUsuarioToDelete, HttpSession session) {
 		// 0- declaracion de variables locales

@@ -43,4 +43,9 @@ public class CursosCalificacionesServiceImpl implements ICursosCalificacionesSer
 		return dataAccess.delete(id);
 	}
 
+	@Override
+	public ArrayList<CursosCalificaciones> getAllByID(int id) throws Exception {
+		return dataAccess.getAllByID(id);
+	}
+
 }
