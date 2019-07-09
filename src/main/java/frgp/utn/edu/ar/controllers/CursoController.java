@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -16,12 +17,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import frgp.utn.edu.ar.dominio.Curso;
 import frgp.utn.edu.ar.dominio.Usuario;
+import frgp.utn.edu.ar.dominio.validacion.CalificacionForm;
+import frgp.utn.edu.ar.dominio.validacion.CalificacionValidator;
 import frgp.utn.edu.ar.dominio.TipoPeriodo;
-import frgp.utn.edu.ar.dominio.CursosCalificaciones;
-import frgp.utn.edu.ar.dominio.Usuario;
 import frgp.utn.edu.ar.servicio.ICursoService;
 import frgp.utn.edu.ar.servicio.ICursosCalificacionesService;
-import frgp.utn.edu.ar.servicio.ITipoExamenService;
 import frgp.utn.edu.ar.servicio.ITipoPeriodoService;
 import frgp.utn.edu.ar.servicio.IUsuarioService;
 import utils.InfoMessage;
@@ -194,6 +194,61 @@ public class CursoController {
 			message = String.format("Se cargaron las calificaciones del curso %d ", idCursoToViewCalificaciones);
 			objInfoMessage = new InfoMessage(true, message);
 			paginaJsp = "/CalificacionListadoProfe";
+		} catch (Exception e) {
+			objInfoMessage = new InfoMessage(false, e.getMessage());
+			paginaJsp = Constantes.indexJsp;
+		}
+		MV.addObject("objInfoMessage", objInfoMessage);
+		MV.setViewName(paginaJsp);
+		return MV;
+	}
+
+	@RequestMapping(value = "/altaCalificacionMasivaLoad.html", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView altaCalificacionMasivaLoad(int idCursoToViewCalificaciones, HttpSession session) {
+		// 0- declaracion de variables locales
+		String message = null;
+		InfoMessage objInfoMessage = new InfoMessage();
+		ModelAndView MV = new ModelAndView();
+		try {
+			// 1- cargar listas de objetos de la BBDD
+			CalificacionForm objCalificacionForm = new CalificacionForm();
+			objCalificacionForm
+					.cargarListCalifHibernate(serviceCursosCalificaciones.getAllByID(idCursoToViewCalificaciones));
+			// 2- guardar los valores obtenidos en las variables de la vista
+			MV.addObject("objCurso", serviceCurso.get(idCursoToViewCalificaciones));
+			MV.addObject("objCalificacionForm", objCalificacionForm);
+
+			message = String.format("Se cargaron las calificaciones del curso %d ", idCursoToViewCalificaciones);
+			objInfoMessage = new InfoMessage(true, message);
+			paginaJsp = "/CalificacionAltaMasiva";
+		} catch (Exception e) {
+			objInfoMessage = new InfoMessage(false, e.getMessage());
+			paginaJsp = Constantes.indexJsp;
+		}
+		MV.addObject("objInfoMessage", objInfoMessage);
+		MV.setViewName(paginaJsp);
+		return MV;
+	}
+
+	@RequestMapping(value = "/altaCalificacionMasiva.html", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView altaCalificacionMasiva(
+			@ModelAttribute("objCalificacionForm") CalificacionForm objCalificacionForm) {
+		// 0- declaracion de variables locales
+		String message = null;
+		InfoMessage objInfoMessage = new InfoMessage();
+		ModelAndView MV = new ModelAndView();
+		try {
+
+			for (CalificacionValidator item : objCalificacionForm.getListaCalificaciones()) {
+				Utilitario.validarObjetoClasePorValidator(item);
+				System.out.println(item.toString());
+			}
+
+			/*
+			 * message = String.format("Se cargaron las calificaciones del curso %d ",
+			 * idCursoToViewCalificaciones); objInfoMessage = new InfoMessage(true,
+			 * message); paginaJsp = "/CalificacionAltaMasiva";
+			 */
 		} catch (Exception e) {
 			objInfoMessage = new InfoMessage(false, e.getMessage());
 			paginaJsp = Constantes.indexJsp;

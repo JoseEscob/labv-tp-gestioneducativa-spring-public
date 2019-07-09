@@ -1,3 +1,11 @@
+Alta masiva - Calificaciones [2019-07-09 19:14 josee]
+ - Se implementa ejemplo de https://viralpatel.net/blogs/spring-mvc-multi-row-submit-java-list/
+ - Se realizan pruebas de obtención en Controller
+ 	1: <td><name="objCalificacionForm.listaCalificaciones[${status.index}].idCursoCalif" 	input type="number"	value="${objCalificacion.idCursoCalif}"		readonly/></td>
+ 	2: <td><form:input path="listaCalificaciones[${status.index}].nota" 					type="number" 		value="${objCalificacion.nota}"						/></td>
+ - Se desarrolla casteo de calificaciones hibernate a validator
+ + Queda implementar los controles de la forma mencionada en el punto DOS
+
 Listar Materias/Calificaciones [2019-07-06 23:38 josee]
  - Se prepara y verifica la carga de materias por usuario (Admin/logueado))
  - Se verifica que también se carguen las calificaciones de la materia seleccionada

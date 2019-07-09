@@ -37,6 +37,16 @@
 								</form>
 							</div>
 						</td>
+						<td>
+							<div>
+								<form action="altaCalificacionMasivaLoad.html" method="POST">
+									<input type="hidden" value="${objCurso.idCurso}"
+										name="idCursoToViewCalificaciones" /> 
+									<input type="submit" value="Ver calificaciones"
+										class="btn btn-info" />
+								</form>
+							</div>
+						</td>
 					</tr>
 				</c:forEach>
 			</tbody>

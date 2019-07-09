@@ -46,7 +46,7 @@ public class UsuarioValidator {
 	@Size(min = 1, max = 10, message = "La altura debe tener al menos {min} digito. Valor ingresado [${validatedValue}]")
 	private String calleAltura;
 
-	@NotNull(message = "")
+	@NotNull(message = "Complete la fecha de nacimiento")
 	@Past
 	@DateTimeFormat(pattern = Constantes.YYYYMMDD_Guiones) // "dd-mmm-yyyy"
 	private Date fechaNac;
