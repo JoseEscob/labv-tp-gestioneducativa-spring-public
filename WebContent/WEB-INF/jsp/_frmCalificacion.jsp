@@ -49,7 +49,7 @@
 	<div class="row col-md-12">
 		<div class="col-md-6 form-group">
 			<font color="red">* </font><label>DNI Alumno </label> <input
-				type="text" name="dniAlumno" class="form-control"
+				type="text" name="dni" class="form-control"
 				onkeypress="return soloNros(event)"
 				value="${objCalificacion.getObjUsuarioAlumn().dni}"
 				maxlength="15" required>

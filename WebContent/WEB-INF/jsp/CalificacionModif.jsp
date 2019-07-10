@@ -15,7 +15,7 @@
 			<%@ include file="mostrarInfoMessage.jsp"%>
 		</div>
 	</div>
-	<form method="POST" action="altaCalificacion.html">
+	<form method="POST" action="modificarCalificacionByID.html">
 		<div class="container">
 			<div class="row">
 				<%@ include file="_frmCalificacion.jsp"%>

@@ -185,7 +185,7 @@ public class CursoController {
 		return MV;
 	}
 
-	/// ******************* CALIFICACIONES ******************* ///
+	/// ******************* CALIFICACIONES - INDIVIDUAL ******************* ///
 
 	@RequestMapping(value = "/calificacionListadoProfeLoad.html", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView calificacionListadoProfeLoad(int idCursoToViewCalificaciones, HttpSession session) {
@@ -209,6 +209,76 @@ public class CursoController {
 		MV.setViewName(paginaJsp);
 		return MV;
 	}
+
+	@RequestMapping(value = "/modificarCalificacionByIDLoad.html", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView modificarCalificacionByIDLoad(int idCursoCalifToUpdate, HttpSession session) {
+		// 0- declaracion de variables locales
+		ModelAndView MV = new ModelAndView();
+		String message = null;
+		InfoMessage objInfoMessage = new InfoMessage();
+		try {
+			// 1- Verificar permisos del usuario logueado
+			if (ORSesion.getUsuarioBySession(session).getObjTipoUsuario()
+					.getIdTipoUsuario() == Constantes.idTipoUsuarioAlumn)
+				throw new ValidacionException("El usuario alumno no puede ingresar a esta funcionalidad");
+			// 2- Ejecutar transacción DB y devolver las respuestas
+			CursosCalificaciones objCalificacion = serviceCursosCalificaciones.get(idCursoCalifToUpdate);
+			if (objCalificacion == null)
+				throw new ValidacionException("No se encontró la calificación con ID: " + idCursoCalifToUpdate);
+
+			// 3- Guardar valor obtenido
+			MV.addObject("objCalificacion", objCalificacion);
+			MV.addObject("listaTiposExamen", serviceTipoExamen.getAll());
+
+			// 4- informar resultados
+			paginaJsp = "CalificacionModif";
+			message = String.format("Se cargaron los datos de la calificación con ID: %d", idCursoCalifToUpdate);
+			objInfoMessage = new InfoMessage(true, message);
+		} catch (Exception e) {
+			objInfoMessage = new InfoMessage(false, e.getMessage());
+			paginaJsp = Constantes.indexJsp;
+		}
+		MV.addObject("objInfoMessage", objInfoMessage);
+		MV.setViewName(paginaJsp);
+		return MV;
+	}
+
+	@RequestMapping(value = "/modificarCalificacionByID.html", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView modificarCalificacionByID(HttpSession session, CalificacionValidator objCalificacionValidator) {
+		// 0- declaracion de variables locales
+		ModelAndView MV = new ModelAndView();
+		String message = null;
+		InfoMessage objInfoMessage = new InfoMessage();
+		try {
+			// 1- Verificar permisos del usuario logueado
+			if (ORSesion.getUsuarioBySession(session).getObjTipoUsuario()
+					.getIdTipoUsuario() == Constantes.idTipoUsuarioAlumn)
+				throw new ValidacionException("El usuario alumno no puede ingresar a esta funcionalidad");
+			Utilitario.validarObjetoClasePorValidator(objCalificacionValidator);
+			// 2- Ejecutar transacción DB y devolver las respuestas
+			CursosCalificaciones objCalificacion = obtenerCalificacionPorObjetoValidator(objCalificacionValidator);
+			objCalificacion.setFechaUltModif(Utilitario.getCurrentDateAndHoursJavaUtil());
+			if (!serviceCursosCalificaciones.update(objCalificacion))
+				throw new ValidacionException(
+						"SQL: Ocurrió un error al guardar la calificación " + objCalificacion.getIdCursoCalif());
+			// 3- Guardar valor obtenido
+			MV.addObject("objCalificacion", objCalificacion);
+			MV.addObject("listaTiposExamen", serviceTipoExamen.getAll());
+
+			// 4- informar resultados
+			paginaJsp = "CalificacionModif";
+			message = String.format("Se modificaron los datos de la calificación con ID: %d",
+					objCalificacion.getIdCursoCalif());
+			objInfoMessage = new InfoMessage(true, message);
+		} catch (Exception e) {
+			objInfoMessage = new InfoMessage(false, e.getMessage());
+			paginaJsp = Constantes.indexJsp;
+		}
+		MV.addObject("objInfoMessage", objInfoMessage);
+		MV.setViewName(paginaJsp);
+		return MV;
+	}
+	/// ******************* CALIFICACIONES - MASIVA ******************* ///
 
 	@RequestMapping(value = "/altaCalificacionMasivaLoad.html", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView altaCalificacionMasivaLoad(int idCursoToViewCalificaciones, HttpSession session) {

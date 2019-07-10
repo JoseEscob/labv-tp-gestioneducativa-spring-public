@@ -67,12 +67,13 @@
 							<!--<td>${objCalificacion.getObjTipoExamen().idTipoExamen}</td>-->
 							<td>${objCalificacion.getObjTipoExamen().descripcion}</td>
 							<td>${objCalificacion.nota}</td>
-							<td>${objCalificacion.fechaCalif}</td>
-							<td>${objCalificacion.fechaUltModif}</td>
+							<td><fmt:formatDate value="${objCalificacion.fechaCalif}"
+									pattern="yyyy-MM-dd" /></td>
+							<td><fmt:formatDate value="${objCalificacion.fechaUltModif}"
+									pattern="yyyy-MMM-dd HH:mm" /></td>
 							<td>
 								<div>
-									<form action="modificarCalificacionUsuarioLoad.html"
-										method="POST">
+									<form action="modificarCalificacionByIDLoad.html" method="POST">
 										<input type="hidden" value="${objCalificacion.idCursoCalif}"
 											name="idCursoCalifToUpdate" /> <input type="submit"
 											value="Modificar" class="btn btn-warning" />

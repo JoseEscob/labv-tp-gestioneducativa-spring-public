@@ -73,39 +73,7 @@ public class CalificacionController {
 		return MV;
 	}
 
-	@RequestMapping(value = "/modificarCalificacionUsuarioLoad.html", method = { RequestMethod.GET,
-			RequestMethod.POST })
-	public ModelAndView modificarCalificacionUsuarioLoad(int idCursoCalifToUpdate, HttpSession session) {
-		// 0- declaracion de variables locales
-		ModelAndView MV = new ModelAndView();
-		String message = null;
-		InfoMessage objInfoMessage = new InfoMessage();
-		try {
-			// 1- Verificar permisos del usuario logueado
-			if (ORSesion.getUsuarioBySession(session).getObjTipoUsuario()
-					.getIdTipoUsuario() == Constantes.idTipoUsuarioAlumn)
-				throw new ValidacionException("El usuario alumno no puede ingresar a esta funcionalidad");
-			// 2- Ejecutar transacción DB y devolver las respuestas
-			CursosCalificaciones objCalificacion = serviceCursosCalificaciones.get(idCursoCalifToUpdate);
-			if (objCalificacion == null)
-				throw new ValidacionException("No se encontró la calificación con ID: " + idCursoCalifToUpdate);
 
-			// 3- Guardar valor obtenido
-			MV.addObject("objCalificacion", objCalificacion);
-			MV.addObject("listaTiposExamen", serviceTipoExamen.getAll());
-
-			// 4- informar resultados
-			paginaJsp = "CalificacionModif";
-			message = String.format("Se cargaron los datos de la calificación con ID: %d", idCursoCalifToUpdate);
-			objInfoMessage = new InfoMessage(true, message);
-		} catch (Exception e) {
-			objInfoMessage = new InfoMessage(false, e.getMessage());
-			paginaJsp = Constantes.indexJsp;
-		}
-		MV.addObject("objInfoMessage", objInfoMessage);
-		MV.setViewName(paginaJsp);
-		return MV;
-	}
 
 	
 }
