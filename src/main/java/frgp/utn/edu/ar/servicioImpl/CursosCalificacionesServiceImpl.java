@@ -48,4 +48,9 @@ public class CursosCalificacionesServiceImpl implements ICursosCalificacionesSer
 		return dataAccess.getAllByID(id);
 	}
 
+	@Override
+	public ArrayList<String> getAllDNIByIDCurso(int id) throws Exception {
+		return dataAccess.getAllDNIByIDCurso(id);
+	}
+
 }

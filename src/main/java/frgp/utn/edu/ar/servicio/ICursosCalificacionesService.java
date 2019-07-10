@@ -19,4 +19,6 @@ public interface ICursosCalificacionesService {
 
 	public ArrayList<CursosCalificaciones> getAllByID(int id) throws Exception;
 
+	ArrayList<String> getAllDNIByIDCurso(int id) throws Exception;
+
 }

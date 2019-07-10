@@ -35,6 +35,10 @@ Hibernate
 JAVA 
 	- MostrarFecha en input date:
 		https://stackoverflow.com/questions/4587208/how-to-display-a-date-by-using-cout-tag-in-some-format
+	- Lambda - java distinct
+		https://howtodoinjava.com/java8/java-stream-distinct-examples/
+	- JSTL not equals
+		https://www.javatips.net/blog/jstl-check-equals-not-equals
 
 Table HTML - Add rows
 	https://www.encodedna.com/javascript/dynamically-add-remove-rows-to-html-table-using-javascript-and-save-data.htm

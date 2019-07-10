@@ -45,6 +45,18 @@ public class Utilitario {
 		if (objUsuarioLogueado.getObjTipoUsuario().getIdTipoUsuario() != Constantes.idTipoUsuarioAdmin)
 			throw new ValidacionException(Constantes.usuarioSinPermisos);
 	}
+	
+	/**
+	 * Sirve para utilizar como distinct por un atributo de un lista de objetos
+	 * 
+	 * @param <T>
+	 * @param keyExtractor
+	 * @return
+	 */
+	public static <T> Predicate<T> distinctByKey(Function<? super T, Object> keyExtractor) {
+		Map<Object, Boolean> map = new ConcurrentHashMap<>();
+		return t -> map.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
+	}
 
 	/// *********************** SERVLET *****************************///
 	public static void validarParametrosObligatoriosDeUnJSP(HttpServletRequest request, String[] listaNombreParametros,

@@ -94,5 +94,14 @@
 		</div>
 
 	</div>
+
+<script type="text/javascript">
+	<c:if test="${objUsuario.objTipoUsuario.idTipoUsuario ne Constantes.idTipoUsuarioAdmin}">
+		$("[name=dni]").prop('disabled', true);
+		$("[name=idTipoUsuario]").attr('disabled','disabled');
+		document.getElementsByName('dni')[0].disabled = true;
+		document.getElementsByName('idTipoUsuario')[0].disabled = true;
+	</c:if>
+</script>
 </body>
 </html>

@@ -36,11 +36,12 @@
 					</div>
 				</div>
 				<div class="row col-md-12">
+					<fmt:formatDate var="year" value="${now}" pattern="yyyy" />
 					<div class="col-md-6 form-group">
 						<span style="color: RED">* </span><label>Año </label> <input
 							type="number" name="anio" class="form-control"
 							onkeypress="return soloNros(event)" pattern="^(19|20)\d\d$"
-							min=1900 max=2500 value="2019" maxlength="4" required>
+							min=1900 max=2500 value="${year}" maxlength="4" required>
 					</div>
 					<!-- value="${objMateriaCurso.anio}" -->
 					<div class="col-md-6 form-group">

@@ -35,7 +35,15 @@
 						</small>
 					</h3>
 				</div>
-				<div class="col-md-6 "></div>
+				<div class="col-md-6 form-group">
+					<span style="color: RED">* </span><label>Tipo de Examen </label> <select
+						name="idTipoExamenSeleccionado" class="form-control" required>
+						<c:forEach items="${listaTiposExamen}" var="item">
+							<option value="${item.idTipoExamen}">${ item.descripcion}</option>
+
+						</c:forEach>
+					</select>
+				</div>
 			</div>
 			<hr />
 		</div>
@@ -57,9 +65,28 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${objCalificacionForm.listaCalificaciones}"
-							var="objCalificacion" varStatus="status">
-							<%@ include file="_filaCalificacionMasiva.jsp"%>
+						<c:set var="today" value="<%=new java.util.Date()%>" /> ${today}
+						<c:forEach items="${listaDNIAlumno}" var="dniAlumno" varStatus="status">
+							<tr>
+								<fmt:formatDate value="${now}" 	pattern="yyyy-MM-dd" var="fechaCalif_format"/>
+								<fmt:formatDate value="${now}"	pattern="yyyy-MM-dd" var="fechaUltModif_format"/>
+								<td align="center">${status.count}</td>
+								<td><form:input path="listaCalificaciones[${status.index}].idCursoCalif" 	type="number" 	class="form-control" 						readonly="true"/></td>
+								<td><form:input path="listaCalificaciones[${status.index}].dni" 			type="text" 	class="form-control" value="${dniAlumno}" 	maxlength="15" onkeypress="return soloNros(event)" /></td>
+								<td><form:input path="listaCalificaciones[${status.index}].nota" 			type="number" 	class="form-control" pattern="^\d\d$" 		min="1" max="10"/></td>
+								<td><form:input path="listaCalificaciones[${status.index}].fechaCalif" 		type="date" 	class="form-control" value="${fechaCalif_format}" /></td>
+								<td><form:input path="listaCalificaciones[${status.index}].fechaUltModif" 	type="date" 	class="form-control" value="${fechaUltModif_format}" readonly="true" id="idFechaUltModif"/></td>
+									<form:input path="listaCalificaciones[${status.index}].idCurso" 		type="hidden" 	class="form-control" value="${objCurso.idCurso}"/> 
+									<form:input path="listaCalificaciones[${status.index}].idTipoExamen" 	type="hidden" 	class="form-control" />
+								<!--
+								<td>
+								${objCalificacion.idCurso} *
+								${objCalificacion.idTipoExamen}
+								
+								</td>
+								-->
+							</tr>
+
 						</c:forEach>
 					</tbody>
 				</table>

@@ -1,6 +1,7 @@
 package frgp.utn.edu.ar.controllers;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletConfig;
@@ -141,7 +142,7 @@ public class CursoController {
 			// 4- informar resultados
 			message = String.format("Se cargaron las materias del usuario");
 			objInfoMessage = new InfoMessage(true, message);
-			paginaJsp = "/MateriasListadoProfe"; 
+			paginaJsp = "/MateriasListadoProfe";
 		} catch (Exception e) {
 			objInfoMessage = new InfoMessage(false, e.getMessage());
 			paginaJsp = Constantes.indexJsp;
@@ -169,7 +170,7 @@ public class CursoController {
 			// 4- informar resultados
 			message = String.format("Se cargaron las materias del usuario");
 			objInfoMessage = new InfoMessage(true, message);
-			paginaJsp = "/MateriasListadoProfe"; 
+			paginaJsp = "/MateriasListadoProfe";
 		} catch (Exception e) {
 			objInfoMessage = new InfoMessage(false, e.getMessage());
 			paginaJsp = Constantes.indexJsp;
@@ -272,8 +273,9 @@ public class CursoController {
 		MV.setViewName(paginaJsp);
 		return MV;
 	}
+
 	/// ******************* CALIFICACIONES - MASIVA ******************* ///
-	//TODO: definir carga de alta jsp de calificaciones
+	// TODO: definir carga de alta jsp de calificaciones
 	@RequestMapping(value = "/altaCalificacionMasivaLoad.html", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView altaCalificacionMasivaLoad(int idCursoToViewCalificaciones, HttpSession session) {
 		// 0- declaracion de variables locales
@@ -282,12 +284,24 @@ public class CursoController {
 		ModelAndView MV = new ModelAndView();
 		try {
 			// 1- cargar listas de objetos de la BBDD
-			CalificacionForm objCalificacionForm = new CalificacionForm();
-			objCalificacionForm
-					.cargarListCalifHibernate(serviceCursosCalificaciones.getAllByID(idCursoToViewCalificaciones));
+			ArrayList<CursosCalificaciones> listaCalificaciones = new ArrayList<CursosCalificaciones>();
+			ArrayList<String> listaDNIAlumno = serviceCursosCalificaciones
+					.getAllDNIByIDCurso(idCursoToViewCalificaciones);
+			// TODO obtener los Usuarios por idCurso así se muestra nombre y apellido
+
+//			for(String dniAlumno : listaDNIAlumno) {
+//				CursosCalificaciones objCalificacion = new CursosCalificaciones();
+//				Usuario objUsuario = new Usuario();
+//				objUsuario.setDni(dniAlumno);
+//				objCalificacion.setObjUsuarioAlumn(objUsuario);		
+//				objCalificacion.setFechaCalif(Utilitario.getCurrentDateAndHoursJavaUtil());
+//				listaCalificaciones.add(objCalificacion);
+//			}
+
 			// 2- guardar los valores obtenidos en las variables de la vista
 			MV.addObject("objCurso", serviceCurso.get(idCursoToViewCalificaciones));
-			MV.addObject("objCalificacionForm", objCalificacionForm);
+			MV.addObject("listaTiposExamen", serviceTipoExamen.getAll());
+			MV.addObject("listaDNIAlumno", listaDNIAlumno);
 
 			message = String.format("Se cargaron las calificaciones del curso %d ", idCursoToViewCalificaciones);
 			objInfoMessage = new InfoMessage(true, message);
@@ -303,7 +317,7 @@ public class CursoController {
 
 	@RequestMapping(value = "/altaCalificacionMasiva.html", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView altaCalificacionMasiva(
-			@ModelAttribute("objCalificacionForm") CalificacionForm objCalificacionForm) {
+			@ModelAttribute("objCalificacionForm") CalificacionForm objCalificacionForm, int idTipoExamenSeleccionado) {
 		// 0- declaracion de variables locales
 		String message = null;
 		InfoMessage objInfoMessage = new InfoMessage();
@@ -316,13 +330,17 @@ public class CursoController {
 			// 2- validar campos
 			for (CalificacionValidator item : objCalificacionForm.getListaCalificaciones()) {
 				Utilitario.validarObjetoClasePorValidator(item);
+				item.setIdTipoExamen(idTipoExamenSeleccionado);
 				listaCalificaciones.add(obtenerCalificacionPorObjetoValidator(item));
 				cantModif++;
 				LOG.info(String.format("Se verificó %d de %d de calificaciones", cantModif, cantTotal));
 			}
 			// 3- almacenado de registros validados en BBDD
 			cantModif = 0;
+			Date fechaCreacion = Utilitario.getCurrentDateAndHoursJavaUtil();
 			for (CursosCalificaciones objCalificaciones : listaCalificaciones) {
+				objCalificaciones.setFechaCalif(fechaCreacion);
+				objCalificaciones.setFechaUltModif(fechaCreacion);
 				int idGenerado = serviceCursosCalificaciones.insert(objCalificaciones);
 				if (!(idGenerado > 0))
 					throw new ValidacionException(
@@ -342,7 +360,7 @@ public class CursoController {
 		return MV;
 	}
 
-	//TODO: definir controles deshabilitados en los jsp de modificación
+	// TODO: definir controles deshabilitados en los jsp de modificación
 	@RequestMapping(value = "/modificarCalificacionMasivaLoad.html", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView modificarCalificacionMasivaLoad(int idCursoToViewCalificaciones, HttpSession session) {
 		// 0- declaracion de variables locales
@@ -392,6 +410,7 @@ public class CursoController {
 			// 3- almacenado de registros validados en BBDD
 			cantModif = 0;
 			for (CursosCalificaciones objCalificaciones : listaCalificaciones) {
+				objCalificaciones.setFechaUltModif(Utilitario.getCurrentDateAndHoursJavaUtil());
 				if (!serviceCursosCalificaciones.update(objCalificaciones))
 					throw new ValidacionException(
 							"SQL: Ocurrió un error al guardar la calificación " + objCalificaciones.getIdCursoCalif());
