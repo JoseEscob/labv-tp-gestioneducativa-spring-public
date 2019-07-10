@@ -57,11 +57,6 @@ public class CursoController {
 		this.serviceTipoExamen = (ITipoExamenService) ctx.getBean("serviceTipoExamen");
 	}
 
-	@RequestMapping(value = "")
-	public void cargar() {
-
-	}
-
 	@RequestMapping("/altaMateriaCursoLoad.html")
 	public ModelAndView altaMateriaCursoLoad() {
 		String message = null;
@@ -141,13 +136,12 @@ public class CursoController {
 			if (objUsuario == null)
 				throw new ValidacionException("La sesión no fue iniciada");
 			// 3- pasar las variables al jsp a cargar
-			// TODO getAllByProfe - Usuario.listaCursos
 			List<Curso> listaCursos = serviceCurso.getAllByDNIProfe(objUsuario.getDni());
 			MV.addObject("listaCursos", listaCursos);
 			// 4- informar resultados
 			message = String.format("Se cargaron las materias del usuario");
 			objInfoMessage = new InfoMessage(true, message);
-			paginaJsp = "/MateriasListadoProfe"; // TODO preparar vista
+			paginaJsp = "/MateriasListadoProfe"; 
 		} catch (Exception e) {
 			objInfoMessage = new InfoMessage(false, e.getMessage());
 			paginaJsp = Constantes.indexJsp;
@@ -175,7 +169,7 @@ public class CursoController {
 			// 4- informar resultados
 			message = String.format("Se cargaron las materias del usuario");
 			objInfoMessage = new InfoMessage(true, message);
-			paginaJsp = "/MateriasListadoProfe"; // TODO preparar vista
+			paginaJsp = "/MateriasListadoProfe"; 
 		} catch (Exception e) {
 			objInfoMessage = new InfoMessage(false, e.getMessage());
 			paginaJsp = Constantes.indexJsp;
@@ -279,7 +273,7 @@ public class CursoController {
 		return MV;
 	}
 	/// ******************* CALIFICACIONES - MASIVA ******************* ///
-
+	//TODO: definir carga de alta jsp de calificaciones
 	@RequestMapping(value = "/altaCalificacionMasivaLoad.html", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView altaCalificacionMasivaLoad(int idCursoToViewCalificaciones, HttpSession session) {
 		// 0- declaracion de variables locales
@@ -348,6 +342,7 @@ public class CursoController {
 		return MV;
 	}
 
+	//TODO: definir controles deshabilitados en los jsp de modificación
 	@RequestMapping(value = "/modificarCalificacionMasivaLoad.html", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView modificarCalificacionMasivaLoad(int idCursoToViewCalificaciones, HttpSession session) {
 		// 0- declaracion de variables locales
