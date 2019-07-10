@@ -16,12 +16,14 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 
 import frgp.utn.edu.ar.dominio.Curso;
+import frgp.utn.edu.ar.dominio.CursosCalificaciones;
 import frgp.utn.edu.ar.dominio.Usuario;
 import frgp.utn.edu.ar.dominio.validacion.CalificacionForm;
 import frgp.utn.edu.ar.dominio.validacion.CalificacionValidator;
 import frgp.utn.edu.ar.dominio.TipoPeriodo;
 import frgp.utn.edu.ar.servicio.ICursoService;
 import frgp.utn.edu.ar.servicio.ICursosCalificacionesService;
+import frgp.utn.edu.ar.servicio.ITipoExamenService;
 import frgp.utn.edu.ar.servicio.ITipoPeriodoService;
 import frgp.utn.edu.ar.servicio.IUsuarioService;
 import utils.InfoMessage;
@@ -42,6 +44,8 @@ public class CursoController {
 	public IUsuarioService serviceUsuario;
 	@Autowired
 	private ICursosCalificacionesService serviceCursosCalificaciones;
+	@Autowired
+	private ITipoExamenService serviceTipoExamen;
 
 	public void init(ServletConfig config) {
 		ApplicationContext ctx = WebApplicationContextUtils
@@ -50,6 +54,7 @@ public class CursoController {
 		this.serviceTipoPeriodo = (ITipoPeriodoService) ctx.getBean("serviceTipoPeriodo");
 		this.serviceUsuario = (IUsuarioService) ctx.getBean("serviceUsuario");
 		this.serviceCursosCalificaciones = (ICursosCalificacionesService) ctx.getBean("serviceCursosCalificaciones");
+		this.serviceTipoExamen = (ITipoExamenService) ctx.getBean("serviceTipoExamen");
 	}
 
 	@RequestMapping(value = "")
@@ -180,6 +185,8 @@ public class CursoController {
 		return MV;
 	}
 
+	/// ******************* CALIFICACIONES ******************* ///
+
 	@RequestMapping(value = "/calificacionListadoProfeLoad.html", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView calificacionListadoProfeLoad(int idCursoToViewCalificaciones, HttpSession session) {
 		// 0- declaracion de variables locales
@@ -238,17 +245,57 @@ public class CursoController {
 		InfoMessage objInfoMessage = new InfoMessage();
 		ModelAndView MV = new ModelAndView();
 		try {
-
+			// 1- declaración de variables
+			int cantTotal = objCalificacionForm.getListaCalificaciones().size();
+			int cantModif = 0;
+			ArrayList<CursosCalificaciones> listaCalificaciones = new ArrayList<CursosCalificaciones>();
+			// 2- validar campos
 			for (CalificacionValidator item : objCalificacionForm.getListaCalificaciones()) {
 				Utilitario.validarObjetoClasePorValidator(item);
-				System.out.println(item.toString());
+				listaCalificaciones.add(obtenerCalificacionPorObjetoValidator(item));
+				cantModif++;
+				LOG.info(String.format("Se verificó %d de %d de calificaciones", cantModif, cantTotal));
 			}
+			// 3- almacenado de registros validados en BBDD
+			cantModif = 0;
+			for (CursosCalificaciones objCalificaciones : listaCalificaciones) {
+				int idGenerado = serviceCursosCalificaciones.insert(objCalificaciones);
+				if (!(idGenerado > 0))
+					throw new ValidacionException(
+							"SQL: Ocurrió un error al guardar la calificación " + objCalificaciones.getIdCursoCalif());
 
-			/*
-			 * message = String.format("Se cargaron las calificaciones del curso %d ",
-			 * idCursoToViewCalificaciones); objInfoMessage = new InfoMessage(true,
-			 * message); paginaJsp = "/CalificacionAltaMasiva";
-			 */
+				cantModif++;
+			}
+			// 4- informar los resultados obtenidos
+			message = String.format("Se guardaron las calificaciones. Registros modificados %d de %d ", cantModif,
+					cantTotal);
+			objInfoMessage = new InfoMessage(true, message);
+		} catch (Exception e) {
+			objInfoMessage = new InfoMessage(false, e.getMessage());
+		}
+		MV.addObject("objInfoMessage", objInfoMessage);
+		MV.setViewName(Constantes.indexJsp);
+		return MV;
+	}
+
+	@RequestMapping(value = "/modificarCalificacionMasivaLoad.html", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView modificarCalificacionMasivaLoad(int idCursoToViewCalificaciones, HttpSession session) {
+		// 0- declaracion de variables locales
+		String message = null;
+		InfoMessage objInfoMessage = new InfoMessage();
+		ModelAndView MV = new ModelAndView();
+		try {
+			// 1- cargar listas de objetos de la BBDD
+			CalificacionForm objCalificacionForm = new CalificacionForm();
+			objCalificacionForm
+					.cargarListCalifHibernate(serviceCursosCalificaciones.getAllByID(idCursoToViewCalificaciones));
+			// 2- guardar los valores obtenidos en las variables de la vista
+			MV.addObject("objCurso", serviceCurso.get(idCursoToViewCalificaciones));
+			MV.addObject("objCalificacionForm", objCalificacionForm);
+
+			message = String.format("Se cargaron las calificaciones del curso %d ", idCursoToViewCalificaciones);
+			objInfoMessage = new InfoMessage(true, message);
+			paginaJsp = "/CalificacionModifMasiva";
 		} catch (Exception e) {
 			objInfoMessage = new InfoMessage(false, e.getMessage());
 			paginaJsp = Constantes.indexJsp;
@@ -256,6 +303,60 @@ public class CursoController {
 		MV.addObject("objInfoMessage", objInfoMessage);
 		MV.setViewName(paginaJsp);
 		return MV;
+	}
+
+	@RequestMapping(value = "/modificarCalificacionMasiva.html", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView modificarCalificacionMasiva(
+			@ModelAttribute("objCalificacionForm") CalificacionForm objCalificacionForm) {
+		// 0- declaracion de variables locales
+		String message = null;
+		InfoMessage objInfoMessage = new InfoMessage();
+		ModelAndView MV = new ModelAndView();
+		try {
+			// 1- declaración de variables
+			int cantTotal = objCalificacionForm.getListaCalificaciones().size();
+			int cantModif = 0;
+			ArrayList<CursosCalificaciones> listaCalificaciones = new ArrayList<CursosCalificaciones>();
+			// 2- validar campos
+			for (CalificacionValidator item : objCalificacionForm.getListaCalificaciones()) {
+				Utilitario.validarObjetoClasePorValidator(item);
+				listaCalificaciones.add(obtenerCalificacionPorObjetoValidator(item));
+				cantModif++;
+				LOG.info(String.format("Se verificó %d de %d de calificaciones", cantModif, cantTotal));
+			}
+			// 3- almacenado de registros validados en BBDD
+			cantModif = 0;
+			for (CursosCalificaciones objCalificaciones : listaCalificaciones) {
+				if (!serviceCursosCalificaciones.update(objCalificaciones))
+					throw new ValidacionException(
+							"SQL: Ocurrió un error al guardar la calificación " + objCalificaciones.getIdCursoCalif());
+
+				cantModif++;
+			}
+			// 4- informar los resultados obtenidos
+			message = String.format("Se guardaron las calificaciones. Registros modificados %d de %d ", cantModif,
+					cantTotal);
+			objInfoMessage = new InfoMessage(true, message);
+		} catch (Exception e) {
+			objInfoMessage = new InfoMessage(false, e.getMessage());
+		}
+		MV.addObject("objInfoMessage", objInfoMessage);
+		MV.setViewName(Constantes.indexJsp);
+		return MV;
+	}
+
+	private CursosCalificaciones obtenerCalificacionPorObjetoValidator(CalificacionValidator objCalifValidator)
+			throws Exception {
+		CursosCalificaciones objCalif = new CursosCalificaciones();
+		objCalif.setIdCursoCalif(objCalifValidator.getIdCursoCalif());
+		objCalif.setNota(objCalifValidator.getNota());
+		objCalif.setFechaCalif(objCalifValidator.getFechaCalif());
+		objCalif.setFechaUltModif(objCalifValidator.getFechaUltModif());
+		objCalif.setObjCurso(serviceCurso.get(objCalifValidator.getIdCurso()));
+		objCalif.setObjTipoExamen(serviceTipoExamen.get(objCalifValidator.getIdTipoExamen()));
+		objCalif.setObjUsuarioAlumn(serviceUsuario.getUsuarioByDNI(objCalifValidator.getDni()));
+
+		return objCalif;
 	}
 
 }

@@ -1,7 +1,6 @@
 package frgp.utn.edu.ar.dominio.validacion;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import frgp.utn.edu.ar.dominio.CursosCalificaciones;
 import utils.LOG;

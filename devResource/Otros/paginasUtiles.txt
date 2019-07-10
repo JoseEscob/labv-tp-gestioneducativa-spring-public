@@ -21,7 +21,7 @@ Spring Attributes: VALIDATOR
 	
 Spring - HTTP Status 400 – Bad Request Spring MVC
 	https://stackoverflow.com/questions/45126970/http-status-400-bad-request-spring-mvc?answertab=votes#tab-top
-
+	https://stackoverflow.com/questions/44820798/spring-mvc-how-to-get-the-value-of-forminput-path-from-jsp-to-controller
 
 JAVA Environment
 	https://www.ntu.edu.sg/home/ehchua/programming/howto/JDK_HowTo.html#Set-JAVA_HOME
@@ -31,6 +31,10 @@ Hibernate
 	https://stackoverflow.com/questions/836569/what-do-refresh-and-merge-mean-in-terms-of-databases
 	https://stackoverflow.com/questions/31318788/cascadetype-vs-fetchtype
 	https://thoughts-on-java.org/best-practices-many-one-one-many-associations-mappings/
+
+JAVA 
+	- MostrarFecha en input date:
+		https://stackoverflow.com/questions/4587208/how-to-display-a-date-by-using-cout-tag-in-some-format
 
 Table HTML - Add rows
 	https://www.encodedna.com/javascript/dynamically-add-remove-rows-to-html-table-using-javascript-and-save-data.htm

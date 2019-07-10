@@ -20,13 +20,14 @@ public class CalificacionValidator {
 
 	private Integer idTipoExamen;
 
-	@Size(min = 0, max = 10, message = "La nota debe ser mayor a {min} y menor igual a {max}. Valor ingresado [${validatedValue}]")
+	@NotNull(message = "Complete la nota con un valor de mayor a 0 y menor igual a 10. Valor ingresado [${validatedValue}]")
 	private int nota;
 
 	@NotNull(message = "Complete la fecha de calificacion")
 	@DateTimeFormat(pattern = Constantes.YYYYMMDD_Guiones) // "dd-mmm-yyyy"
 	private Date fechaCalif;
 
+	@DateTimeFormat(pattern = Constantes.YYYYMMDD_Guiones)
 	private Date fechaUltModif;
 
 	public CalificacionValidator() {

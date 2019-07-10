@@ -41,7 +41,7 @@
 		</div>
 
 		<!-- Tabla de calificaciones - Vista Profesor -->
-		<form:form method="POST" action="altaCalificacionMasiva.html"
+		<form:form method="POST" action="modificarCalificacionMasiva.html"
 			commandName="objCalificacionForm">
 			<div class="row col-md-12">
 

@@ -1,3 +1,7 @@
+Modif Masiva - Calificaciones [2019-07-09 23:01 josee]
+ - Se prepara modificación masiva de calificaciones
+ - Utilizar vista de grilla para alumno
+
 Alta masiva - Calificaciones [2019-07-09 19:14 josee]
  - Se implementa ejemplo de https://viralpatel.net/blogs/spring-mvc-multi-row-submit-java-list/
  - Se realizan pruebas de obtención en Controller
