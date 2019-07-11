@@ -21,4 +21,6 @@ public interface IUsuarioDAO<T> {
 	public void validarCamposUnicos(Usuario objUsuario) throws Exception;
 	
 	public Usuario getUsuarioByDNI(String dni) throws Exception;
+	
+	public boolean saveOrUpdate(T obj) throws Exception;
 }

@@ -1,3 +1,8 @@
+Modificación usuarios [2019-07-11 01:25 josee]
+ - Se preparan y prueban las funcionalidades de modificación de datos usuario
+ - Seteando el ID a modificar se soluciona el error:
+	TransientObjectException The given object has a null identifier update
+ - BUGfix: Se agregan restricciones de permisos en la pantalla de inicio
 
 Modif Masiva - Calificaciones [2019-07-09 23:48 josee]
  - Se prepara modificación de calificaciones

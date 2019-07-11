@@ -27,7 +27,7 @@
 				</div>
 
 				<input type="password" class="form-control" required="required"
-					name="txtLoginClave">
+					name="txtLoginClave" value="admin">
 			</div>
 		</div>
 		<div class="modal-footer">

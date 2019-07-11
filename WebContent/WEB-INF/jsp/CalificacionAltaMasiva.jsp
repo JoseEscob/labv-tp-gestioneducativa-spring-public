@@ -16,87 +16,90 @@
 	</div>
 
 	<div class="container">
-		<!-- Tabla de calificaciones - Cabecera Página -->
-		<div class="row">
-			<div class="row col-md-12">
-				<div class="col-md-6">
-					<h3>${objCurso.nombreCurso}</h3>
+		<form:form method="POST" action="altaCalificacionMasiva.html">
+			<!-- Tabla de calificaciones - Cabecera Página -->
+			<div class="row">
+				<div class="row col-md-12">
+					<div class="col-md-6">
+						<h3>${objCurso.nombreCurso}</h3>
+					</div>
+					<div class="col-md-6 pull-right">
+						<h4>Nro de Curso: ${objCurso.idCurso}</h4>
+					</div>
 				</div>
-				<div class="col-md-6 pull-right">
-					<h4>Nro de Curso: ${objCurso.idCurso}</h4>
+				<div class="row col-md-12">
+					<div class="col-md-6">
+						<h3>
+							<small> <br> <label>Año: ${objCurso.anio}</label> <br>
+								<label>Periodo:
+									${objCurso.getObjTipoPeriodo().descripcion}</label>
+							</small>
+						</h3>
+					</div>
+					<div class="col-md-6 form-group">
+						<span style="color: RED">* </span><label>Tipo de Examen </label> <select
+							name="idTipoExamenSeleccionado" class="form-control" required>
+							<c:forEach items="${listaTiposExamen}" var="item">
+								<option value="${item.idTipoExamen}">${ item.descripcion}</option>
+
+							</c:forEach>
+						</select>
+					</div>
 				</div>
+				<hr />
 			</div>
-			<div class="row col-md-12">
-				<div class="col-md-6">
-					<h3>
-						<small> <br> <label>Año: ${objCurso.anio}</label> <br>
-							<label>Periodo:
-								${objCurso.getObjTipoPeriodo().descripcion}</label>
-						</small>
-					</h3>
-				</div>
-				<div class="col-md-6 form-group">
-					<span style="color: RED">* </span><label>Tipo de Examen </label> <select
-						name="idTipoExamenSeleccionado" class="form-control" required>
-						<c:forEach items="${listaTiposExamen}" var="item">
-							<option value="${item.idTipoExamen}">${ item.descripcion}</option>
 
-						</c:forEach>
-					</select>
-				</div>
-			</div>
-			<hr />
-		</div>
+			<!-- Tabla de calificaciones - Vista Profesor -->
+			<div class="row">
+				<div class="row col-md-12">
 
-		<!-- Tabla de calificaciones - Vista Profesor -->
-		<form:form method="POST" action="altaCalificacionMasiva.html"
-			commandName="objCalificacionForm">
-			<div class="row col-md-12">
-
-				<table class="table table-striped table-bordered">
-					<thead>
-						<tr>
-							<th>No.</th>
-							<th>idCursoCalif</th>
-							<th>dniAlumno</th>
-							<th>nota</th>
-							<th>fechaCalif</th>
-							<th>fechaUltModif</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:set var="today" value="<%=new java.util.Date()%>" /> ${today}
-						<c:forEach items="${listaDNIAlumno}" var="dniAlumno" varStatus="status">
+					<table class="table table-striped table-bordered">
+						<thead>
 							<tr>
-								<fmt:formatDate value="${now}" 	pattern="yyyy-MM-dd" var="fechaCalif_format"/>
-								<fmt:formatDate value="${now}"	pattern="yyyy-MM-dd" var="fechaUltModif_format"/>
-								<td align="center">${status.count}</td>
-								<td><form:input path="listaCalificaciones[${status.index}].idCursoCalif" 	type="number" 	class="form-control" 						readonly="true"/></td>
-								<td><form:input path="listaCalificaciones[${status.index}].dni" 			type="text" 	class="form-control" value="${dniAlumno}" 	maxlength="15" onkeypress="return soloNros(event)" /></td>
-								<td><form:input path="listaCalificaciones[${status.index}].nota" 			type="number" 	class="form-control" pattern="^\d\d$" 		min="1" max="10"/></td>
-								<td><form:input path="listaCalificaciones[${status.index}].fechaCalif" 		type="date" 	class="form-control" value="${fechaCalif_format}" /></td>
-								<td><form:input path="listaCalificaciones[${status.index}].fechaUltModif" 	type="date" 	class="form-control" value="${fechaUltModif_format}" readonly="true" id="idFechaUltModif"/></td>
-									<form:input path="listaCalificaciones[${status.index}].idCurso" 		type="hidden" 	class="form-control" value="${objCurso.idCurso}"/> 
-									<form:input path="listaCalificaciones[${status.index}].idTipoExamen" 	type="hidden" 	class="form-control" />
-								<!--
-								<td>
-								${objCalificacion.idCurso} *
-								${objCalificacion.idTipoExamen}
-								
-								</td>
-								-->
+								<th>No.</th>
+								<th>idCursoCalif</th>
+								<th>dniAlumno</th>
+								<th>nota</th>
+								<th>fechaCalif</th>
+								<th>fechaUltModif</th>
 							</tr>
+						</thead>
+						<tbody>
+							<c:set var="today" value="<%=new java.util.Date()%>" />
+							${today}
+							<c:forEach items="${listaDNIAlumno}" var="dniAlumno"
+								varStatus="status">
+								<tr>
+									<fmt:formatDate value="${now}" 	pattern="yyyy-MM-dd" var="fechaCalif_format"/>
+									<fmt:formatDate value="${now}"	pattern="yyyy-MM-dd" var="fechaUltModif_format"/>
+									<td align="center">${status.count}</td>
+									<td><form:input path="objCalificacionForm.listaCalificaciones[${status.index}].idCursoCalif" 	type="number" 	class="form-control" 						readonly="true"/></td>
+									<td><form:input path="objCalificacionForm.listaCalificaciones[${status.index}].dni" 			type="text" 	class="form-control" value="${dniAlumno}" 	maxlength="15" onkeypress="return soloNros(event)" /></td>
+									<td><form:input path="objCalificacionForm.listaCalificaciones[${status.index}].nota" 			type="number" 	class="form-control" pattern="^\d\d$" 		min="1" max="10"/></td>
+									<td><form:input path="objCalificacionForm.listaCalificaciones[${status.index}].fechaCalif" 		type="date" 	class="form-control" value="${fechaCalif_format}" /></td>
+									<td><form:input path="objCalificacionForm.listaCalificaciones[${status.index}].fechaUltModif" 	type="date" 	class="form-control" value="${fechaUltModif_format}" readonly="true" id="idFechaUltModif"/></td>
+										<form:input path="objCalificacionForm.listaCalificaciones[${status.index}].idCurso" 		type="hidden" 	class="form-control" value="${objCurso.idCurso}"/> 
+										<form:input path="objCalificacionForm.listaCalificaciones[${status.index}].idTipoExamen" 	type="hidden" 	class="form-control" />
+									<!--
+									<td>
+									${objCalificacion.idCurso} *
+									${objCalificacion.idTipoExamen}
+									
+									</td>
+									-->
+								</tr>
 
-						</c:forEach>
-					</tbody>
-				</table>
+							</c:forEach>
+						</tbody>
+					</table>
 
-			</div>
-			<div class="row col-md-12">
-				<div class="col-md-6 form-group"></div>
-				<div class="col-md-6 form-group" align="right">
-					<input type="submit" class="btn btn-primary" name="btnGuardar"
-						value="Guardar"></input>
+				</div>
+				<div class="row col-md-12">
+					<div class="col-md-6 form-group"></div>
+					<div class="col-md-6 form-group" align="right">
+						<input type="submit" class="btn btn-primary" name="btnGuardar"
+							value="Guardar"></input>
+					</div>
 				</div>
 			</div>
 		</form:form>

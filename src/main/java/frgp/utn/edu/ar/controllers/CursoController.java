@@ -302,6 +302,11 @@ public class CursoController {
 			MV.addObject("objCurso", serviceCurso.get(idCursoToViewCalificaciones));
 			MV.addObject("listaTiposExamen", serviceTipoExamen.getAll());
 			MV.addObject("listaDNIAlumno", listaDNIAlumno);
+			
+			CalificacionForm objCalificacionForm = new CalificacionForm();
+			objCalificacionForm
+			.cargarListCalifHibernate(serviceCursosCalificaciones.getAllByID(idCursoToViewCalificaciones));
+			MV.addObject("objCalificacionForm", objCalificacionForm);
 
 			message = String.format("Se cargaron las calificaciones del curso %d ", idCursoToViewCalificaciones);
 			objInfoMessage = new InfoMessage(true, message);

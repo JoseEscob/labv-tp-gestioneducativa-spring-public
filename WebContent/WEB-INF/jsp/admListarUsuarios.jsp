@@ -55,19 +55,10 @@
 										name="idUsuarioToDelete" /> <input type="submit"
 										value="Eliminar" class="btn btn-danger" />
 								</form>
-							</div>
+							</div>							
 							<div>
-								<form action="UsuarioServlet" method="POST">
-									<input type="hidden" value="${objUsuario.idUsuario}"
-										name="idUsuarioToUpdate" /> <input type="hidden"
-										name="accionPOST" value="modificarUsuarioLoad"></input> <input
-										type="submit" value="Modificar" class="btn btn-info" />
-								</form>
-							</div>
-							
-							<div>
-								<a href="<c:url value='/select-user-${objUsuario.idUsuario}' />" class="btn btn-primary" >
-									Ver Perfil
+								<a href="<c:url value='/modificar-user-${objUsuario.idUsuario}' />" class="btn btn-primary" >
+									Ver-Modificar
 								</a>
 							</div>
 						</td>

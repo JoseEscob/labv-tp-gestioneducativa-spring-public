@@ -15,7 +15,7 @@
 			<%@ include file="mostrarInfoMessage.jsp"%>
 		</div>
 	</div>
-	<form method="POST" action="UsuarioServlet">
+	<form method="POST" action="modificarUsuarioByAdmin.html" modelAttribute="objUsuario">
 
 		<div class="container">
 			<div class="row">
@@ -26,11 +26,9 @@
 					<div class="col-md-6 form-group"></div>
 					<div class="col-md-6 form-group" align="right">
 						<input type="hidden" value="${objUsuario.idUsuario}"
-							name="idUsuarioToUpdate" /> <input type="hidden"
-							name="accionPOST" value="modificarUsuario"></input> <input
-							type="submit" class="btn btn-primary" name="btnGuardar"
+											name="idUsuarioToViewModif" />
+						<input type="submit" class="btn btn-primary" name="btnGuardar"
 							value="Guardar"></input>
-
 					</div>
 				</div>
 			</div>

@@ -15,7 +15,7 @@
 			<%@ include file="mostrarInfoMessage.jsp"%>
 		</div>
 	</div>
-	<form method="POST" action="UsuarioServlet">
+	<form method="POST" action="modificarUsuarioLogueado.html">
 
 		<div class="container">
 			<div class="row">
@@ -34,8 +34,7 @@
 					<div class="col-md-6 form-group"></div>
 					<div class="col-md-6 form-group" align="right">
 
-						<input type="hidden" name="accionPOST"
-							value="modificarUsuarioLogueado"></input> <input type="submit"
+						<input type="submit"
 							class="btn btn-primary" name="btnGuardar" value="Guardar"></input>
 
 					</div>

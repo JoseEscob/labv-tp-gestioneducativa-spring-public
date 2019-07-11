@@ -15,6 +15,8 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import utils.constantes.Constantes;
@@ -28,12 +30,14 @@ public class UsuarioValidator {
 	@Column(name = "idUsuario", updatable = false, nullable = false)
 	private Integer idUsuario;
 
+	@Range(min = 1)
 	@NotNull(message = "Por favor seleccione un opción para el tipo de usuario")
 	private int idTipoUsuario;
 
 	@NotNull(message = "Por favor complete el campo: nombre")
 	private String nombre;
 
+	@NotEmpty
 	@NotNull(message = "Por favor complete el campo: apellido")
 	private String apellido;
 	
@@ -64,10 +68,10 @@ public class UsuarioValidator {
 
 	
 	@NotNull
-	@Pattern(regexp=".+@.+\\.[a-z]+", message="Por favor ingrese un correo electrónico válido. Valor ingresado [${validatedValue}]")
+	//@Pattern(regexp=".+@.+\\.[a-z]+", message="Por favor ingrese un correo electrónico válido. Valor ingresado [${validatedValue}]")
 	private String mail;
 
-	@Size(min = 5, max = 20, message = "La contraseña ingresada no es válida, debe tener al menos {min} y un máximo de {max} caracteres. Valor ingresado [${validatedValue}]")
+	@Size(min = 2, max = 20, message = "La contraseña ingresada no es válida, debe tener al menos {min} y un máximo de {max} caracteres. Valor ingresado [${validatedValue}]")
 	private String clave;
 
 	private boolean habilitado;

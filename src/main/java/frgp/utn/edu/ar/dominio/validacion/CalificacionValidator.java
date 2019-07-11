@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import utils.constantes.Constantes;
@@ -20,6 +21,7 @@ public class CalificacionValidator {
 
 	private Integer idTipoExamen;
 
+	@Range(min = 1)
 	@NotNull(message = "Complete la nota con un valor de mayor a 0 y menor igual a 10. Valor ingresado [${validatedValue}]")
 	private int nota;
 

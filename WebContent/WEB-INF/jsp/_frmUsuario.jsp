@@ -10,15 +10,13 @@
 		<div class="col-md-6 form-group">
 			<span style="color: RED">* </span><label>Nombre </label> <input
 				type="text" name="nombre" class="form-control"
-<%-- 				value="${objUsuario.nombre}" onkeypress="return soloLetras(event)" --%>
-					value="José" onkeypress="return soloLetras(event)"
+				value="${objUsuario.nombre}" onkeypress="return soloLetras(event)"
 				maxlength="50" required>
 		</div>
 		<div class="col-md-6 form-group">
 			<font color="red">* </font><label>Apellido </label> <input
 				type="text" name="apellido" class="form-control"
-<%-- 				onkeypress="return soloLetras(event)" value="${objUsuario.apellido}" --%>
-				onkeypress="return soloLetras(event)" value="apellido"
+				onkeypress="return soloLetras(event)" value="${objUsuario.apellido}"
 				maxlength="50" required>
 		</div>
 	</div>
@@ -31,8 +29,8 @@
 				<span style="color: RED">* </span><label>DNI </label> <input
 					type="text" name="dni" class="form-control"
 					onkeypress="return soloNros(event)" onpaste="return false"
-<%-- 					value="${objUsuario.dni}" maxlength="10" required> --%>
-					value="4545454" maxlength="10" required>
+					value="${objUsuario.dni}" maxlength="10" required>
+<!-- 					value="4545454" maxlength="10" required> -->
 			</div>
 			<div class="form-group">
 				<span style="color: RED">* </span><label>Fecha de Nacimiento
@@ -52,16 +50,16 @@
 			<div class="form-group">
 				<span style="color: RED">* </span><label>Calle </label> <input
 					type="text" name="calleNombre" class="form-control"
-<%-- 					value="${objUsuario.calleNombre}" --%>
-					value="Av Libertador"
-					onkeypress="return soloLetras(event)" maxlength="50" required>
+					value="${objUsuario.calleNombre}" onkeypress="return soloLetras(event)" maxlength="50" required>
+<!-- 					value="Av Libertador" -->
+					
 			</div>
 			<div class="form-group">
 				<span style="color: RED">* </span><label>Altura </label> <input
 					type="text" name="calleAltura" class="form-control"
 					onkeypress="return soloNros(event)"
-<%-- 					value="${objUsuario.calleAltura}" maxlength="8" required> --%>
-					value="2560" maxlength="8" required>
+					value="${objUsuario.calleAltura}" maxlength="8" required>
+<!-- 					value="2560" maxlength="8" required> -->
 			</div>
 		</div>
 
@@ -82,21 +80,21 @@
 			<div class="form-group">
 				<span style="color: RED">* </span><label>Mail </label> <input
 					type="email" name="mail" class="form-control" maxlength="30"
-<%-- 					value="${objUsuario.mail}" required> --%>
-					value="hola@gmail.com" required>
+					value="${objUsuario.mail}" required>
+<!-- 					value="hola@gmail.com" required> -->
 			</div>
 			<div class="form-group">
 				<span style="color: RED">* </span><label>Clave </label> <input
 					type="text" name="clave" class="form-control" maxlength=20
-<%-- 					value="${objUsuario.clave}" required> --%>
-					value="utn123" required>
+					value="${objUsuario.clave}" required>
+<!-- 					value="utn123" required> -->
 			</div>
 		</div>
 
 	</div>
 
 <script type="text/javascript">
-	<c:if test="${objUsuario.objTipoUsuario.idTipoUsuario ne Constantes.idTipoUsuarioAdmin}">
+	<c:if test="${sessionScope.sessionUser.getObjTipoUsuario().idTipoUsuario ne Constantes.idTipoUsuarioAlumn}">>
 		$("[name=dni]").prop('disabled', true);
 		$("[name=idTipoUsuario]").attr('disabled','disabled');
 		document.getElementsByName('dni')[0].disabled = true;

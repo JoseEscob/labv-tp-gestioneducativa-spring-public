@@ -77,7 +77,7 @@ public class CursosCalificacionesDAOImpl implements ICursosCalificacionesDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<String> getAllDNIByIDCurso(int id) throws Exception {
-		String queryHQL = String.format("SELECT DISTINCT DNI %s WHERE idCurso = %s", fromTable, id);
+		String queryHQL = String.format("SELECT DISTINCT objUsuarioAlumn.dni %s WHERE idCurso = %s", fromTable, id);
 		return (ArrayList<String>) this.hibernateTemplate.find(queryHQL);
 	}
 

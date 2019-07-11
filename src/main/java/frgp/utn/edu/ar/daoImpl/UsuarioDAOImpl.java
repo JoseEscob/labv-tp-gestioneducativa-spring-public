@@ -114,4 +114,13 @@ public class UsuarioDAOImpl implements IUsuarioDAO<Usuario> {
 			}
 		}
 	}
+
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
+	public boolean saveOrUpdate(Usuario obj) throws Exception {
+		boolean estado = false;
+		this.hibernateTemplate.saveOrUpdate(obj);
+		estado = true;
+		return estado;
+	}
 }

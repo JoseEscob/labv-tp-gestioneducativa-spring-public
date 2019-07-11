@@ -20,7 +20,6 @@ import frgp.utn.edu.ar.dominio.validacion.UsuarioValidator;
 import frgp.utn.edu.ar.servicio.ITipoUsuarioService;
 import frgp.utn.edu.ar.servicio.IUsuarioService;
 import utils.InfoMessage;
-import utils.LOG;
 import utils.ORSesion;
 import utils.Utilitario;
 import utils.constantes.Constantes;
@@ -60,24 +59,39 @@ public class UsuarioController {
 	}
 
 	@RequestMapping("/InicioAdministrador.html")
-	public ModelAndView InicioAdministrador() {
-		return new ModelAndView("InicioAdministrador");
+	public ModelAndView InicioAdministrador(HttpSession session) {
+		InfoMessage objInfoMessage = new InfoMessage();
+		ModelAndView MV = new ModelAndView();
+		try {
+			Utilitario.verificarQueElUsuarioLogueadoSeaAdmin(session);
+			paginaJsp = "InicioAdministrador";
+		} catch (Exception e) {
+			objInfoMessage = new InfoMessage(false, e.getMessage());
+			paginaJsp = Constantes.indexJsp;
+			MV.addObject("objInfoMessage", objInfoMessage);
+		}
+		MV.setViewName(paginaJsp);
+		return MV;
 	}
 
 	@RequestMapping("/admListarUsuarios.html")
 	public ModelAndView admListarUsuarios(HttpSession session) {
+		InfoMessage objInfoMessage = new InfoMessage();
+		ModelAndView MV = new ModelAndView();
 		try {
-			ModelAndView MV = new ModelAndView();
 			// 1- verificar que el usuario tenga permisos de administrador
 			Utilitario.verificarQueElUsuarioLogueadoSeaAdmin(session);
 			// 2- devolver resultados obtenidos
 			MV.addObject("listaUsuarios", this.serviceUsuario.getAll());
-			MV.setViewName("admListarUsuarios");
-			return MV;
+			paginaJsp = "admListarUsuarios";
+			objInfoMessage = new InfoMessage(true, "lista cargada");
 		} catch (Exception e) {
-			LOG.warning(e.getMessage());
-			return null;
+			objInfoMessage = new InfoMessage(false, e.getMessage());
+			paginaJsp = Constantes.indexJsp;
 		}
+		MV.addObject("objInfoMessage", objInfoMessage);
+		MV.setViewName(paginaJsp);
+		return MV;
 	}
 
 	@RequestMapping(value = "/iniciarSesion" + Constantes.html, method = RequestMethod.POST)
@@ -117,7 +131,6 @@ public class UsuarioController {
 			}
 		} catch (Exception e) {
 			objInfoMessage = new InfoMessage(false, e.getMessage());
-			LOG.warning(e.getMessage());
 			paginaJsp = Constantes.indexJsp;
 		}
 		MV.addObject("objInfoMessage", objInfoMessage);
@@ -153,7 +166,6 @@ public class UsuarioController {
 			MV.setViewName("UsuarioAlta");
 			return MV;
 		} catch (Exception e) {
-			LOG.warning(e.getMessage());
 			return null;
 		}
 	}
@@ -203,7 +215,6 @@ public class UsuarioController {
 			paginaJsp = Constantes.indexJsp;
 		} catch (Exception e) {
 			objInfoMessage = new InfoMessage(false, e.getMessage());
-			LOG.warning(e.getMessage());
 			paginaJsp = Constantes.indexJsp;
 		}
 		MV.addObject("objInfoMessage", objInfoMessage);
@@ -238,8 +249,7 @@ public class UsuarioController {
 		MV.setViewName(paginaJsp);
 		return MV;
 	}
-//TODO modificarUsuarioByAdmin
-	
+
 	@RequestMapping(value = "/eliminarUsuario.html", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView eliminarUsuario(int idUsuarioToDelete, HttpSession session) {
 		// 0- declaracion de variables locales
@@ -249,6 +259,9 @@ public class UsuarioController {
 		try {
 			// 1- Verificar permisos del usuario logueado
 			Utilitario.verificarQueElUsuarioLogueadoSeaAdmin(session);
+			Usuario objUsuarioLogueado = ORSesion.getUsuarioBySession(session);
+			if (idUsuarioToDelete == objUsuarioLogueado.getIdUsuario())
+				throw new ValidacionException("No se puede eliminar al usuario logueado con ID: " + idUsuarioToDelete);
 			// 2- Ejecutar transacción DB y devolver las respuestas
 			if (!serviceUsuario.delete(idUsuarioToDelete))
 				throw new ValidacionException(
@@ -264,18 +277,20 @@ public class UsuarioController {
 		return MV;
 	}
 
-	@RequestMapping(value = { "/select-user-{idUsuarioToView}" }, method = RequestMethod.GET)
-	public ModelAndView selectUser(@PathVariable int idUsuarioToView) {
+	@RequestMapping(value = { "/modificar-user-{idUsuarioToViewModif}" }, method = RequestMethod.GET)
+	public ModelAndView modificarUsuarioByAdminLoad(@PathVariable int idUsuarioToViewModif, HttpSession session) {
 		// 0- declaracion de variables locales
 		String message = null;
 		InfoMessage objInfoMessage = new InfoMessage();
 		ModelAndView MV = new ModelAndView();
 		try {
+			// 1- verificar que el usuario tenga permisos de administrador
+			Utilitario.verificarQueElUsuarioLogueadoSeaAdmin(session);
 			// 1- Recuperar info del usuario seleccionado
-			Usuario objUsuario = serviceUsuario.get(idUsuarioToView);
+			Usuario objUsuario = serviceUsuario.get(idUsuarioToViewModif);
 			// 2- validar la informacion recuperada
 			if (objUsuario == null)
-				throw new ValidacionException("No se encontró al usuario con ID: " + idUsuarioToView);
+				throw new ValidacionException("No se encontró al usuario con ID: " + idUsuarioToViewModif);
 			// 3- pasar las variables al jsp a cargar
 			MV.addObject("listaTipoUsuarios", serviceTipoUsuario.getAll());
 			MV.addObject("objUsuario", objUsuario);
@@ -283,6 +298,79 @@ public class UsuarioController {
 			message = String.format("Se cargaron los datos del usuario a visualizar");
 			objInfoMessage = new InfoMessage(true, message);
 			paginaJsp = "/UsuarioViewModifAdmin";
+		} catch (Exception e) {
+			objInfoMessage = new InfoMessage(false, e.getMessage());
+			paginaJsp = Constantes.indexJsp;
+		}
+		MV.addObject("objInfoMessage", objInfoMessage);
+		MV.setViewName(paginaJsp);
+		return MV;
+	}
+
+	@RequestMapping(value = "/modificarUsuarioByAdmin" + Constantes.html, method = RequestMethod.POST)
+	public ModelAndView modificarUsuarioByAdmin(@ModelAttribute("objUsuario") UsuarioValidator objUsuarioValidator,
+			int idUsuarioToViewModif, HttpSession session) {
+
+		ModelAndView MV = new ModelAndView();
+		String message = null;
+		InfoMessage objInfoMessage = new InfoMessage();
+		try {
+			// 1- verificar que el usuario tenga permisos de administrador
+			Utilitario.verificarQueElUsuarioLogueadoSeaAdmin(session);
+			// 2- validar campos
+			Utilitario.validarObjetoClasePorValidator(objUsuarioValidator);
+
+			// 3- insertar en BBDD y verificar estado de transacción
+			Usuario objUsuario = obtenerUsuarioDeObjetoValidator(objUsuarioValidator);
+			// serviceUsuario.validarCamposUnicos(objUsuario);
+			// 3.2 Se indica qué id actualizar (siempre)
+			objUsuario.setIdUsuario(idUsuarioToViewModif);
+			if (!serviceUsuario.update(objUsuario))
+				throw new ValidacionException("SQL: Ocurrió un error al guardar las modificaciones del usuario");
+			// 4- informar resultados
+			message = String.format("Se modificaron los datos del usuario exitosamente ");
+			objInfoMessage = new InfoMessage(true, message);
+			paginaJsp = Constantes.indexJsp;
+		} catch (Exception e) {
+			objInfoMessage = new InfoMessage(false, e.getMessage());
+			paginaJsp = Constantes.indexJsp;
+		}
+		MV.addObject("objInfoMessage", objInfoMessage);
+		MV.setViewName(paginaJsp);
+		return MV;
+	}
+
+//	Usuario objUsuarioLogueado = ORSesion.getUsuarioBySession(session);
+//	objUsuarioLogueado.getIdUsuario();
+//	objUsuarioLogueado.getIdTipoUsuario();
+
+	@RequestMapping(value = "/modificarUsuarioLogueado" + Constantes.html, method = RequestMethod.POST)
+	public ModelAndView modificarUsuarioLogueado(@ModelAttribute("objUsuario") UsuarioValidator objUsuarioValidator,
+			HttpSession session) {
+
+		ModelAndView MV = new ModelAndView();
+		String message = null;
+		InfoMessage objInfoMessage = new InfoMessage();
+		try {
+
+			// 2- validar campos
+			Utilitario.validarObjetoClasePorValidator(objUsuarioValidator);
+
+			// 3- insertar en BBDD y verificar estado de transacción
+			Usuario objUsuarioLogueado = ORSesion.getUsuarioBySession(session);
+			objUsuarioValidator.setIdTipoUsuario(objUsuarioLogueado.getObjTipoUsuario().getIdTipoUsuario());
+			Usuario objUsuario = obtenerUsuarioDeObjetoValidator(objUsuarioValidator);
+			// serviceUsuario.validarCamposUnicos(objUsuario);
+			// 3.2 Se indica qué id actualizar (siempre)
+
+			int idUsuarioToViewModif = objUsuarioLogueado.getIdUsuario();
+			objUsuario.setIdUsuario(idUsuarioToViewModif);
+			if (!serviceUsuario.update(objUsuario))
+				throw new ValidacionException("SQL: Ocurrió un error al guardar las modificaciones del usuario");
+			// 4- informar resultados
+			message = String.format("Se modificaron los datos del usuario exitosamente ");
+			objInfoMessage = new InfoMessage(true, message);
+			paginaJsp = Constantes.indexJsp;
 		} catch (Exception e) {
 			objInfoMessage = new InfoMessage(false, e.getMessage());
 			paginaJsp = Constantes.indexJsp;

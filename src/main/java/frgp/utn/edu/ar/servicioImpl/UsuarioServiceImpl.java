@@ -55,4 +55,9 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	public Usuario getUsuarioByDNI(String dni) throws Exception {
 		return dataAccess.getUsuarioByDNI(dni);
 	}
+
+	@Override
+	public boolean saveOrUpdate(Usuario obj) throws Exception {
+		return dataAccess.saveOrUpdate(obj);
+	}
 }
