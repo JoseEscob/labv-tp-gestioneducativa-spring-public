@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import frgp.utn.edu.ar.dao.ICursosCalificacionesDAO;
 import frgp.utn.edu.ar.dominio.CursosCalificaciones;
 import utils.constantes.ConstantesDAO;
+import utils.LOG;
 
 public class CursosCalificacionesDAOImpl implements ICursosCalificacionesDAO {
 	private final String fromTable = String.format("FROM %s", ConstantesDAO.CursosCalificaciones);
@@ -73,6 +74,21 @@ public class CursosCalificacionesDAOImpl implements ICursosCalificacionesDAO {
 		return (ArrayList<CursosCalificaciones>) this.hibernateTemplate.find(queryHQL);
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+	public ArrayList<CursosCalificaciones> getAllByDNIAlumno(String dniAlumno) throws Exception {
+		String queryHQL = String.format(" %s WHERE objUsuarioAlumn.dni = %s", fromTable, dniAlumno);
+		return (ArrayList<CursosCalificaciones>) this.hibernateTemplate.find(queryHQL);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+	public ArrayList<CursosCalificaciones> getAllByDNIAlumnoIDCurso(String dniAlumno, int id) throws Exception {
+		String queryHQL = String.format(" %s WHERE objUsuarioAlumn.dni = %s AND idCurso = %s", fromTable, dniAlumno, id);
+		return (ArrayList<CursosCalificaciones>) this.hibernateTemplate.find(queryHQL);
+	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -81,4 +97,31 @@ public class CursosCalificacionesDAOImpl implements ICursosCalificacionesDAO {
 		return (ArrayList<String>) this.hibernateTemplate.find(queryHQL);
 	}
 
+	@Override
+	public void validarCamposUnicos(CursosCalificaciones obj) throws Exception {
+		LOG.info("Calificaciones: Comienza el proceso de validación de campos únicos");
+		int idCurso = obj.getObjCurso().getIdCurso();
+		// int idTipoPeriodo = obj.getObjCurso().getObjTipoPeriodo().getIdPeriodo();
+		String dniAlumno = obj.getObjUsuarioAlumn().getDni();
+		int idTipoExamen = obj.getObjTipoExamen().getIdTipoExamen();
+
+		for (CursosCalificaciones dbObj : getAllByID(idCurso)) {
+			if ((dbObj.getObjUsuarioAlumn().getDni().equals(dniAlumno))) {
+				if (dbObj.getObjTipoExamen().getIdTipoExamen() == idTipoExamen) {
+					throw new Exception(String.format(
+							"ERROR DB: Combinación de datos repetidos. \nYa existe una calificación para el curso [%d - %s], alumno con DNI [%s] y tipo de examen: [%d - %s]",
+							idCurso, dbObj.getObjCurso().getNombreCurso(), dniAlumno, idTipoExamen,
+							dbObj.getObjTipoExamen().getDescripcion()));
+				}
+			}
+		}
+		LOG.info("Calificaciones: El proceso de validación de campos únicos finalizó con éxito");
+	}
+
+	public boolean existeAlumnoDNIByIDCurso(String dniAlumno, int id) throws Exception {
+		String queryHQL = String.format("SELECT count(*) %s WHERE idCurso = %s AND objUsuarioAlumn.dni = %s", fromTable, id,
+				dniAlumno);
+		boolean existe = (long) this.hibernateTemplate.find(queryHQL).get(0) > 0;
+		return existe;
+	}
 }

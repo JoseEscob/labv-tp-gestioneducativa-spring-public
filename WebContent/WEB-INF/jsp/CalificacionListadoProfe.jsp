@@ -63,12 +63,12 @@
 						<tr>
 							<td>${objCalificacion.idCursoCalif}</td>
 							<td>${objCalificacion.getObjUsuarioAlumn().dni}</td>
-							<td>${objCalificacion.getObjUsuarioAlumn().nombre}</td>
+							<td>${objCalificacion.getObjUsuarioAlumn().nombre}&nbsp;${objCalificacion.getObjUsuarioAlumn().apellido}</td>
 							<!--<td>${objCalificacion.getObjTipoExamen().idTipoExamen}</td>-->
 							<td>${objCalificacion.getObjTipoExamen().descripcion}</td>
 							<td>${objCalificacion.nota}</td>
 							<td><fmt:formatDate value="${objCalificacion.fechaCalif}"
-									pattern="yyyy-MM-dd" /></td>
+									pattern="yyyy-MMM-dd HH:mm" /></td>
 							<td><fmt:formatDate value="${objCalificacion.fechaUltModif}"
 									pattern="yyyy-MMM-dd HH:mm" /></td>
 							<td>

@@ -53,4 +53,24 @@ public class CursosCalificacionesServiceImpl implements ICursosCalificacionesSer
 		return dataAccess.getAllDNIByIDCurso(id);
 	}
 
+	@Override
+	public void validarCamposUnicos(CursosCalificaciones obj) throws Exception {
+		dataAccess.validarCamposUnicos(obj);
+	}
+
+	@Override
+	public ArrayList<CursosCalificaciones> getAllByDNIAlumno(String dniAlumno) throws Exception {
+		return dataAccess.getAllByDNIAlumno(dniAlumno);
+	}
+
+	@Override
+	public ArrayList<CursosCalificaciones> getAllByDNIAlumnoIDCurso(String dniAlumno, int id) throws Exception {
+		return dataAccess.getAllByDNIAlumnoIDCurso(dniAlumno, id);
+	}
+
+	@Override
+	public boolean existeAlumnoDNIByIDCurso(String dniAlumno, int id) throws Exception {
+		return dataAccess.existeAlumnoDNIByIDCurso(dniAlumno, id);
+	}
+
 }

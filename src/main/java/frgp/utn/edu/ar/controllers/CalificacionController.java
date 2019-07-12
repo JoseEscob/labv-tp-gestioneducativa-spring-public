@@ -46,33 +46,6 @@ public class CalificacionController {
 	 * 
 	 * listaTiposExamen objCalificacion
 	 */
-	@RequestMapping(value = "/altaCalificacionLoad.html", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView altaCalificacionLoad(HttpSession session) {
-		// 0- declaracion de variables locales
-		ModelAndView MV = new ModelAndView();
-		String message = null;
-		InfoMessage objInfoMessage = new InfoMessage();
-		try {
-			// 1- Verificar permisos del usuario logueado
-			if (ORSesion.getUsuarioBySession(session).getObjTipoUsuario()
-					.getIdTipoUsuario() == Constantes.idTipoUsuarioAlumn)
-				throw new ValidacionException("El usuario alumno no puede ingresar a esta funcionalidad");
-			// 2- Ejecutar transacción DB y devolver las respuestas
-			MV.addObject("listaTiposExamen", serviceTipoExamen.getAll());
-
-			// 3- informar resultados
-			paginaJsp = "CalificacionAlta";
-			message = String.format("Se cargaron los datos dl formulario calificación ");
-			objInfoMessage = new InfoMessage(true, message);
-		} catch (Exception e) {
-			objInfoMessage = new InfoMessage(false, e.getMessage());
-			paginaJsp = Constantes.indexJsp;
-		}
-		MV.addObject("objInfoMessage", objInfoMessage);
-		MV.setViewName(paginaJsp);
-		return MV;
-	}
-
 
 
 	

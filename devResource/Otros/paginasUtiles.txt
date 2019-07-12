@@ -39,6 +39,8 @@ JAVA
 		https://howtodoinjava.com/java8/java-stream-distinct-examples/
 	- JSTL not equals
 		https://www.javatips.net/blog/jstl-check-equals-not-equals
+	- Add rows dynamically
+		https://codingwithsara.com/how-to-add-remove-and-sort-table-rows-dynamically-using-jquery/
 
 Table HTML - Add rows
 	https://www.encodedna.com/javascript/dynamically-add-remove-rows-to-html-table-using-javascript-and-save-data.htm

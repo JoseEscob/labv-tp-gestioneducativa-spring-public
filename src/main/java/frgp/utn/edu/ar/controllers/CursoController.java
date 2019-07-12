@@ -231,9 +231,9 @@ public class CursoController {
 			objInfoMessage = new InfoMessage(true, message);
 		} catch (Exception e) {
 			objInfoMessage = new InfoMessage(false, e.getMessage());
+			MV.addObject("objInfoMessage", objInfoMessage);
 			paginaJsp = Constantes.indexJsp;
 		}
-		MV.addObject("objInfoMessage", objInfoMessage);
 		MV.setViewName(paginaJsp);
 		return MV;
 	}
@@ -274,6 +274,80 @@ public class CursoController {
 		return MV;
 	}
 
+	@RequestMapping(value = "/altaCalificacionLoad.html", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView altaCalificacionLoad(int idCursoToViewCalificaciones, HttpSession session) {
+		// 0- declaracion de variables locales
+		ModelAndView MV = new ModelAndView();
+		String message = null;
+		InfoMessage objInfoMessage = new InfoMessage();
+		try {
+			// 1- Verificar permisos del usuario logueado
+			if (ORSesion.getUsuarioBySession(session).getObjTipoUsuario()
+					.getIdTipoUsuario() == Constantes.idTipoUsuarioAlumn)
+				throw new ValidacionException("El usuario alumno no puede ingresar a esta funcionalidad");
+			// 2- Ejecutar transacción DB y devolver las respuestas
+
+			CursosCalificaciones objCalificacion = new CursosCalificaciones();
+			objCalificacion.setObjCurso(serviceCurso.get(idCursoToViewCalificaciones));
+			objCalificacion.setFechaCalif(Utilitario.getCurrentDateAndHoursJavaUtil());
+			MV.addObject("objCalificacion", objCalificacion);
+			MV.addObject("listaTiposExamen", serviceTipoExamen.getAll());
+
+			// 3- informar resultados
+			paginaJsp = "CalificacionAlta";
+			message = String.format("Se cargaron los datos del formulario calificación ");
+			objInfoMessage = new InfoMessage(true, message);
+		} catch (Exception e) {
+			objInfoMessage = new InfoMessage(false, e.getMessage());
+			paginaJsp = Constantes.indexJsp;
+		}
+		MV.addObject("objInfoMessage", objInfoMessage);
+		MV.setViewName(paginaJsp);
+		return MV;
+	}
+
+	@RequestMapping(value = "/altaCalificacion.html", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView altaCalificacion(HttpSession session, CalificacionValidator objCalificacionValidator) {
+		// 0- declaracion de variables locales
+		ModelAndView MV = new ModelAndView();
+		String message = null;
+		InfoMessage objInfoMessage = new InfoMessage();
+		try {
+			// 1- Verificar permisos del usuario logueado
+			if (ORSesion.getUsuarioBySession(session).getObjTipoUsuario()
+					.getIdTipoUsuario() == Constantes.idTipoUsuarioAlumn)
+				throw new ValidacionException("El usuario alumno no puede ingresar a esta funcionalidad");
+			Utilitario.validarObjetoClasePorValidator(objCalificacionValidator);
+			// 1.2- Verificar existencia de alumno para esa materia/ curso
+			String dniAlumno = objCalificacionValidator.getDni();
+			int idCurso = objCalificacionValidator.getIdCurso();
+			if (!serviceCursosCalificaciones.existeAlumnoDNIByIDCurso(dniAlumno, idCurso))
+				throw new ValidacionException(String.format(
+						"El alumno con DNI [%s] no está registrado en el curso con ID: %d", dniAlumno, idCurso));
+			// 2- Ejecutar transacción DB y devolver las respuestas
+			CursosCalificaciones objCalificacion = obtenerCalificacionPorObjetoValidator(objCalificacionValidator);
+			Date fechaCreacion = Utilitario.getCurrentDateAndHoursJavaUtil();
+			objCalificacion.setFechaCalif(fechaCreacion);
+			objCalificacion.setFechaUltModif(fechaCreacion);
+			serviceCursosCalificaciones.validarCamposUnicos(objCalificacion);
+			int idGenerado = serviceCursosCalificaciones.insert(objCalificacion);
+			if (!(idGenerado > 0))
+				throw new ValidacionException("SQL: Ocurrió un error al guardar la calificación ");
+			// 3- Guardar valor obtenido
+			// 4- informar resultados
+			message = String.format("Se creó exitosamente la calificación con ID: %d", idGenerado);
+			objInfoMessage = new InfoMessage(true, message);
+		} catch (Exception e) {
+			objInfoMessage = new InfoMessage(false, e.getMessage());
+		}
+		MV.addObject("objInfoMessage", objInfoMessage);
+		MV.setViewName(Constantes.indexJsp);
+		return MV;
+	}
+	// TODO: Calificaciones: mostrar nombre y apellido de los alumnos
+	// TODO: Calificaciones: preparar método de borrado de calificaciones
+	// TODO: Materias/Cursos: preparar método de borrado/ modificación 
+	// TODO: Materias/Cursos: inscripción un alumno y masiva
 	/// ******************* CALIFICACIONES - MASIVA ******************* ///
 	// TODO: definir carga de alta jsp de calificaciones
 	@RequestMapping(value = "/altaCalificacionMasivaLoad.html", method = { RequestMethod.GET, RequestMethod.POST })
@@ -302,10 +376,10 @@ public class CursoController {
 			MV.addObject("objCurso", serviceCurso.get(idCursoToViewCalificaciones));
 			MV.addObject("listaTiposExamen", serviceTipoExamen.getAll());
 			MV.addObject("listaDNIAlumno", listaDNIAlumno);
-			
+
 			CalificacionForm objCalificacionForm = new CalificacionForm();
 			objCalificacionForm
-			.cargarListCalifHibernate(serviceCursosCalificaciones.getAllByID(idCursoToViewCalificaciones));
+					.cargarListCalifHibernate(serviceCursosCalificaciones.getAllByID(idCursoToViewCalificaciones));
 			MV.addObject("objCalificacionForm", objCalificacionForm);
 
 			message = String.format("Se cargaron las calificaciones del curso %d ", idCursoToViewCalificaciones);

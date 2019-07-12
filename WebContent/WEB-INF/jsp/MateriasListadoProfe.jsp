@@ -29,6 +29,15 @@
 						<%@ include file="_filaMateriasBody.jsp"%>
 						<td>
 							<div>
+								<form action="altaCalificacionLoad.html" method="POST">
+									<input type="hidden" value="${objCurso.idCurso}"
+										name="idCursoToViewCalificaciones" /> <input type="submit"
+										value="Calificar" class="btn btn-danger" />
+								</form>
+							</div>
+						</td>
+						<td>
+							<div>
 								<form action="calificacionListadoProfeLoad.html" method="POST">
 									<input type="hidden" value="${objCurso.idCurso}"
 										name="idCursoToViewCalificaciones" /> <input type="submit"
@@ -48,14 +57,14 @@
 						</td>
 						<td>
 							<div>
-								<form action="altaCalificacionMasivaLoad.html"
-									method="POST">
+								<form action="altaCalificacionMasivaLoad.html" method="POST">
 									<input type="hidden" value="${objCurso.idCurso}"
 										name="idCursoToViewCalificaciones" /> <input type="submit"
-										value="Calificar" class="btn btn-danger" />
+										value="Calificar Masivamente" class="btn btn-danger" />
 								</form>
 							</div>
 						</td>
+
 					</tr>
 				</c:forEach>
 			</tbody>

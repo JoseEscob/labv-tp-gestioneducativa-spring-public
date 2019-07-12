@@ -1,3 +1,11 @@
+Alta Calificaciones [2019-07-12 01:15 josee]
+ - Se prepara alta de calificaciones (individuales)
+ 	DAO/Service: Se agregan métodos para validar
+ 	Controller: Se desarrolla lógica (CursoCotroller)
+ - readonly y disable no funcionan cuando se hace submit:
+ 	El primero lo pone en null y el último no envía los datos
+
+
 Modificación usuarios [2019-07-11 01:25 josee]
  - Se preparan y prueban las funcionalidades de modificación de datos usuario
  - Seteando el ID a modificar se soluciona el error:

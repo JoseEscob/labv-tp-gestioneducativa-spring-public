@@ -3,12 +3,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Calificación - Alta</title>
+<title>Calificación - Modificación</title>
 </head>
 <body>
 	<%@ include file="Banner.jsp"%>
 	<div class="container">
-		<h2>Formulario de alta - Calificación</h2>
+		<h2>Formulario de Modificación - Calificación</h2>
 		<hr />
 		<!--Horizantal line divider  <div class="page-header"/> -->
 		<div class="row">
@@ -32,7 +32,8 @@
 		</div>
 	</form>
 	<script type="text/javascript">
-		datePickerId.max = new Date().toISOString().split("T")[0];
+		//$("[name=fechaCalif]").attr('disabled', 'disabled');
+		//document.getElementsByName('fechaCalif')[0].disabled = true;
 	</script>
 </body>
 </html>
