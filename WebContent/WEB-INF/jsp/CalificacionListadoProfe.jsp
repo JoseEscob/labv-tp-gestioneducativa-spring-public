@@ -79,6 +79,13 @@
 											value="Modificar" class="btn btn-warning" />
 									</form>
 								</div>
+								<div>
+									<form action="eliminarCalificacion.html" method="POST">
+										<input type="hidden" value="${objCalificacion.idCursoCalif}"
+											name="idCursoCalifToDelete" /> <input type="submit"
+											value="Eliminar" class="btn btn-danger" />
+									</form>
+								</div>
 							</td>
 						</tr>
 

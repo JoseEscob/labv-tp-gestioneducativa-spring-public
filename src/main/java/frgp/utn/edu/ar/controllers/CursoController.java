@@ -78,7 +78,6 @@ public class CursoController {
 			paginaJsp = "MateriaAlta";
 		} catch (Exception e) {
 			objInfoMessage = new InfoMessage(false, e.getMessage());
-			LOG.warning(e.getMessage());
 			paginaJsp = Constantes.indexJsp;
 		}
 		MV.addObject("objInfoMessage", objInfoMessage);
@@ -117,7 +116,6 @@ public class CursoController {
 			objInfoMessage = new InfoMessage(true, message);
 		} catch (Exception e) {
 			objInfoMessage = new InfoMessage(false, e.getMessage());
-			LOG.warning(e.getMessage());
 		}
 		MV.addObject("objInfoMessage", objInfoMessage);
 		MV.setViewName(Constantes.indexJsp);
@@ -180,6 +178,70 @@ public class CursoController {
 		return MV;
 	}
 
+	@RequestMapping(value = "/modificarMateriaCursoLoad.html", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView modificarMateriaCursoLoad(int idCurso, HttpSession session) {
+		String message = null;
+		InfoMessage objInfoMessage = new InfoMessage();
+		ModelAndView MV = new ModelAndView();
+		try {
+			// 1- verificar que el usuario tenga permisos de administrador
+			Utilitario.verificarQueElUsuarioLogueadoSeaAdmin(session);
+			// 2- recuperar valores de la BBDD y devolver resultados obtenidos
+			MV.addObject("listaPeriodos", serviceTipoPeriodo.getAll());
+			Curso objMateriaCurso = serviceCurso.get(idCurso);
+			// 3- pasar las variables al jsp a cargar
+			MV.addObject("objMateriaCurso", objMateriaCurso);
+			// 4- informar resultados
+			message = String.format("Se cargaron los datos del formulario");
+			objInfoMessage = new InfoMessage(true, message);
+			paginaJsp = "MateriaModif";
+		} catch (Exception e) {
+			objInfoMessage = new InfoMessage(false, e.getMessage());
+			paginaJsp = Constantes.indexJsp;
+		}
+		MV.addObject("objInfoMessage", objInfoMessage);
+		MV.setViewName(paginaJsp);
+		return MV;
+	}
+
+	@RequestMapping(value = "/modificarMateriaCurso.html", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView modificarMateriaCurso(int idCurso, HttpSession session, String nombreCurso, int anio,
+			int idPeriodo, String dniProfesor) {
+		String message = null;
+		InfoMessage objInfoMessage = new InfoMessage();
+		ModelAndView MV = new ModelAndView();
+		try {
+			// 1- verificar que el usuario tenga permisos de administrador
+			Utilitario.verificarQueElUsuarioLogueadoSeaAdmin(session);
+			// 2- validar datos
+			if (nombreCurso.isEmpty())
+				throw new ValidacionException("Por favor complete el nombre de la materia/ curso");
+			if (dniProfesor.isEmpty())
+				throw new ValidacionException("Por favor complete el dni del profesor de la materia/ curso");
+
+			Usuario objUsuarioProfe = serviceUsuario.getUsuarioByDNI(dniProfesor);
+			if (objUsuarioProfe.getObjTipoUsuario().getIdTipoUsuario() != Constantes.idTipoUsuarioProfe)
+				throw new ValidacionException("El DNI ingresado debe corresponder a un profesor");
+			TipoPeriodo objTipoPeriodo = serviceTipoPeriodo.get(idPeriodo);
+			// 2- guardar la información recuperada en las variables
+			Curso objMateriaCurso = serviceCurso.get(idCurso);
+			objMateriaCurso.setNombreCurso(nombreCurso);
+			objMateriaCurso.setAnio(anio);
+			objMateriaCurso.setObjTipoPeriodo(objTipoPeriodo);
+			objMateriaCurso.setObjUsuarioProfe(objUsuarioProfe);
+			// 3- realizar transacción BBDD
+			if (!serviceCurso.update(objMateriaCurso))
+				throw new ValidacionException("SQL: Ocurrió un error al modificar el curso con ID " + idCurso);
+			// 4- informar resultados
+			message = String.format("Se modificaron los datos del curso con ID: %d", idCurso);
+			objInfoMessage = new InfoMessage(true, message);
+		} catch (Exception e) {
+			objInfoMessage = new InfoMessage(false, e.getMessage());
+		}
+		MV.addObject("objInfoMessage", objInfoMessage);
+		MV.setViewName(Constantes.indexJsp);
+		return MV;
+	}
 	/// ******************* CALIFICACIONES - INDIVIDUAL ******************* ///
 
 	@RequestMapping(value = "/calificacionListadoProfeLoad.html", method = { RequestMethod.GET, RequestMethod.POST })
@@ -344,9 +406,9 @@ public class CursoController {
 		MV.setViewName(Constantes.indexJsp);
 		return MV;
 	}
+
 	// TODO: Calificaciones: mostrar nombre y apellido de los alumnos
-	// TODO: Calificaciones: preparar método de borrado de calificaciones
-	// TODO: Materias/Cursos: preparar método de borrado/ modificación 
+	// TODO: Materias/Cursos: preparar método de borrado/ modificación
 	// TODO: Materias/Cursos: inscripción un alumno y masiva
 	/// ******************* CALIFICACIONES - MASIVA ******************* ///
 	// TODO: definir carga de alta jsp de calificaciones
@@ -522,4 +584,29 @@ public class CursoController {
 		return objCalif;
 	}
 
+	@RequestMapping(value = "/eliminarCalificacion.html", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView eliminarCalificacion(int idCursoCalifToDelete, HttpSession session) {
+		// 0- declaracion de variables locales
+		ModelAndView MV = new ModelAndView();
+		String message = null;
+		InfoMessage objInfoMessage = new InfoMessage();
+		try {
+			// 1- Verificar permisos del usuario logueado
+			if (ORSesion.getUsuarioBySession(session).getObjTipoUsuario()
+					.getIdTipoUsuario() == Constantes.idTipoUsuarioAlumn)
+				throw new ValidacionException("El usuario alumno no puede ingresar a esta funcionalidad");
+			// 2- Ejecutar transacción DB y devolver las respuestas
+			if (!serviceCursosCalificaciones.delete(idCursoCalifToDelete))
+				throw new ValidacionException(
+						"Ocurrió un error al intentar eliminar la Calificación con ID: " + idCursoCalifToDelete);
+			// 3- informar resultados
+			message = String.format("Se eliminó la Calificación con ID: %d", idCursoCalifToDelete);
+			objInfoMessage = new InfoMessage(true, message);
+		} catch (Exception e) {
+			objInfoMessage = new InfoMessage(false, e.getMessage());
+		}
+		MV.addObject("objInfoMessage", objInfoMessage);
+		MV.setViewName(Constantes.indexJsp);
+		return MV;
+	}
 }

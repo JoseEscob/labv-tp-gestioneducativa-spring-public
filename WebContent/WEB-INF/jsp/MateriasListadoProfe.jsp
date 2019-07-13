@@ -29,6 +29,15 @@
 						<%@ include file="_filaMateriasBody.jsp"%>
 						<td>
 							<div>
+								<form action="modificarMateriaCursoLoad.html" method="POST">
+									<input type="hidden" value="${objCurso.idCurso}"
+										name="idCurso" /> <input type="submit"
+										value="Modificar Curso" class="btn btn-primary" />
+								</form>
+							</div>
+						</td>
+						<td>
+							<div>
 								<form action="altaCalificacionLoad.html" method="POST">
 									<input type="hidden" value="${objCurso.idCurso}"
 										name="idCursoToViewCalificaciones" /> <input type="submit"
