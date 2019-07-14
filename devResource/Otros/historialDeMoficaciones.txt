@@ -1,3 +1,6 @@
+Filtrado de Usuarios [2019-07-14 00:41 josee]
+ - Se prepara funcionalidad de búsqueda
+
 Materias/Cursos: Borrado/ modificación[2019-07-13 21:24 josee]
 - Materias/Cursos: Se prepara método de borrado/ modificación
 - Materias/Cursos: Inscripción un alumno

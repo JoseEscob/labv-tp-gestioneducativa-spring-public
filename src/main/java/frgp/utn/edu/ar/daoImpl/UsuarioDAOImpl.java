@@ -123,4 +123,13 @@ public class UsuarioDAOImpl implements IUsuarioDAO<Usuario> {
 		estado = true;
 		return estado;
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+	public ArrayList<Usuario> getAllByDNIBuscado(String dni) throws Exception {
+		String likeParam = "'" + dni + "%')";
+		String queryHQL = String.format("%s WHERE lower(dni) LIKE lower(%s", fromTable, likeParam);
+		return (ArrayList<Usuario>) this.hibernateTemplate.find(queryHQL);
+	}
 }

@@ -10,13 +10,14 @@ public class ConstantesJSP {
 	// Global
 	public final static String jspValidar_js = "web-design/JSValidar.js";
 	// Vendor - Pantalla de Login
+	public final static String jspLogin_fontAwesome_css = "web-design/login/css/font-awesome.min.css";
+	// Vendor - Pantalla de Login
 	public final static String jspLogin_bootstrapMin_css = "web-design/login/vendor/bootstrap/css/bootstrap.min.css";
 	//public final static String jspLogin_fontAwe_all_min_css = "web-design/login/vendor/fontawesome-free/css/all.min.css";
 	public final static String jspLogin_magnific_popup = "web-design/login/vendor/magnific-popup/magnific-popup.css";
 	public final static String jspLogin_freelancer_min_css = "web-design/login/css/freelancer.min.css";
 	public final static String jspLogin_Italic_css = "web-design/login/css/Italiccss.css";
 	public final static String jspLogin_Monserrat_css = "web-design/login/css/Monserratcss.css";
-	public final static String jspLogin_fontAwe_min_css = "web-design/login/vendor/fontawesome-free/css/fontawesome.min.css";
 	public final static String jspLogin_img_profilepng = "web-design/login/img/profile.png";
 	public final static String jspLogin_select2_js = "web-design/login/vendor/select2/select2.min.js";
 	public final static String jspLogin_jquery_js = "web-design/login/vendor/jquery/jquery.min.js";

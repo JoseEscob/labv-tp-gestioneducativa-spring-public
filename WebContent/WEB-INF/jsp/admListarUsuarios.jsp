@@ -19,7 +19,30 @@
 		</div>
 	</div>
 	<div class="container">
+		<div class="row">
+			<h4>Filtros</h4>
 
+			<div class="row col-md-12">
+				<div class="col-md-6 form-group"></div>
+				<div class="col-md-3 form-group"></div>
+				<div class="col-md-3 form-group pull-right">
+					<form method="POST" action="listaUsuariosByDNI.html">
+
+						<div class="input-group">
+							<input class="form-control border" type="search"
+								name="txtDNIBuscado" placeholder="Nro de DNI (solo números)" />
+							<span
+								class="input-group-append" onkeypress="return soloNros(event)">
+								<button class="btn btn-outline-secondary border" type="submit">
+									<i class="fa fa-search"></i>
+								</button>
+							</span>
+						</div>
+					</form>
+
+				</div>
+			</div>
+		</div>
 		<table id="grdUsuarios" class="table table-striped table-bordered">
 			<thead>
 				<tr>
@@ -55,11 +78,11 @@
 										name="idUsuarioToDelete" /> <input type="submit"
 										value="Eliminar" class="btn btn-danger" />
 								</form>
-							</div>							
+							</div>
 							<div>
-								<a href="<c:url value='/modificar-user-${objUsuario.idUsuario}' />" class="btn btn-primary" >
-									Ver-Modificar
-								</a>
+								<a
+									href="<c:url value='/modificar-user-${objUsuario.idUsuario}' />"
+									class="btn btn-primary"> Ver-Modificar </a>
 							</div>
 						</td>
 					</tr>

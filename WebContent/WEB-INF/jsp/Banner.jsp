@@ -7,7 +7,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page import="utils.constantes.ConstantesJSP"%>
 <%@ page import="utils.constantes.Constantes"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <html>
 <head>
 <!-- IMPORTS DE BANNER -->
@@ -18,6 +18,9 @@
 <!-- Bootstrap core CSS -->
 <link href="<%=ConstantesJSP.jspLogin_bootstrapMin_css%>"
 	rel="stylesheet">
+<link href="<%=ConstantesJSP.jspLogin_fontAwesome_css%>"
+	rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"/>
 
 <!-- Custom fonts for this template -->
 
@@ -47,8 +50,7 @@
 			<button
 				class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded"
 				type="button" data-toggle="collapse" data-target="#navbarResponsive"
-				aria-controls="navbarResponsive" aria-expanded="true">
-				Menu</button>
+				aria-controls="navbarResponsive" aria-expanded="true">Menu</button>
 			<div class="collapse navbar-collapse" id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
 					<c:choose>

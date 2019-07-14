@@ -29,4 +29,6 @@ public interface IUsuarioService {
 	
 	public boolean saveOrUpdate(Usuario obj) throws Exception;
 
+	ArrayList<Usuario> getAllByDNIBuscado(String dni) throws Exception;
+
 }

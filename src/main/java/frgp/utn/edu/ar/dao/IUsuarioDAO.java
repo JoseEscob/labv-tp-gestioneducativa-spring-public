@@ -23,4 +23,6 @@ public interface IUsuarioDAO<T> {
 	public Usuario getUsuarioByDNI(String dni) throws Exception;
 	
 	public boolean saveOrUpdate(T obj) throws Exception;
+
+	ArrayList<Usuario> getAllByDNIBuscado(String dni) throws Exception;
 }

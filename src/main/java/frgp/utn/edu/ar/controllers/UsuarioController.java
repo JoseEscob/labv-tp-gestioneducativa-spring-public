@@ -1,5 +1,8 @@
 package frgp.utn.edu.ar.controllers;
 
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpSession;
 
@@ -82,9 +85,11 @@ public class UsuarioController {
 			// 1- verificar que el usuario tenga permisos de administrador
 			Utilitario.verificarQueElUsuarioLogueadoSeaAdmin(session);
 			// 2- devolver resultados obtenidos
-			MV.addObject("listaUsuarios", this.serviceUsuario.getAll());
+			ArrayList<Usuario> listaUsuarios = this.serviceUsuario.getAll();
+			listaUsuarios.sort((o1, o2) -> o2.getIdUsuario().compareTo(o1.getIdUsuario()));
+			MV.addObject("listaUsuarios", listaUsuarios);
 			paginaJsp = "admListarUsuarios";
-			objInfoMessage = new InfoMessage(true, "lista cargada");
+			objInfoMessage = new InfoMessage(true, "Lista de usuarios cargada exitósamente");
 		} catch (Exception e) {
 			objInfoMessage = new InfoMessage(false, e.getMessage());
 			paginaJsp = Constantes.indexJsp;
@@ -340,10 +345,6 @@ public class UsuarioController {
 		return MV;
 	}
 
-//	Usuario objUsuarioLogueado = ORSesion.getUsuarioBySession(session);
-//	objUsuarioLogueado.getIdUsuario();
-//	objUsuarioLogueado.getIdTipoUsuario();
-
 	@RequestMapping(value = "/modificarUsuarioLogueado" + Constantes.html, method = RequestMethod.POST)
 	public ModelAndView modificarUsuarioLogueado(@ModelAttribute("objUsuario") UsuarioValidator objUsuarioValidator,
 			HttpSession session) {
@@ -371,6 +372,57 @@ public class UsuarioController {
 			message = String.format("Se modificaron los datos del usuario exitosamente ");
 			objInfoMessage = new InfoMessage(true, message);
 			paginaJsp = Constantes.indexJsp;
+		} catch (Exception e) {
+			objInfoMessage = new InfoMessage(false, e.getMessage());
+			paginaJsp = Constantes.indexJsp;
+		}
+		MV.addObject("objInfoMessage", objInfoMessage);
+		MV.setViewName(paginaJsp);
+		return MV;
+	}
+
+	// listado de filtros
+	@RequestMapping(value = "/listaUsuariosByDNI.html", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView listaUsuariosByDNI(String txtDNIBuscado, HttpSession session) {
+		InfoMessage objInfoMessage = new InfoMessage();
+		ModelAndView MV = new ModelAndView();
+		try {
+			// 1- verificar que el usuario tenga permisos de administrador
+			Utilitario.verificarQueElUsuarioLogueadoSeaAdmin(session);
+			// 2- devolver resultados obtenidos
+			ArrayList<Usuario> listaUsuarios = serviceUsuario.getAllByDNIBuscado(txtDNIBuscado);
+			if (listaUsuarios.isEmpty())
+				throw new ValidacionException("No se encontraron usuarios que comiencen con DNI: " + txtDNIBuscado);
+			listaUsuarios.sort((o1, o2) -> o2.getIdUsuario().compareTo(o1.getIdUsuario()));
+			MV.addObject("listaUsuarios", listaUsuarios);
+			paginaJsp = "admListarUsuarios";
+			objInfoMessage = new InfoMessage(true, "Búsqueda de usuarios que comienzan con DNI: " + txtDNIBuscado);
+		} catch (Exception e) {
+			objInfoMessage = new InfoMessage(false, e.getMessage());
+			paginaJsp = Constantes.indexJsp;
+		}
+		MV.addObject("objInfoMessage", objInfoMessage);
+		MV.setViewName(paginaJsp);
+		return MV;
+	}
+
+	@RequestMapping(value = "/listaUsuariosByTipoUsuario.html", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView listaUsuariosByTipoUsuario(int idTipoUsuarioBuscado, HttpSession session) {
+		InfoMessage objInfoMessage = new InfoMessage();
+		ModelAndView MV = new ModelAndView();
+		try {
+			// 1- verificar que el usuario tenga permisos de administrador
+			Utilitario.verificarQueElUsuarioLogueadoSeaAdmin(session);
+			// 2- devolver resultados obtenidos
+			ArrayList<Usuario> listaUsuarios = (ArrayList<Usuario>) serviceUsuario.getAll().stream()
+					.filter(item -> (item.getObjTipoUsuario().getIdTipoUsuario() == idTipoUsuarioBuscado))
+					.collect(Collectors.toList());
+			if (listaUsuarios.isEmpty())
+				throw new ValidacionException("No se encontraron usuarios con TipoUsuario: " + idTipoUsuarioBuscado);
+			listaUsuarios.sort((o1, o2) -> o2.getIdUsuario().compareTo(o1.getIdUsuario()));
+			MV.addObject("listaUsuarios", listaUsuarios);
+			paginaJsp = "admListarUsuarios";
+			objInfoMessage = new InfoMessage(true, "Filtro de usuarios aplicados exitosamente");
 		} catch (Exception e) {
 			objInfoMessage = new InfoMessage(false, e.getMessage());
 			paginaJsp = Constantes.indexJsp;
