@@ -242,6 +242,33 @@ public class CursoController {
 		MV.setViewName(Constantes.indexJsp);
 		return MV;
 	}
+
+	@RequestMapping(value = "/eliminarMateriaCurso.html", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView eliminarMateriaCurso(int idCurso, HttpSession session) {
+		// 0- declaracion de variables locales
+		ModelAndView MV = new ModelAndView();
+		String message = null;
+		InfoMessage objInfoMessage = new InfoMessage();
+		try {
+			// 1- Verificar permisos del usuario logueado
+			if (ORSesion.getUsuarioBySession(session).getObjTipoUsuario()
+					.getIdTipoUsuario() == Constantes.idTipoUsuarioAlumn)
+				throw new ValidacionException("El usuario alumno no puede ingresar a esta funcionalidad");
+			// 2- Ejecutar transacción DB y devolver las respuestas
+			if (!serviceCurso.delete(idCurso))
+				throw new ValidacionException(
+						"Ocurrió un error al intentar eliminar la Materia/Curso con ID: " + idCurso);
+			// 3- informar resultados
+			message = String.format("Se eliminó la Materia/Curso con ID: %d", idCurso);
+			objInfoMessage = new InfoMessage(true, message);
+		} catch (Exception e) {
+			objInfoMessage = new InfoMessage(false, e.getMessage());
+		}
+		MV.addObject("objInfoMessage", objInfoMessage);
+		MV.setViewName(Constantes.indexJsp);
+		return MV;
+	}
+
 	/// ******************* CALIFICACIONES - INDIVIDUAL ******************* ///
 
 	@RequestMapping(value = "/calificacionListadoProfeLoad.html", method = { RequestMethod.GET, RequestMethod.POST })
@@ -407,9 +434,64 @@ public class CursoController {
 		return MV;
 	}
 
+	@RequestMapping(value = "/inscripcionAlumnoLoad.html", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView inscripcionAlumnoLoad(HttpSession session, int idCurso) {
+		InfoMessage objInfoMessage = new InfoMessage();
+		ModelAndView MV = new ModelAndView();
+		try {
+			Utilitario.verificarQueElUsuarioLogueadoSeaAdmin(session);
+			MV.addObject("objMateriaCurso", serviceCurso.get(idCurso));
+			paginaJsp = "MateriaInscripcionAlumno";
+		} catch (Exception e) {
+			objInfoMessage = new InfoMessage(false, e.getMessage());
+			paginaJsp = Constantes.indexJsp;
+			MV.addObject("objInfoMessage", objInfoMessage);
+		}
+		MV.setViewName(paginaJsp);
+		return MV;
+	}
+
+	@RequestMapping(value = "/inscripcionAlumno.html", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView inscripcionAlumno(HttpSession session, int idCurso, String dniAlumno) {
+		// 0- declaracion de variables locales
+		ModelAndView MV = new ModelAndView();
+		String message = null;
+		InfoMessage objInfoMessage = new InfoMessage();
+		try {
+			// 1- Verificar permisos del usuario logueado
+			if (ORSesion.getUsuarioBySession(session).getObjTipoUsuario()
+					.getIdTipoUsuario() == Constantes.idTipoUsuarioAlumn)
+				throw new ValidacionException("El usuario alumno no puede ingresar a esta funcionalidad");
+			// 1.2- Verificar existencia de alumno para esa materia/ curso
+			if (serviceCursosCalificaciones.existeAlumnoDNIByIDCurso(dniAlumno, idCurso))
+				throw new ValidacionException(
+						String.format("El alumno con DNI [%s] ya se encuentra registrado en el curso con ID: %d",
+								dniAlumno, idCurso));
+			// 1.3- Verificar que el DNI ingresado sea de un alumno
+			Usuario objUsuarioAlumno = serviceUsuario.getUsuarioByDNI(dniAlumno);
+			if (objUsuarioAlumno.getObjTipoUsuario().getIdTipoUsuario() != Constantes.idTipoUsuarioAlumn)
+				throw new ValidacionException("El DNI ingresado debe corresponder a un alumno");
+			// 2- Ejecutar transacción DB y devolver las respuestas
+			CursosCalificaciones objCalificacion = new CursosCalificaciones();
+			objCalificacion.setObjCurso(serviceCurso.get(idCurso));
+			objCalificacion.setObjUsuarioAlumn(serviceUsuario.getUsuarioByDNI(dniAlumno));
+			int idGenerado = serviceCursosCalificaciones.insert(objCalificacion);
+			if (!(idGenerado > 0))
+				throw new ValidacionException("SQL: Ocurrió un error al guardar la calificación ");
+			// 4- informar resultados
+			message = String.format("Se creó exitosamente la inscripción con ID: %d", idGenerado);
+			objInfoMessage = new InfoMessage(true, message);
+		} catch (Exception e) {
+			objInfoMessage = new InfoMessage(false, e.getMessage());
+		}
+		MV.addObject("objInfoMessage", objInfoMessage);
+		MV.setViewName(Constantes.indexJsp);
+		return MV;
+	}
+
 	// TODO: Calificaciones: mostrar nombre y apellido de los alumnos
-	// TODO: Materias/Cursos: preparar método de borrado/ modificación
-	// TODO: Materias/Cursos: inscripción un alumno y masiva
+	// TODO: Materias/Cursos: inscripción alumno masiva
+	// TODO: Materias/Cursos: Preparar vista de gestión materia
 	/// ******************* CALIFICACIONES - MASIVA ******************* ///
 	// TODO: definir carga de alta jsp de calificaciones
 	@RequestMapping(value = "/altaCalificacionMasivaLoad.html", method = { RequestMethod.GET, RequestMethod.POST })
@@ -609,4 +691,5 @@ public class CursoController {
 		MV.setViewName(Constantes.indexJsp);
 		return MV;
 	}
+
 }

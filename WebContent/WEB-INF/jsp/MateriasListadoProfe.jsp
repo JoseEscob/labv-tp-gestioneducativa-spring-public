@@ -29,10 +29,28 @@
 						<%@ include file="_filaMateriasBody.jsp"%>
 						<td>
 							<div>
+								<form action="eliminarMateriaCurso.html" method="POST">
+									<input type="hidden" value="${objCurso.idCurso}" name="idCurso" />
+									<input type="submit" value="Eliminar Curso"
+										class="btn btn-danger" />
+								</form>
+							</div>
+						</td>
+						<td>
+							<div>
+								<form action="inscripcionAlumnoLoad.html" method="POST">
+									<input type="hidden" value="${objCurso.idCurso}" name="idCurso" />
+									<input type="submit" value="Inscripción"
+										class="btn btn-primary" />
+								</form>
+							</div>
+						</td>
+						<td>
+							<div>
 								<form action="modificarMateriaCursoLoad.html" method="POST">
-									<input type="hidden" value="${objCurso.idCurso}"
-										name="idCurso" /> <input type="submit"
-										value="Modificar Curso" class="btn btn-primary" />
+									<input type="hidden" value="${objCurso.idCurso}" name="idCurso" />
+									<input type="submit" value="Modificar Curso"
+										class="btn btn-primary" />
 								</form>
 							</div>
 						</td>

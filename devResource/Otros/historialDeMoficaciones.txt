@@ -1,3 +1,11 @@
+Materias/Cursos: Borrado/ modificación[2019-07-13 21:24 josee]
+- Materias/Cursos: Se prepara método de borrado/ modificación
+- Materias/Cursos: Inscripción un alumno
+
+Modificación Cursos - Eliminar Calificación[2019-07-13 19:49 josee]
+ - Se prepara modificación de Materias/Cursos
+ - Se prepara modificación de Calificaciones
+  
 Alta Calificaciones [2019-07-12 01:15 josee]
  - Se prepara alta de calificaciones (individuales)
  	DAO/Service: Se agregan métodos para validar
