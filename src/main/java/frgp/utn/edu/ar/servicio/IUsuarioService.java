@@ -2,6 +2,7 @@ package frgp.utn.edu.ar.servicio;
 
 import java.util.ArrayList;
 
+import frgp.utn.edu.ar.dominio.TipoUsuario;
 import frgp.utn.edu.ar.dominio.Usuario;
 
 public interface IUsuarioService {
@@ -30,5 +31,8 @@ public interface IUsuarioService {
 	public boolean saveOrUpdate(Usuario obj) throws Exception;
 
 	ArrayList<Usuario> getAllByDNIBuscado(String dni) throws Exception;
+	
+	ArrayList<TipoUsuario> getAllTipoUsuarioByUsuarios() throws Exception;
+
 
 }

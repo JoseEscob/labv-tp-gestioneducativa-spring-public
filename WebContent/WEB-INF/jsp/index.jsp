@@ -28,19 +28,8 @@
   <link rel="shortcut icon" type="image/png" href="<%=ConstantesJSP.jspLogin_img_profilepng%>"/>
 </head>
 
-<body id="page-top">
+<body>
 	<%@ include file="Banner.jsp" %>
-
-  <!-- Modal -->
-	<div class="modal fade" id="iniciarSesion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      <div class="modal-body">
-			<%@include file="iniciarSesion.jsp" %>
-	      </div>
-	    </div>
-	  </div>
-	</div>
 	
 	<div class="row">
 		<%@ include file="mostrarInfoMessage.jsp"%>
@@ -52,7 +41,7 @@
       <img class="img-fluid mb-5 d-block mx-auto" src="<%=ConstantesJSP.jspLogin_img_profilepng%>" alt="Logo">
       <h1 class="text-uppercase mb-0">Sistema de Gestión Educativa</h1>
       <hr class="star-light">
-      <h2 class="font-weight-light mb-0">Cursos - Calificaciones</h2>
+      <h2 class="font-weight-light mb-0">Cursos y Calificaciones</h2>
     </div>
   </header>
 
@@ -62,14 +51,14 @@
     <div class="container">
       <div class="row">
         <div class="col-md-4 mb-5 mb-lg-0">
-          <h4 class="text-uppercase mb-4">Direccion</h4>
+          <h4 class="text-uppercase mb-4">Dirección</h4>
           <p class="lead mb-0">Av. Hipólito Yrigoyen 288
             <br>Gral. Pacheco (Tigre)</p>
         </div>
        
         <div class="col-md-4">
           <h4 class="text-uppercase mb-4">Desarrollo de la web</h4>
-          <p class="lead mb-0">Esta web esta diseñada con Java Servles, html, css, bootstrap, mysql.
+          <p class="lead mb-0">Web diseñada con Spring MVC, mysql, JSP/bootstrap/JSTL
           </p>
         </div>
       </div>

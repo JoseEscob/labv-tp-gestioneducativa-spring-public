@@ -3,6 +3,7 @@ package frgp.utn.edu.ar.daoImpl;
 import java.util.ArrayList;
 
 import frgp.utn.edu.ar.dao.IUsuarioDAO;
+import frgp.utn.edu.ar.dominio.TipoUsuario;
 import frgp.utn.edu.ar.dominio.Usuario;
 import utils.constantes.ConstantesDAO;
 
@@ -80,9 +81,13 @@ public class UsuarioDAOImpl implements IUsuarioDAO<Usuario> {
 	public Usuario getUsuarioByLogin(String correoUsuario, String claveUsuario) throws Exception {
 		Usuario objUsuario = null;
 		String queryHQL = String.format("%s WHERE lower(mail) = lower('%s')", fromTable, correoUsuario);
-		objUsuario = (Usuario) this.hibernateTemplate.find(queryHQL).get(0);
-		if (objUsuario == null)
-			throw new Exception("El correo electrónico ingresado no se encontró en los registros");
+		try {
+			objUsuario = (Usuario) this.hibernateTemplate.find(queryHQL).get(0);
+		} catch (Exception e) {
+			throw new Exception(String.format(
+					"El correo electrónico ingresado no se encontró en los registros. Valor ingresado [%s]",
+					correoUsuario));
+		}
 		if (!(claveUsuario.equals(objUsuario.getClave())))
 			throw new Exception("La clave ingresada no es la correcta");
 		return objUsuario;
@@ -132,4 +137,13 @@ public class UsuarioDAOImpl implements IUsuarioDAO<Usuario> {
 		String queryHQL = String.format("%s WHERE lower(dni) LIKE lower(%s", fromTable, likeParam);
 		return (ArrayList<Usuario>) this.hibernateTemplate.find(queryHQL);
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+	public ArrayList<TipoUsuario> getAllTipoUsuarioByUsuarios() throws Exception {
+		String queryHQL = String.format("SELECT DISTINCT objTipoUsuario %s", fromTable);
+		return (ArrayList<TipoUsuario>) this.hibernateTemplate.find(queryHQL);
+	}
+
 }

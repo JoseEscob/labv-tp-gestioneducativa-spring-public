@@ -20,7 +20,9 @@
 	rel="stylesheet">
 <link href="<%=ConstantesJSP.jspLogin_fontAwesome_css%>"
 	rel="stylesheet">
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet"/>
+<link
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"
+	rel="stylesheet" />
 
 <!-- Custom fonts for this template -->
 
@@ -44,14 +46,25 @@
 </head>
 <body>
 	<!-- Navigation -->
-	<nav class="navbar  bg-secondary  text-uppercase" id="mainNav">
+	<nav class="navbar  bg-secondary" id="mainNav">
 		<div class="container">
-			<a class="navbar-brand js-scroll-trigger">Sist. Gestión Educativa</a>
-			<button
-				class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded"
-				type="button" data-toggle="collapse" data-target="#navbarResponsive"
-				aria-controls="navbarResponsive" aria-expanded="true">Menu</button>
-			<div class="collapse navbar-collapse" id="navbarResponsive">
+			<a class="navbar-brand js-scroll-trigger text-uppercase">Sist.
+				Gestión Educativa</a>
+			<c:choose>
+				<c:when test="${empty sessionScope.sessionUser}">
+					<a class="btn btn-primary text-white " data-target="#iniciarSesion"
+						data-toggle="modal">Iniciar Sesión</a>
+				</c:when>
+				<c:otherwise>
+					<button
+						class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded"
+						type="button" data-toggle="collapse"
+						data-target="#navbarResponsive" aria-controls="navbarResponsive"
+						aria-expanded="true">Menu</button>
+				</c:otherwise>
+			</c:choose>
+			<div class="collapse navbar-collapse text-uppercase"
+				id="navbarResponsive">
 				<ul class="navbar-nav ml-auto">
 					<c:choose>
 						<c:when
@@ -91,6 +104,17 @@
 			</div>
 		</div>
 	</nav>
+
+	<!-- Modal -->
+	<div class="modal fade" id="iniciarSesion">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<%@include file="iniciarSesion.jsp"%>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div>
 		<br>
 	</div>

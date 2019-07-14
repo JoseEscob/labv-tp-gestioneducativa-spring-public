@@ -5,4 +5,4 @@
 <td>${objCurso.objTipoPeriodo.idPeriodo}</td>
 <td>${objCurso.objTipoPeriodo.descripcion}</td>
 <td>${objCurso.objUsuarioProfe.dni}</td>
-<td>${objCurso.objUsuarioProfe.nombre}</td>
+<td>${objCurso.objUsuarioProfe.nombre}&nbsp;${objCurso.objUsuarioProfe.apellido}</td>

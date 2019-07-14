@@ -41,7 +41,7 @@ public class UsuarioValidator {
 	@NotNull(message = "Por favor complete el campo: apellido")
 	private String apellido;
 	
-	@Size(min = 5, max = 10, message = "El dni debe tener al menos {min} y un máximo de {max} digitos. Valor ingresado [${validatedValue}]")
+	@Size(min = 3, max = 10, message = "El dni debe tener al menos {min} y un máximo de {max} digitos. Valor ingresado [${validatedValue}]")
 	private String dni;
 
 	@Size(min = 3, message = "El nombre de la calle no es válido, debe tener al menos {min} caracteres. Valor ingresado [${validatedValue}]")

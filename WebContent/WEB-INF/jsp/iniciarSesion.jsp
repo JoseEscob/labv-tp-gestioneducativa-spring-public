@@ -4,6 +4,14 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
+<script type="text/javascript">
+	document.addEventListener("keyup", function(event) {
+		event.preventDefault();
+		if (event.keyCode === 13) {
+			document.getElementById("btnIniciarSesion").click();
+		}
+	});
+</script>
 </head>
 <body>
 	<form action="iniciarSesion.html" method="post">

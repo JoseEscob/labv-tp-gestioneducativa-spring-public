@@ -88,6 +88,14 @@ public class UsuarioController {
 			ArrayList<Usuario> listaUsuarios = this.serviceUsuario.getAll();
 			listaUsuarios.sort((o1, o2) -> o2.getIdUsuario().compareTo(o1.getIdUsuario()));
 			MV.addObject("listaUsuarios", listaUsuarios);
+			// 3- carga de combo de filtro
+//			ArrayList<TipoUsuario> listaTipoUsuarios = new ArrayList<TipoUsuario>();
+//
+//			for (Usuario objUsuario : listaUsuarios.stream()
+//					.filter(Utilitario.distinctByKey(Usuario::getObjTipoUsuario)).collect(Collectors.toList())) {
+//				listaTipoUsuarios.add(objUsuario.getObjTipoUsuario());
+//			}
+			MV.addObject("listaTipoUsuarios", serviceUsuario.getAllTipoUsuarioByUsuarios());
 			paginaJsp = "admListarUsuarios";
 			objInfoMessage = new InfoMessage(true, "Lista de usuarios cargada exitósamente");
 		} catch (Exception e) {
@@ -114,7 +122,6 @@ public class UsuarioController {
 				throw new ValidacionException("El usuario no está registrado");
 			// 4- Se guarda una variable SESSION
 			ORSesion.nuevaSesion(session, objUsuario);
-			// MV.addObject(Constantes.sessionUser, objUsuario);
 			// 5- Informar estado
 			objInfoMessage = new InfoMessage(true, "Login exitoso");
 
@@ -137,8 +144,8 @@ public class UsuarioController {
 		} catch (Exception e) {
 			objInfoMessage = new InfoMessage(false, e.getMessage());
 			paginaJsp = Constantes.indexJsp;
+			MV.addObject("objInfoMessage", objInfoMessage);
 		}
-		MV.addObject("objInfoMessage", objInfoMessage);
 		MV.setViewName(paginaJsp);
 		return MV;
 	}
@@ -358,17 +365,23 @@ public class UsuarioController {
 			Utilitario.validarObjetoClasePorValidator(objUsuarioValidator);
 
 			// 3- insertar en BBDD y verificar estado de transacción
+			if (!ORSesion.sesionActiva(session))
+				throw new ValidacionException("La sesión no fue iniciada. No se pudo modificar los datos");
 			Usuario objUsuarioLogueado = ORSesion.getUsuarioBySession(session);
 			objUsuarioValidator.setIdTipoUsuario(objUsuarioLogueado.getObjTipoUsuario().getIdTipoUsuario());
 			Usuario objUsuario = obtenerUsuarioDeObjetoValidator(objUsuarioValidator);
 			// serviceUsuario.validarCamposUnicos(objUsuario);
 			// 3.2 Se indica qué id actualizar (siempre)
-
 			int idUsuarioToViewModif = objUsuarioLogueado.getIdUsuario();
 			objUsuario.setIdUsuario(idUsuarioToViewModif);
 			if (!serviceUsuario.update(objUsuario))
 				throw new ValidacionException("SQL: Ocurrió un error al guardar las modificaciones del usuario");
-			// 4- informar resultados
+			// 4- actualizar datos de la sesión del usuario
+			session.removeAttribute(Constantes.sessionUser);
+			//ORSesion.cerrarSesion(session);
+			ORSesion.nuevaSesion(session, objUsuario);
+
+			// 5- informar resultados
 			message = String.format("Se modificaron los datos del usuario exitosamente ");
 			objInfoMessage = new InfoMessage(true, message);
 			paginaJsp = Constantes.indexJsp;
@@ -395,6 +408,7 @@ public class UsuarioController {
 				throw new ValidacionException("No se encontraron usuarios que comiencen con DNI: " + txtDNIBuscado);
 			listaUsuarios.sort((o1, o2) -> o2.getIdUsuario().compareTo(o1.getIdUsuario()));
 			MV.addObject("listaUsuarios", listaUsuarios);
+			MV.addObject("listaTipoUsuarios", serviceUsuario.getAllTipoUsuarioByUsuarios());
 			paginaJsp = "admListarUsuarios";
 			objInfoMessage = new InfoMessage(true, "Búsqueda de usuarios que comienzan con DNI: " + txtDNIBuscado);
 		} catch (Exception e) {
@@ -421,6 +435,7 @@ public class UsuarioController {
 				throw new ValidacionException("No se encontraron usuarios con TipoUsuario: " + idTipoUsuarioBuscado);
 			listaUsuarios.sort((o1, o2) -> o2.getIdUsuario().compareTo(o1.getIdUsuario()));
 			MV.addObject("listaUsuarios", listaUsuarios);
+			MV.addObject("listaTipoUsuarios", serviceUsuario.getAllTipoUsuarioByUsuarios());
 			paginaJsp = "admListarUsuarios";
 			objInfoMessage = new InfoMessage(true, "Filtro de usuarios aplicados exitosamente");
 		} catch (Exception e) {

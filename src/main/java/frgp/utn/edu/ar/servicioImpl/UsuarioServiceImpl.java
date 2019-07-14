@@ -3,6 +3,7 @@ package frgp.utn.edu.ar.servicioImpl;
 import java.util.ArrayList;
 
 import frgp.utn.edu.ar.dao.IUsuarioDAO;
+import frgp.utn.edu.ar.dominio.TipoUsuario;
 import frgp.utn.edu.ar.dominio.Usuario;
 import frgp.utn.edu.ar.servicio.IUsuarioService;
 
@@ -64,5 +65,10 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	@Override
 	public ArrayList<Usuario> getAllByDNIBuscado(String dni) throws Exception {
 		return dataAccess.getAllByDNIBuscado(dni);
+	}
+
+	@Override
+	public ArrayList<TipoUsuario> getAllTipoUsuarioByUsuarios() throws Exception {
+		return dataAccess.getAllTipoUsuarioByUsuarios();
 	}
 }

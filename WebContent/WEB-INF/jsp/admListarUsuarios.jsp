@@ -20,27 +20,40 @@
 	</div>
 	<div class="container">
 		<div class="row">
-			<h4>Filtros</h4>
-
+			<div class="row col-md-12 form-group">
+				<h4>Filtros</h4>
+			</div>
 			<div class="row col-md-12">
-				<div class="col-md-6 form-group"></div>
-				<div class="col-md-3 form-group"></div>
+				<div class="col-md-3 form-group">
+					<form method="POST" action="listaUsuariosByTipoUsuario.html">
+						<label>Tipo de Usuario </label>
+						<div class="input-group">
+							<select name="idTipoUsuarioBuscado" class="form-control border">
+								<c:forEach items="${listaTipoUsuarios}" var="item">
+									<option value="${item.idTipoUsuario}">${ item.descripcion}</option>
+								</c:forEach>
+							</select> <span class="input-group-append"> <input type="submit"
+								class="btn btn-primary border" value="Filtrar"></input>
+							</span>
+						</div>
+					</form>
+				</div>
 				<div class="col-md-3 form-group pull-right">
 					<form method="POST" action="listaUsuariosByDNI.html">
-
+						<label>Buscador de Usuario (Por DNI)</label>
 						<div class="input-group">
 							<input class="form-control border" type="search"
-								name="txtDNIBuscado" placeholder="Nro de DNI (solo números)" />
-							<span
-								class="input-group-append" onkeypress="return soloNros(event)">
+								name="txtDNIBuscado" placeholder="Nro de DNI (solo números)"
+								onkeypress="return soloNros(event)" maxlength="10" /> <span
+								class="input-group-append">
 								<button class="btn btn-outline-secondary border" type="submit">
 									<i class="fa fa-search"></i>
 								</button>
 							</span>
 						</div>
 					</form>
-
 				</div>
+				<div class="col-md-6 form-group"></div>
 			</div>
 		</div>
 		<table id="grdUsuarios" class="table table-striped table-bordered">
