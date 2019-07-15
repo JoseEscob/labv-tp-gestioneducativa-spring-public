@@ -19,23 +19,11 @@
 		<form:form method="POST" action="altaCalificacionMasiva.html">
 			<!-- Tabla de calificaciones - Cabecera Página -->
 			<div class="row">
-				<div class="row col-md-12">
-					<div class="col-md-6">
-						<h3>${objCurso.nombreCurso}</h3>
-					</div>
-					<div class="col-md-6 pull-right">
-						<h4>Nro de Curso: ${objCurso.idCurso}</h4>
-					</div>
-				</div>
-				<div class="row col-md-12">
-					<div class="col-md-6">
-						<h3>
-							<small> <br> <label>Año: ${objCurso.anio}</label> <br>
-								<label>Periodo:
-									${objCurso.getObjTipoPeriodo().descripcion}</label>
-							</small>
-						</h3>
-					</div>
+				<%@ include file="_frmMateriaCabecera.jsp"%>
+			</div>
+
+			<div class="row col-md-12">
+					<div class="col-md-6"></div>
 					<div class="col-md-6 form-group">
 						<span style="color: RED">* </span><label>Tipo de Examen </label> <select
 							name="idTipoExamenSeleccionado" class="form-control" required>
@@ -45,8 +33,6 @@
 							</c:forEach>
 						</select>
 					</div>
-				</div>
-				<hr />
 			</div>
 
 			<!-- Tabla de calificaciones - Vista Profesor -->

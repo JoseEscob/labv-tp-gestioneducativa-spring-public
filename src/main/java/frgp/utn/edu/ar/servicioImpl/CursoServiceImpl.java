@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import frgp.utn.edu.ar.dao.ICursoDAO;
 import frgp.utn.edu.ar.dominio.Curso;
+import frgp.utn.edu.ar.dominio.TipoPeriodo;
 import frgp.utn.edu.ar.servicio.ICursoService;
 
 public class CursoServiceImpl implements ICursoService {
@@ -46,6 +47,26 @@ public class CursoServiceImpl implements ICursoService {
 	@Override
 	public ArrayList<Curso> getAllByDNIProfe(String dniProfesor) throws Exception {
 		return dataAccess.getAllByDNIProfe(dniProfesor);
+	}
+
+	@Override
+	public ArrayList<TipoPeriodo> getAllDistinctTipoPeriodo() throws Exception {
+		return dataAccess.getAllDistinctTipoPeriodo();
+	}
+
+	@Override
+	public ArrayList<Integer> getAllDistinctAnio() throws Exception {
+		return dataAccess.getAllDistinctAnio();
+	}
+
+	@Override
+	public ArrayList<Curso> getAllByNombreCursoBuscado(String nombreCurso) throws Exception {
+		return dataAccess.getAllByNombreCursoBuscado(nombreCurso);
+	}
+
+	@Override
+	public ArrayList<Curso> getAllByFiltroPeriodoAnio(int idTipoPeriodo, int anio) throws Exception {
+		return dataAccess.getAllByFiltroPeriodoAnio(idTipoPeriodo, anio);
 	}
 
 }

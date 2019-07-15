@@ -17,6 +17,54 @@
 		</div>
 	</div>
 	<div class="container">
+		<div class="row">
+			<div class="row col-md-12 form-group">
+				<h4>Filtros</h4>
+			</div>
+			<div class="row col-md-12">
+				<div class="col-md-8 form-group">
+					<form method="POST" action="listaCursosByFiltroPeriodoAnio.html">
+						<div class="col-md-4 form-group">
+							<label>Tipo de Periodo </label> <select
+								name="idTipoPeriodoBuscado" class="form-control">
+								<c:forEach items="${listaTipoPeriodo}" var="item">
+									<option value="${item.idPeriodo}">${ item.descripcion}</option>
+								</c:forEach>
+							</select>
+						</div>
+						<div class="col-md-4 form-group">
+							<label>Año </label> <select name="anioBuscado"
+								class="form-control">
+								<c:forEach items="${listaAnio}" var="item">
+									<option value="${item}">${item}</option>
+								</c:forEach>
+							</select>
+						</div>
+						<div class="col-md-4 form-group">
+							<input type="submit" class="btn btn-primary border"
+								value="Filtrar"></input>
+						</div>
+					</form>
+				</div>
+				<div class="col-md-4 form-group pull-right">
+					<form method="POST" action="listaCursosByNombreCurso.html">
+						<label>Buscador de Materias</label>
+						<div class="input-group">
+							<input class="form-control border" type="search"
+								name="txtNombreCursoBuscado" placeholder="Nombre de Materia"
+								onkeypress="return soloLetras(event)" maxlength="50" /> <span
+								class="input-group-append">
+								<button class="btn btn-outline-secondary border" type="submit">
+									<i class="fa fa-search"></i>
+								</button>
+							</span>
+						</div>
+					</form>
+				</div>
+
+			</div>
+		</div>
+
 		<table id="grdCursos" class="table table-striped table-bordered">
 			<thead>
 				<tr>
@@ -29,69 +77,14 @@
 						<%@ include file="_filaMateriasBody.jsp"%>
 						<td>
 							<div>
-								<form action="eliminarMateriaCurso.html" method="POST">
-									<input type="hidden" value="${objCurso.idCurso}" name="idCurso" />
-									<input type="submit" value="Eliminar Curso"
-										class="btn btn-danger" />
-								</form>
-							</div>
-						</td>
-						<td>
-							<div>
-								<form action="inscripcionAlumnoLoad.html" method="POST">
-									<input type="hidden" value="${objCurso.idCurso}" name="idCurso" />
-									<input type="submit" value="Inscripción"
-										class="btn btn-primary" />
-								</form>
-							</div>
-						</td>
-						<td>
-							<div>
-								<form action="modificarMateriaCursoLoad.html" method="POST">
-									<input type="hidden" value="${objCurso.idCurso}" name="idCurso" />
-									<input type="submit" value="Modificar Curso"
-										class="btn btn-primary" />
-								</form>
-							</div>
-						</td>
-						<td>
-							<div>
-								<form action="altaCalificacionLoad.html" method="POST">
-									<input type="hidden" value="${objCurso.idCurso}"
-										name="idCursoToViewCalificaciones" /> <input type="submit"
-										value="Calificar" class="btn btn-danger" />
-								</form>
-							</div>
-						</td>
-						<td>
-							<div>
-								<form action="calificacionListadoProfeLoad.html" method="POST">
-									<input type="hidden" value="${objCurso.idCurso}"
-										name="idCursoToViewCalificaciones" /> <input type="submit"
-										value="Ver calificaciones" class="btn btn-info" />
-								</form>
-							</div>
-						</td>
-						<td>
-							<div>
-								<form action="modificarCalificacionMasivaLoad.html"
+								<form action="gestionarMateriaCurso.html"
 									method="POST">
 									<input type="hidden" value="${objCurso.idCurso}"
-										name="idCursoToViewCalificaciones" /> <input type="submit"
-										value="Modificar calificaciones" class="btn btn-warning" />
+										name="idCurso" /> <input type="submit"
+										value="Gestionar Materia" class="btn btn-warning" />
 								</form>
 							</div>
 						</td>
-						<td>
-							<div>
-								<form action="altaCalificacionMasivaLoad.html" method="POST">
-									<input type="hidden" value="${objCurso.idCurso}"
-										name="idCursoToViewCalificaciones" /> <input type="submit"
-										value="Calificar Masivamente" class="btn btn-danger" />
-								</form>
-							</div>
-						</td>
-
 					</tr>
 				</c:forEach>
 			</tbody>

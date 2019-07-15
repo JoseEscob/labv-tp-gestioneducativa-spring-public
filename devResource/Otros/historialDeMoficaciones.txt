@@ -1,3 +1,9 @@
+Filtrado de Materias [2019-07-14 23:57 josee]
+ - Se prepara filtrado y búsqueda de Materias
+ - Se extraen funcionalidades de calificaciones a controller correspondiente
+ - Se prepara menú de gestión de materias
+
+
 Filtrado de Usuarios [2019-07-14 12:48 josee]
  - Se prepara filtrado de usuario por tipoDeusuarios
  - Corrección de banner e index

@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import frgp.utn.edu.ar.dao.ICursoDAO;
 import frgp.utn.edu.ar.dominio.Curso;
+import frgp.utn.edu.ar.dominio.TipoPeriodo;
 import utils.constantes.ConstantesDAO;
 
 public class CursoDAOImpl implements ICursoDAO {
@@ -73,4 +74,33 @@ public class CursoDAOImpl implements ICursoDAO {
 		return (ArrayList<Curso>) this.hibernateTemplate.find(queryHQL);
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayList<TipoPeriodo> getAllDistinctTipoPeriodo() throws Exception {
+		String queryHQL = String.format("SELECT DISTINCT objTipoPeriodo %s", fromTable);
+		return (ArrayList<TipoPeriodo>) this.hibernateTemplate.find(queryHQL);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayList<Integer> getAllDistinctAnio() throws Exception {
+		String queryHQL = String.format("SELECT DISTINCT anio %s", fromTable);
+		return (ArrayList<Integer>) this.hibernateTemplate.find(queryHQL);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayList<Curso> getAllByNombreCursoBuscado(String nombreCurso) throws Exception {
+		String likeParam = "'" + nombreCurso + "%')";
+		String queryHQL = String.format("%s WHERE lower(nombreCurso) LIKE lower(%s", fromTable, likeParam);
+		return (ArrayList<Curso>) this.hibernateTemplate.find(queryHQL);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public ArrayList<Curso> getAllByFiltroPeriodoAnio(int idTipoPeriodo, int anio) throws Exception {
+		String queryHQL = String.format("%s WHERE anio = %d AND objTipoPeriodo.idPeriodo = %d", fromTable, anio,
+				idTipoPeriodo);
+		return (ArrayList<Curso>) this.hibernateTemplate.find(queryHQL);
+	}
 }

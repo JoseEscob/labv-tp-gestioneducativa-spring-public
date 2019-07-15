@@ -394,7 +394,7 @@ public class UsuarioController {
 		return MV;
 	}
 
-	// listado de filtros
+	/// ******************* LISTADO DE FILTROS ******************* ///
 	@RequestMapping(value = "/listaUsuariosByDNI.html", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView listaUsuariosByDNI(String txtDNIBuscado, HttpSession session) {
 		InfoMessage objInfoMessage = new InfoMessage();

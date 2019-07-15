@@ -3,6 +3,7 @@ package frgp.utn.edu.ar.servicio;
 import java.util.ArrayList;
 
 import frgp.utn.edu.ar.dominio.Curso;
+import frgp.utn.edu.ar.dominio.TipoPeriodo;
 
 public interface ICursoService {
 	public ArrayList<Curso> getAll() throws Exception;
@@ -19,4 +20,9 @@ public interface ICursoService {
 	
 	public ArrayList<Curso> getAllByDNIProfe(String dniProfesor) throws Exception;
 
+	ArrayList<TipoPeriodo> getAllDistinctTipoPeriodo() throws Exception;
+	ArrayList<Integer> getAllDistinctAnio() throws Exception;
+
+	ArrayList<Curso> getAllByNombreCursoBuscado(String nombreCurso) throws Exception;
+	ArrayList<Curso> getAllByFiltroPeriodoAnio(int idTipoPeriodo, int anio) throws Exception;
 }
