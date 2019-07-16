@@ -69,4 +69,9 @@ public class CursoServiceImpl implements ICursoService {
 		return dataAccess.getAllByFiltroPeriodoAnio(idTipoPeriodo, anio);
 	}
 
+	@Override
+	public int getCountByDNIProfe(String dniProfesor) throws Exception {
+		return dataAccess.getCountByDNIProfe(dniProfesor);
+	}
+
 }

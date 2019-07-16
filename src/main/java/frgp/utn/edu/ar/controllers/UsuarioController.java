@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import frgp.utn.edu.ar.dominio.Usuario;
 import frgp.utn.edu.ar.dominio.validacion.UsuarioValidator;
+import frgp.utn.edu.ar.servicio.ICursoService;
 import frgp.utn.edu.ar.servicio.ITipoUsuarioService;
 import frgp.utn.edu.ar.servicio.IUsuarioService;
 import utils.InfoMessage;
@@ -38,12 +39,16 @@ public class UsuarioController {
 	@Autowired
 	public ITipoUsuarioService serviceTipoUsuario;
 
+	@Autowired
+	private ICursoService serviceCurso;
+
 	public void init(ServletConfig config) {
 		ApplicationContext ctx = WebApplicationContextUtils
 				.getRequiredWebApplicationContext(config.getServletContext());
 
 		this.serviceUsuario = (IUsuarioService) ctx.getBean("serviceUsuario");
 		this.serviceTipoUsuario = (ITipoUsuarioService) ctx.getBean("serviceTipoUsuario");
+		this.serviceCurso = (ICursoService) ctx.getBean("serviceCurso");
 	}
 
 	@RequestMapping("/inicio.html")
@@ -306,6 +311,7 @@ public class UsuarioController {
 			// 3- pasar las variables al jsp a cargar
 			MV.addObject("listaTipoUsuarios", serviceTipoUsuario.getAll());
 			MV.addObject("objUsuario", objUsuario);
+			MV.addObject("cantMateriasAsignadas", serviceCurso.getCountByDNIProfe(objUsuario.getDni()));
 			// 4- informar resultados
 			message = String.format("Se cargaron los datos del usuario a visualizar");
 			objInfoMessage = new InfoMessage(true, message);
@@ -378,7 +384,7 @@ public class UsuarioController {
 				throw new ValidacionException("SQL: Ocurrió un error al guardar las modificaciones del usuario");
 			// 4- actualizar datos de la sesión del usuario
 			session.removeAttribute(Constantes.sessionUser);
-			//ORSesion.cerrarSesion(session);
+			// ORSesion.cerrarSesion(session);
 			ORSesion.nuevaSesion(session, objUsuario);
 
 			// 5- informar resultados

@@ -359,9 +359,7 @@ public class CalificacionController {
 	}
 
 	// TODO: Calificaciones: mostrar nombre y apellido de los alumnos
-	// TODO: Materias/Cursos: inscripción alumno masiva
 	/// ******************* CALIFICACIONES - MASIVA ******************* ///
-	// TODO: definir carga de alta jsp de calificaciones
 	@RequestMapping(value = "/altaCalificacionMasivaLoad.html", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView altaCalificacionMasivaLoad(int idCursoToViewCalificaciones, HttpSession session) {
 		// 0- declaracion de variables locales
@@ -373,7 +371,6 @@ public class CalificacionController {
 			ArrayList<CursosCalificaciones> listaCalificaciones = new ArrayList<CursosCalificaciones>();
 			ArrayList<String> listaDNIAlumno = serviceCursosCalificaciones
 					.getAllDNIByIDCurso(idCursoToViewCalificaciones);
-			// TODO obtener los Usuarios por idCurso así se muestra nombre y apellido
 
 //			for(String dniAlumno : listaDNIAlumno) {
 //				CursosCalificaciones objCalificacion = new CursosCalificaciones();
@@ -451,7 +448,6 @@ public class CalificacionController {
 		return MV;
 	}
 
-	// TODO: definir controles deshabilitados en los jsp de modificación
 	@RequestMapping(value = "/modificarCalificacionMasivaLoad.html", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView modificarCalificacionMasivaLoad(int idCursoToViewCalificaciones, HttpSession session) {
 		// 0- declaracion de variables locales

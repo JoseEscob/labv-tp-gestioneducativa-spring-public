@@ -20,7 +20,7 @@
 		</div>
 		<div class="row col-md-12">
 			<div class="card text-center col-md-6">
-				<!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+				<img class="card-img-top" src="<%=ConstantesJSP.imgMenuCalificaciones%>" alt="ImagenMateria" height="250" width="100">
 				<div class="card-body">
 					<h5 class="card-title">Calificaciones</h5>
 					<p class="card-text">Vea las calificaciones de su materias</p>
@@ -60,7 +60,7 @@
 				</div>
 			</div>
 			<div class="card text-center col-md-6">
-				<!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+				<img class="card-img-top" src="<%=ConstantesJSP.imgMenuMaterias%>" alt="ImagenMateria" height="250" width="100"> 
 				<div class="card-body">
 					<h5 class="card-title">Materias / Cursos</h5>
 					<p class="card-text">Organización de materias</p>

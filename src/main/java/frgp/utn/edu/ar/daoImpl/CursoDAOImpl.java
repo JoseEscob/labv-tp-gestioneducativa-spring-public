@@ -70,7 +70,7 @@ public class CursoDAOImpl implements ICursoDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public ArrayList<Curso> getAllByDNIProfe(String dniProfesor) throws Exception {
-		String queryHQL = String.format("%s WHERE dniProfesor = %s", fromTable, dniProfesor);
+		String queryHQL = String.format("%s WHERE objUsuarioProfe.dni = %s", fromTable, dniProfesor);
 		return (ArrayList<Curso>) this.hibernateTemplate.find(queryHQL);
 	}
 
@@ -102,5 +102,12 @@ public class CursoDAOImpl implements ICursoDAO {
 		String queryHQL = String.format("%s WHERE anio = %d AND objTipoPeriodo.idPeriodo = %d", fromTable, anio,
 				idTipoPeriodo);
 		return (ArrayList<Curso>) this.hibernateTemplate.find(queryHQL);
+	}
+
+	@Override
+	public int getCountByDNIProfe(String dniProfesor) throws Exception {
+		String queryHQL = String.format("SELECT COUNT(*) %s WHERE objUsuarioProfe.dni = %s", fromTable, dniProfesor);
+		Long cantDeMaterias = (long) this.hibernateTemplate.find(queryHQL).get(0);
+		return cantDeMaterias.intValue();
 	}
 }

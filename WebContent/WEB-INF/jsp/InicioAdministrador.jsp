@@ -16,36 +16,63 @@
 		</div>
 	</div>
 	<div class="container">
-		<div>
-			<a href="admListarUsuarios.html" class="btn btn-primary"
-				data-toggle="tooltip" title="Listado en forma de grilla">&nbsp;Listar Usuarios
-			</a>
+		<div class="row col-md-12">
+			<div class="card text-center col-md-6">
+				<img class="card-img-top" src="<%=ConstantesJSP.imgMenuUsuarios%>"
+					alt="ImagenMateria" height="250" width="100">
+				<div class="card-body">
+					<h5 class="card-title">Usuarios</h5>
+					<p class="card-text">Gestione los datos de los usuarios</p>
+
+					<div class="col-md-12 form-group row">
+						<div class="col-md-6">
+							<div>
+								<a href="admListarUsuarios.html" class="btn btn-info"
+									data-toggle="tooltip" title="Listado en forma de grilla">&nbsp;Listar
+									Usuarios </a>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div>
+								<a href="altaUsuarioLoad.html" class="btn btn-primary"
+									data-toggle="tooltip" title="Dar de alta un Usuario">&nbsp;Alta
+									Usuario </a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="card text-center col-md-6">
+				<img class="card-img-top" src="<%=ConstantesJSP.imgMenuMaterias%>"
+					alt="ImagenMateria" height="250" width="100">
+				<div class="card-body">
+					<h5 class="card-title">Materias / Cursos</h5>
+					<p class="card-text">Organización de materias</p>
+					<div class="col-md-12 form-group row">
+						<div class="col-md-6">
+							<div>
+								<a href="cargarMateriasUsuarioLoad.html" class="btn btn-info"
+									data-toggle="tooltip" title="Dar de alta una materia/curso">&nbsp;Listar
+									Materias/Cursos</a>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div>
+								<a href="altaMateriaCursoLoad.html" class="btn btn-primary"
+									data-toggle="tooltip" title="Dar de alta una materia/curso">&nbsp;Alta
+									Materia/Curso </a>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
 		</div>
-		<div>
-			<a href="altaUsuarioLoad.html" class="btn btn-warning"
-				data-toggle="tooltip" title="Dar de alta un Usuario">&nbsp;Alta Usuario
-			</a>
-		</div>
-		<div>
-			<a href="altaMateriaCursoLoad.html" class="btn btn-info"
-				data-toggle="tooltip" title="Dar de alta una materia/curso">&nbsp;Alta Materia/Curso
-			</a>
-		</div>
-		<div>
-			<a href="cargarMateriasUsuarioLoad.html" class="btn btn-info"
-				data-toggle="tooltip" title="Dar de alta una materia/curso">&nbsp;Listar Materias/Cursos-ADMIN
-			</a>
-		</div>
-		<div>
-			<a href="listarMateriasCursosProfe.html" class="btn btn-info"
-				data-toggle="tooltip" title="Dar de alta una materia/curso">&nbsp;Listar Materias/Cursos-PROFE
-			</a>
-		</div>
-		<div>
-			<a href="altaCalificacionLoad.html" class="btn btn-primary"
-				data-toggle="tooltip" title="Calificar">&nbsp;Alta Calificación
-			</a>
-		</div>
+	</div>
+	<div class="container">
+		<br>
+
+
 	</div>
 
 </body>

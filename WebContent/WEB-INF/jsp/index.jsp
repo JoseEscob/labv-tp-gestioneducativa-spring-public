@@ -58,7 +58,7 @@
        
         <div class="col-md-4">
           <h4 class="text-uppercase mb-4">Desarrollo de la web</h4>
-          <p class="lead mb-0">Web diseñada con Spring MVC, mysql, JSP/bootstrap/JSTL
+          <p class="lead mb-0">Web diseñada con Spring MVC, Hibernate - MySQL, JSP/bootstrap/JSTL
           </p>
         </div>
       </div>

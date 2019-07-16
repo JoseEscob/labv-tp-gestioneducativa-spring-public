@@ -334,4 +334,37 @@ public class CursoController {
 		MV.setViewName(paginaJsp);
 		return MV;
 	}
+
+
+
+	@RequestMapping(value = "/listaCursosByDNIProfesor.html", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView listaCursosByDNIProfesor(String txtDNIBuscado, HttpSession session) {
+		String message = "materias/cursos - Docente con DNI: " + txtDNIBuscado;
+		InfoMessage objInfoMessage = new InfoMessage();
+		ModelAndView MV = new ModelAndView();
+		try {
+			// 1- verificar que el usuario tenga permisos de administrador
+			Utilitario.verificarQueElUsuarioLogueadoSeaAdmin(session);
+			// 2- devolver resultados obtenidos
+			List<Curso> listaCursos = serviceCurso.getAllByDNIProfe(txtDNIBuscado);
+			if (listaCursos.isEmpty())
+				throw new ValidacionException("No se encontraron " + message);
+			// 3- Ordenar resultados y guardar en las variables del JSP
+			listaCursos.sort((o1, o2) -> o2.getIdCurso().compareTo(o1.getIdCurso()));
+			MV.addObject("listaCursos", listaCursos);
+			MV.addObject("listaTipoPeriodo", serviceCurso.getAllDistinctTipoPeriodo());
+			MV.addObject("listaAnio", serviceCurso.getAllDistinctAnio());
+			// 4- informar resultados
+			message = "Búsqueda de " + message;
+			objInfoMessage = new InfoMessage(true, message);
+			paginaJsp = "/MateriasListadoProfe";
+		} catch (Exception e) {
+			objInfoMessage = new InfoMessage(false, e.getMessage());
+			paginaJsp = Constantes.indexJsp;
+		}
+		MV.addObject("objInfoMessage", objInfoMessage);
+		MV.setViewName(paginaJsp);
+		return MV;
+	}
+
 }

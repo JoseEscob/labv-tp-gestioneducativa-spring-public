@@ -1,4 +1,4 @@
-USE EjemploProgAvanzadaII;
+USE labv_tp_gestioneducativa_spring;
 
 INSERT into tipoUsuarios SET idTipoUsuario=1, descripcion='Alumno';
 INSERT into tipoUsuarios SET idTipoUsuario=2, descripcion='Profesor';
@@ -41,4 +41,5 @@ INSERT into cursosCalificaciones SET idCursoCalif=7, idCurso=2, dniAlumno='11113
 INSERT into cursosCalificaciones SET idCursoCalif=8, idCurso=3, dniAlumno='11111', idTipoExamen=1, nota=9, fechaCalif=STR_TO_DATE('01/05/2019','%d/%m/%Y') ;
 INSERT into cursosCalificaciones SET idCursoCalif=9, idCurso=4, dniAlumno='11112', idTipoExamen=1, nota=8, fechaCalif=STR_TO_DATE('01/05/2019','%d/%m/%Y') ;
 INSERT into cursosCalificaciones SET idCursoCalif=10, idCurso=4, dniAlumno='11113', idTipoExamen=1, nota=8, fechaCalif=STR_TO_DATE('01/05/2019','%d/%m/%Y') ;
+
 

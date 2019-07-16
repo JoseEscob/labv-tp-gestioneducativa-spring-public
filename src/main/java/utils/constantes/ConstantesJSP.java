@@ -9,6 +9,10 @@ package utils.constantes;
 public class ConstantesJSP {
 	// Global
 	public final static String jspValidar_js = "web-design/JSValidar.js";
+	// Imagenes
+	public final static String imgMenuCalificaciones = "web-design/images/imgMenuCalificaciones.png";
+	public final static String imgMenuMaterias = "web-design/images/imgMenuMaterias.png";
+	public final static String imgMenuUsuarios = "web-design/images/imgMenuUsuarios.png";
 	// Vendor - Pantalla de Login
 	public final static String jspLogin_fontAwesome_css = "web-design/login/css/font-awesome.min.css";
 	// Vendor - Pantalla de Login

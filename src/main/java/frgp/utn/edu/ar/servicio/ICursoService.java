@@ -25,4 +25,7 @@ public interface ICursoService {
 
 	ArrayList<Curso> getAllByNombreCursoBuscado(String nombreCurso) throws Exception;
 	ArrayList<Curso> getAllByFiltroPeriodoAnio(int idTipoPeriodo, int anio) throws Exception;
+	
+	int getCountByDNIProfe(String dniProfesor) throws Exception;
+
 }
