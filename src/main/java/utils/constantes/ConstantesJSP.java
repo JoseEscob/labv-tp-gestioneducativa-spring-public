@@ -13,6 +13,9 @@ public class ConstantesJSP {
 	public final static String imgMenuCalificaciones = "web-design/images/imgMenuCalificaciones.png";
 	public final static String imgMenuMaterias = "web-design/images/imgMenuMaterias.png";
 	public final static String imgMenuUsuarios = "web-design/images/imgMenuUsuarios.png";
+	public final static String imgMenuTipoPeriodo = "web-design/images/imgMenuTipoPeriodo.png";
+	public final static String imgMenuTipoExamen = "web-design/images/imgMenuTipoExamen.png";
+	public final static String imgMenuTipoExamen1 = "web-design/images/imgMenuTipoExamen1.png";
 	// Vendor - Pantalla de Login
 	public final static String jspLogin_fontAwesome_css = "web-design/login/css/font-awesome.min.css";
 	// Vendor - Pantalla de Login

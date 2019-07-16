@@ -1,3 +1,7 @@
+ABML de tipo de Examen [2019-07-16 05:29 josee]
+ - Se prepara gestión ABML de Tipo de Examen
+ - Diseño inicio admin
+
 ABML de tipo de Periodo [2019-07-16 04:40 josee]
  - Se prepara gestión ABML de Tipo de Periodo
 
