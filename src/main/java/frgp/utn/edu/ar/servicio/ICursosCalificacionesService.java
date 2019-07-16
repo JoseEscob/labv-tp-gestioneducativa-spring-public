@@ -2,6 +2,7 @@ package frgp.utn.edu.ar.servicio;
 
 import java.util.ArrayList;
 
+import frgp.utn.edu.ar.dominio.Curso;
 import frgp.utn.edu.ar.dominio.CursosCalificaciones;
 
 public interface ICursosCalificacionesService {
@@ -37,4 +38,7 @@ public interface ICursosCalificacionesService {
 	ArrayList<CursosCalificaciones> getAllByDNIAlumnoIDCurso(String dniAlumno, int id) throws Exception;
 
 	public boolean existeAlumnoDNIByIDCurso(String dniAlumno, int id) throws Exception;
+	
+	ArrayList<Curso> getAllCursosByDNIAlumno(String dniAlumno) throws Exception;
+
 }

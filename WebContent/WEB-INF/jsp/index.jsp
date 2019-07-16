@@ -41,7 +41,7 @@
       <img class="img-fluid mb-5 d-block mx-auto" src="<%=ConstantesJSP.jspLogin_img_profilepng%>" alt="Logo">
       <h1 class="text-uppercase mb-0">Sistema de Gestión Educativa</h1>
       <hr class="star-light">
-      <h2 class="font-weight-light mb-0">Cursos y Calificaciones</h2>
+      <h2 class="font-weight-light mb-0">Gestión de Cursos y Calificaciones</h2>
     </div>
   </header>
 

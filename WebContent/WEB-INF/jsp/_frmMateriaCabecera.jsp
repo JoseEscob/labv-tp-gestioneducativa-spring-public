@@ -8,6 +8,19 @@
 	</div>
 </div>
 <div class="row col-md-12">
+	<div class="col-md-12">
+		<h3>
+			<small>Docente: </small><b>${objCurso.objUsuarioProfe.nombre}
+				&nbsp;${objCurso.objUsuarioProfe.apellido}</b>
+		</h3>
+	</div>
+	<div class="col-md-12">
+		<h5>
+			<small>Mail: <a>${objCurso.objUsuarioProfe.mail}</a></small>
+		</h5>
+	</div>
+</div>
+<div class="row col-md-12">
 	<div class="col-md-6">
 		<h3>
 			<small> <br> <label>Año: ${objCurso.anio}</label> <br>

@@ -19,13 +19,31 @@
 		</div>
 	</div>
 	<div class="container">
-		<div>
-			<c:url value="MateriaCursoServlet" var="url_listarCursosAlumno">
-				<c:param name="accionGET" value="listarCursosAlumno" />
-			</c:url>
-			<a href="${url_listarCursosAlumno}" class="btn btn-info"> Listado
-				de mis Materias/Cursos</a>
+		<div class="row col-md-12">
+			<div class="card text-center col-md-6">
+				<img class="card-img-top" src="<%=ConstantesJSP.imgMenuMaterias%>"
+					alt="ImagenMateria" height="250" width="100">
+				<div class="card-body">
+					<h5 class="card-title">Materias / Cursos</h5>
+					<p class="card-text">Listado de materias a las que se encuentra
+						inscripto</p>
+					<!--<div class="col-md-12 form-group row">-->
+					<div>
+						<a href="listarMateriasCursosAlumno.html" class="btn btn-info"
+							data-toggle="tooltip" title="Listado de materias/cursos">&nbsp;Listar
+							Materias/Cursos-ALUMNO </a>
+					</div>
+					<!--<div class="col-md-6"> </div>-->
+					<!--<div class="col-md-6"> </div>-->
+					<!--</div>-->
+
+				</div>
+			</div>
+
 		</div>
+	</div>
+	<div class="container">
+		<br>
 	</div>
 </body>
 </html>

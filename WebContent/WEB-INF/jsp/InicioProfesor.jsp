@@ -17,18 +17,32 @@
 			<%@ include file="mostrarInfoMessage.jsp"%>
 		</div>
 	</div>
-	<div class="container">
 
-		<div>
-			<a href="altaCalificacionLoad.html" class="btn btn-primary"
-				data-toggle="tooltip" title="Calificar">&nbsp;Alta Calificación
-			</a>
+	<div class="container">
+		<div class="row col-md-12">
+			<div class="card text-center col-md-6">
+				<img class="card-img-top" src="<%=ConstantesJSP.imgMenuMaterias%>"
+					alt="ImagenMateria" height="250" width="100">
+				<div class="card-body">
+					<h5 class="card-title">Materias / Cursos</h5>
+					<p class="card-text">Organización de materias</p>
+					<!--<div class="col-md-12 form-group row">-->
+					<div>
+						<a href="listarMateriasCursosProfe.html" class="btn btn-info"
+							data-toggle="tooltip" title="Listado de materias/cursos">&nbsp;Listar
+							Materias/Cursos-PROFE </a>
+					</div>
+					<!--<div class="col-md-6"> </div>-->
+					<!--<div class="col-md-6"> </div>-->
+					<!--</div>-->
+
+				</div>
+			</div>
+
 		</div>
-		<div>
-			<a href="listarMateriasCursosProfe.html" class="btn btn-info"
-				data-toggle="tooltip" title="Dar de alta una materia/curso">&nbsp;Listar
-				Materias/Cursos-PROFE </a>
-		</div>
+	</div>
+	<div class="container">
+		<br>
 	</div>
 </body>
 </html>

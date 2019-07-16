@@ -35,7 +35,6 @@
 						<th>nota</th>
 						<th>fechaCalificado</th>
 						<th>fechaUlt.Modif</th>
-						<th>Acciones</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -52,22 +51,7 @@
 									pattern="yyyy-MMM-dd HH:mm" /></td>
 							<td><fmt:formatDate value="${objCalificacion.fechaUltModif}"
 									pattern="yyyy-MMM-dd HH:mm" /></td>
-							<td>
-								<div>
-									<form action="modificarCalificacionByIDLoad.html" method="POST">
-										<input type="hidden" value="${objCalificacion.idCursoCalif}"
-											name="idCursoCalifToUpdate" /> <input type="submit"
-											value="Modificar" class="btn btn-warning" />
-									</form>
-								</div>
-								<div>
-									<form action="eliminarCalificacion.html" method="POST">
-										<input type="hidden" value="${objCalificacion.idCursoCalif}"
-											name="idCursoCalifToDelete" /> <input type="submit"
-											value="Eliminar" class="btn btn-danger" />
-									</form>
-								</div>
-							</td>
+
 						</tr>
 
 					</c:forEach>

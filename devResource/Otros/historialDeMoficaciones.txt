@@ -1,8 +1,13 @@
+
+Inicio Profe y Alumno[2019-07-16 03:05 josee]
+ - Se prepara menú de alumno y profesor junto a sus vistas
+ - materias/cursos : Solucionar bug con carga de filtros y busqueda
+
 Diseño Admin [2019-07-16 00:55 josee]
  - Modificación de pantalla de inicio Admin
  - Se agrega reporte de cant de materias dictadas por un profesor
  - Se eliminan ejemplos y se corrige nombre de BBDD
- 
+
 Inscripción masiva [2019-07-15 22:22 josee]
  - Se prepara lógica de inscripción masiva
  - tiene javascript para agregar y eliminar filas dinamicamente

@@ -2,6 +2,8 @@ package frgp.utn.edu.ar.controllers;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpSession;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.ModelAndView;
 
+import frgp.utn.edu.ar.dominio.Curso;
 import frgp.utn.edu.ar.dominio.CursosCalificaciones;
 import frgp.utn.edu.ar.dominio.Usuario;
 import frgp.utn.edu.ar.dominio.validacion.CalificacionForm;
@@ -53,7 +56,66 @@ public class CalificacionController {
 		this.serviceUsuario = (IUsuarioService) ctx.getBean("serviceUsuario");
 	}
 
+	@RequestMapping(value = "/listarMateriasCursosAlumno" + Constantes.html, method = RequestMethod.GET)
+	public ModelAndView listarMateriasCursosAlumno(HttpSession session) {
+		// 0- declaracion de variables locales
+		String message = null;
+		InfoMessage objInfoMessage = new InfoMessage();
+		ModelAndView MV = new ModelAndView();
+		try {
+			// 1- Recuperar info de la sesión del usuario
+			Usuario objUsuario = ORSesion.getUsuarioBySession(session);
+			// 2- validar la informacion recuperada
+			if (objUsuario == null)
+				throw new ValidacionException("La sesión no fue iniciada");
+			// 3- pasar las variables al jsp a cargar
+			List<Curso> listaCursos = serviceCursosCalificaciones.getAllCursosByDNIAlumno(objUsuario.getDni());
+			listaCursos.sort((o1, o2) -> o2.getIdCurso().compareTo(o1.getIdCurso()));
+			MV.addObject("listaCursos", listaCursos);
+			MV.addObject("listaTipoPeriodo", serviceCurso.getAllDistinctTipoPeriodo());
+			MV.addObject("listaAnio", serviceCurso.getAllDistinctAnio());
+			// 4- informar resultados
+			message = String.format("Se cargaron las materias del usuario");
+			objInfoMessage = new InfoMessage(true, message);
+			paginaJsp = "/MateriasListadoProfe";
+		} catch (Exception e) {
+			objInfoMessage = new InfoMessage(false, e.getMessage());
+			paginaJsp = Constantes.indexJsp;
+		}
+		MV.addObject("objInfoMessage", objInfoMessage);
+		MV.setViewName(paginaJsp);
+		return MV;
+	}
+
 	/// ******************* CALIFICACIONES - INDIVIDUAL ******************* ///
+
+	@RequestMapping(value = "/calificacionListadoAlumnoLoad.html", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView calificacionListadoAlumnoLoad(int idCursoToViewCalificaciones, HttpSession session) {
+		// 0- declaracion de variables locales
+		String message = null;
+		InfoMessage objInfoMessage = new InfoMessage();
+		ModelAndView MV = new ModelAndView();
+		try {
+			MV.addObject("objCurso", serviceCurso.get(idCursoToViewCalificaciones));
+			String dniAlumnoLogueado = ORSesion.getUsuarioBySession(session).getDni();
+			// filtrado de resultados
+			ArrayList<CursosCalificaciones> listaCursosCalificaciones = serviceCursosCalificaciones
+					.getAllByDNIAlumnoIDCurso(dniAlumnoLogueado, idCursoToViewCalificaciones);
+			// ordenamiento
+			listaCursosCalificaciones.sort((o1, o2) -> o2.getFechaCalif().compareTo(o1.getFechaCalif()));
+			// asignación e información
+			MV.addObject("listaCursosCalificaciones", listaCursosCalificaciones);
+			message = String.format("Se cargaron las calificaciones del curso %d ", idCursoToViewCalificaciones);
+			objInfoMessage = new InfoMessage(true, message);
+			paginaJsp = "/CalificacionListadoAlumno";
+		} catch (Exception e) {
+			objInfoMessage = new InfoMessage(false, e.getMessage());
+			paginaJsp = Constantes.indexJsp;
+		}
+		MV.addObject("objInfoMessage", objInfoMessage);
+		MV.setViewName(paginaJsp);
+		return MV;
+	}
 
 	@RequestMapping(value = "/calificacionListadoProfeLoad.html", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView calificacionListadoProfeLoad(int idCursoToViewCalificaciones, HttpSession session) {
@@ -223,7 +285,11 @@ public class CalificacionController {
 		InfoMessage objInfoMessage = new InfoMessage();
 		ModelAndView MV = new ModelAndView();
 		try {
-			Utilitario.verificarQueElUsuarioLogueadoSeaAdmin(session);
+			// 1- Verificar permisos del usuario logueado
+			if (ORSesion.getUsuarioBySession(session).getObjTipoUsuario()
+					.getIdTipoUsuario() == Constantes.idTipoUsuarioAlumn)
+				throw new ValidacionException("El usuario alumno no puede ingresar a esta funcionalidad");
+			// Utilitario.verificarQueElUsuarioLogueadoSeaAdmin(session);
 			MV.addObject("objMateriaCurso", serviceCurso.get(idCurso));
 			paginaJsp = "MateriaInscripcionAlumno";
 		} catch (Exception e) {

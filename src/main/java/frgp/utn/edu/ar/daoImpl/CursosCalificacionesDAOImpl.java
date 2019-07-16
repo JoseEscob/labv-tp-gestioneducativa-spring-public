@@ -73,7 +73,7 @@ public class CursosCalificacionesDAOImpl implements ICursosCalificacionesDAO {
 		String queryHQL = String.format(" %s WHERE idCurso = %s", fromTable, id);
 		return (ArrayList<CursosCalificaciones>) this.hibernateTemplate.find(queryHQL);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
@@ -85,13 +85,24 @@ public class CursosCalificacionesDAOImpl implements ICursosCalificacionesDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
-	public ArrayList<CursosCalificaciones> getAllByDNIAlumnoIDCurso(String dniAlumno, int id) throws Exception {
-		String queryHQL = String.format(" %s WHERE objUsuarioAlumn.dni = %s AND idCurso = %s", fromTable, dniAlumno, id);
-		return (ArrayList<CursosCalificaciones>) this.hibernateTemplate.find(queryHQL);
+	public ArrayList<frgp.utn.edu.ar.dominio.Curso> getAllCursosByDNIAlumno(String dniAlumno) throws Exception {
+		String queryHQL = String.format("SELECT DISTINCT calif.objCurso %s calif WHERE calif.objUsuarioAlumn.dni = %s", fromTable,
+				dniAlumno);
+		return (ArrayList<frgp.utn.edu.ar.dominio.Curso>) this.hibernateTemplate.find(queryHQL);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
+	public ArrayList<CursosCalificaciones> getAllByDNIAlumnoIDCurso(String dniAlumno, int id) throws Exception {
+		String queryHQL = String.format(" %s WHERE objUsuarioAlumn.dni = %s AND idCurso = %s", fromTable, dniAlumno,
+				id);
+		return (ArrayList<CursosCalificaciones>) this.hibernateTemplate.find(queryHQL);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 	public ArrayList<String> getAllDNIByIDCurso(int id) throws Exception {
 		String queryHQL = String.format("SELECT DISTINCT objUsuarioAlumn.dni %s WHERE idCurso = %s", fromTable, id);
 		return (ArrayList<String>) this.hibernateTemplate.find(queryHQL);
@@ -119,8 +130,8 @@ public class CursosCalificacionesDAOImpl implements ICursosCalificacionesDAO {
 	}
 
 	public boolean existeAlumnoDNIByIDCurso(String dniAlumno, int id) throws Exception {
-		String queryHQL = String.format("SELECT count(*) %s WHERE idCurso = %s AND objUsuarioAlumn.dni = %s", fromTable, id,
-				dniAlumno);
+		String queryHQL = String.format("SELECT count(*) %s WHERE idCurso = %s AND objUsuarioAlumn.dni = %s", fromTable,
+				id, dniAlumno);
 		boolean existe = (long) this.hibernateTemplate.find(queryHQL).get(0) > 0;
 		return existe;
 	}

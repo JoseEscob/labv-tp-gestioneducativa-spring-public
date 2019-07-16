@@ -3,6 +3,7 @@ package frgp.utn.edu.ar.servicioImpl;
 import java.util.ArrayList;
 
 import frgp.utn.edu.ar.dao.ICursosCalificacionesDAO;
+import frgp.utn.edu.ar.dominio.Curso;
 import frgp.utn.edu.ar.dominio.CursosCalificaciones;
 import frgp.utn.edu.ar.servicio.ICursosCalificacionesService;
 
@@ -71,6 +72,11 @@ public class CursosCalificacionesServiceImpl implements ICursosCalificacionesSer
 	@Override
 	public boolean existeAlumnoDNIByIDCurso(String dniAlumno, int id) throws Exception {
 		return dataAccess.existeAlumnoDNIByIDCurso(dniAlumno, id);
+	}
+
+	@Override
+	public ArrayList<Curso> getAllCursosByDNIAlumno(String dniAlumno) throws Exception {
+		return dataAccess.getAllCursosByDNIAlumno(dniAlumno);
 	}
 
 }

@@ -75,16 +75,28 @@
 				<c:forEach items="${listaCursos}" var="objCurso">
 					<tr>
 						<%@ include file="_filaMateriasBody.jsp"%>
-						<td>
-							<div>
-								<form action="gestionarMateriaCurso.html"
-									method="POST">
-									<input type="hidden" value="${objCurso.idCurso}"
-										name="idCurso" /> <input type="submit"
-										value="Gestionar Materia" class="btn btn-warning" />
-								</form>
-							</div>
-						</td>
+						<td><c:choose>
+								<c:when
+									test="${sessionScope.sessionUser.getObjTipoUsuario().idTipoUsuario eq Constantes.idTipoUsuarioAlumn}">
+									<div>
+										<form action="calificacionListadoAlumnoLoad.html"
+											method="POST">
+											<input type="hidden" value="${objCurso.idCurso}"
+												name="idCursoToViewCalificaciones" /> <input type="submit"
+												value="Ver mis calificaciones" class="btn btn-info" />
+										</form>
+									</div>
+								</c:when>
+								<c:otherwise>
+									<div>
+										<form action="gestionarMateriaCurso.html" method="POST">
+											<input type="hidden" value="${objCurso.idCurso}"
+												name="idCurso" /> <input type="submit"
+												value="Gestionar Materia" class="btn btn-warning" />
+										</form>
+									</div>
+								</c:otherwise>
+							</c:choose></td>
 					</tr>
 				</c:forEach>
 			</tbody>

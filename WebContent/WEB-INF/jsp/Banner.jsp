@@ -72,7 +72,7 @@
 							<li class="nav-item"><a href="InicioAlumno.html">&nbsp;Inicio</a></li>
 							<li class="nav-item mx-0 mx-lg-1"><a
 								class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger">
-									${sessionScope.sessionUser.nombre } - Alumno</a> <a
+									${sessionScope.sessionUser.nombre }&nbsp;${sessionScope.sessionUser.apellido } - Alumno</a> <a
 								href="modificarUsuarioLogueadoLoad.html">&nbsp;Editar Perfil</a>
 								<a href="cerrarSesion.html">&nbsp;Salir</a></li>
 						</c:when>
@@ -81,7 +81,7 @@
 							<li class="nav-item"><a href="InicioProfesor.html">&nbsp;Inicio</a></li>
 							<li class="nav-item"><a
 								class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger">
-									${sessionScope.sessionUser.nombre } - Profe</a><a
+									${sessionScope.sessionUser.nombre }&nbsp;${sessionScope.sessionUser.apellido } - Profe</a><a
 								href="modificarUsuarioLogueadoLoad.html">&nbsp;Editar Perfil</a>
 								<a href="cerrarSesion.html">&nbsp;Salir</a></li>
 						</c:when>
@@ -90,7 +90,7 @@
 							<li class="nav-item"><a href="InicioAdministrador.html">&nbsp;Inicio</a></li>
 							<li class="nav-item"><a
 								class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger">
-									${sessionScope.sessionUser.nombre } - Admin</a><a
+									${sessionScope.sessionUser.nombre }&nbsp;${sessionScope.sessionUser.apellido } - Admin</a><a
 								href="modificarUsuarioLogueadoLoad.html">&nbsp;Editar Perfil</a>
 								<a href="cerrarSesion.html">&nbsp;Salir</a></li>
 						</c:when>

@@ -20,7 +20,9 @@
 		</div>
 		<div class="row col-md-12">
 			<div class="card text-center col-md-6">
-				<img class="card-img-top" src="<%=ConstantesJSP.imgMenuCalificaciones%>" alt="ImagenMateria" height="250" width="100">
+				<img class="card-img-top"
+					src="<%=ConstantesJSP.imgMenuCalificaciones%>" alt="ImagenMateria"
+					height="250" width="100">
 				<div class="card-body">
 					<h5 class="card-title">Calificaciones</h5>
 					<p class="card-text">Vea las calificaciones de su materias</p>
@@ -48,19 +50,23 @@
 										value="Modificar calificaciones" class="btn btn-warning" />
 								</form>
 							</li>
-							<li class="list-group-item">
-								<form action="altaCalificacionMasivaLoad.html" method="POST">
-									<input type="hidden" value="${objCurso.idCurso}"
-										name="idCursoToViewCalificaciones" /> <input type="submit"
-										value="Calificar Masivamente" class="btn btn-danger" />
-								</form>
-							</li>
+							<c:if
+								test="${sessionScope.sessionUser.getObjTipoUsuario().idTipoUsuario eq Constantes.idTipoUsuarioAdmin}">
+								<li class="list-group-item">
+									<form action="altaCalificacionMasivaLoad.html" method="POST">
+										<input type="hidden" value="${objCurso.idCurso}"
+											name="idCursoToViewCalificaciones" /> <input type="submit"
+											value="Calificar Masivamente" class="btn btn-danger" />
+									</form>
+								</li>
+							</c:if>
 						</ul>
 					</div>
 				</div>
 			</div>
 			<div class="card text-center col-md-6">
-				<img class="card-img-top" src="<%=ConstantesJSP.imgMenuMaterias%>" alt="ImagenMateria" height="250" width="100"> 
+				<img class="card-img-top" src="<%=ConstantesJSP.imgMenuMaterias%>"
+					alt="ImagenMateria" height="250" width="100">
 				<div class="card-body">
 					<h5 class="card-title">Materias / Cursos</h5>
 					<p class="card-text">Organización de materias</p>
@@ -74,39 +80,42 @@
 										class="btn btn-primary" />
 								</form>
 							</li>
-							<li class="list-group-item">
-								<form action="modificarMateriaCursoLoad.html" method="POST">
-									<input type="hidden" value="${objCurso.idCurso}" name="idCurso" />
-									<input type="submit" value="Modificar Curso"
-										class="btn btn-warning" />
-								</form>
-							</li>
-							<li class="list-group-item">
-								<form action="bajaAlumnoMateriaCurso.html" method="POST">
-									<div class="col-md-12 form-group row">
-										<div class="col-md-2">
-											<label>DNI Alumno a dar de baja</label>
+							<c:if
+								test="${sessionScope.sessionUser.getObjTipoUsuario().idTipoUsuario eq Constantes.idTipoUsuarioAdmin}">
+								<li class="list-group-item">
+									<form action="modificarMateriaCursoLoad.html" method="POST">
+										<input type="hidden" value="${objCurso.idCurso}"
+											name="idCurso" /> <input type="submit"
+											value="Modificar Curso" class="btn btn-warning" />
+									</form>
+								</li>
+								<li class="list-group-item">
+									<form action="bajaAlumnoMateriaCurso.html" method="POST">
+										<div class="col-md-12 form-group row">
+											<div class="col-md-2">
+												<label>DNI Alumno a dar de baja</label>
+											</div>
+											<div class="col-md-6">
+												<input type="hidden" value="${objCurso.idCurso}"
+													name="idCurso" /> <input type="text" name="dniAlumno"
+													class="form-control" onkeypress="return soloNros(event)"
+													maxlength="10" />
+											</div>
+											<div class="col-md-1">
+												<input type="submit" value="Dar de baja a este alumno"
+													class="btn btn-danger" onclick="return ConfirmDelete();" />
+											</div>
 										</div>
-										<div class="col-md-6">
-											<input type="hidden" value="${objCurso.idCurso}"
-												name="idCurso" /> <input type="text" name="dniAlumno"
-												class="form-control" onkeypress="return soloNros(event)"
-												maxlength="10" />
-										</div>
-										<div class="col-md-1">
-											<input type="submit" value="Dar de baja a este alumno"
-												class="btn btn-danger" onclick="return ConfirmDelete();" />
-										</div>
-									</div>
-								</form>
-							</li>
-							<li class="list-group-item">
-								<form action="eliminarMateriaCurso.html" method="POST">
-									<input type="hidden" value="${objCurso.idCurso}" name="idCurso" />
-									<input type="submit" value="Eliminar Curso"
-										class="btn btn-danger" />
-								</form>
-							</li>
+									</form>
+								</li>
+								<li class="list-group-item">
+									<form action="eliminarMateriaCurso.html" method="POST">
+										<input type="hidden" value="${objCurso.idCurso}"
+											name="idCurso" /> <input type="submit"
+											value="Eliminar Curso" class="btn btn-danger" />
+									</form>
+								</li>
+							</c:if>
 						</ul>
 					</div>
 				</div>

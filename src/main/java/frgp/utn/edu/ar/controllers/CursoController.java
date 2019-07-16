@@ -114,6 +114,10 @@ public class CursoController {
 		InfoMessage objInfoMessage = new InfoMessage();
 		ModelAndView MV = new ModelAndView();
 		try {
+			// 1- Verificar permisos del usuario logueado
+			if (ORSesion.getUsuarioBySession(session).getObjTipoUsuario()
+					.getIdTipoUsuario() == Constantes.idTipoUsuarioAlumn)
+				throw new ValidacionException("El usuario alumno no puede ingresar a esta funcionalidad");
 			// 1- Recuperar info de la sesión del usuario
 			Usuario objUsuario = ORSesion.getUsuarioBySession(session);
 			// 2- validar la informacion recuperada
@@ -260,10 +264,14 @@ public class CursoController {
 	}
 
 	@RequestMapping(value = "/gestionarMateriaCurso.html", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView gestionarMateriaCurso(int idCurso) {
+	public ModelAndView gestionarMateriaCurso(int idCurso, HttpSession session) {
 		ModelAndView MV = new ModelAndView("MateriaGestion");
 		InfoMessage objInfoMessage = new InfoMessage();
 		try {
+			// 1- Verificar permisos del usuario logueado
+			if (ORSesion.getUsuarioBySession(session).getObjTipoUsuario()
+					.getIdTipoUsuario() == Constantes.idTipoUsuarioAlumn)
+				throw new ValidacionException("El usuario alumno no puede ingresar a esta funcionalidad");
 			MV.addObject("objCurso", serviceCurso.get(idCurso));
 		} catch (Exception e) {
 			objInfoMessage = new InfoMessage(false, e.getMessage());
@@ -334,8 +342,6 @@ public class CursoController {
 		MV.setViewName(paginaJsp);
 		return MV;
 	}
-
-
 
 	@RequestMapping(value = "/listaCursosByDNIProfesor.html", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView listaCursosByDNIProfesor(String txtDNIBuscado, HttpSession session) {
