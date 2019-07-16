@@ -1,3 +1,8 @@
+Inscripción masiva [2019-07-15 22:22 josee]
+ - Se prepara lógica de inscripción masiva
+ - tiene javascript para agregar y eliminar filas dinamicamente
+Fuente EJ: https://www.encodedna.com/javascript/dynamically-add-remove-rows-to-html-table-using-javascript-and-save-data.htm
+
 Filtrado de Materias [2019-07-14 23:57 josee]
  - Se prepara filtrado y búsqueda de Materias
  - Se extraen funcionalidades de calificaciones a controller correspondiente
