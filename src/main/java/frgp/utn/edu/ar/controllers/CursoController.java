@@ -1,6 +1,7 @@
 package frgp.utn.edu.ar.controllers;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpSession;
@@ -288,9 +289,29 @@ public class CursoController {
 		ModelAndView MV = new ModelAndView();
 		try {
 			// 1- verificar que el usuario tenga permisos de administrador
-			Utilitario.verificarQueElUsuarioLogueadoSeaAdmin(session);
+			// Utilitario.verificarQueElUsuarioLogueadoSeaAdmin(session);
 			// 2- devolver resultados obtenidos
-			List<Curso> listaCursos = serviceCurso.getAllByNombreCursoBuscado(txtNombreCursoBuscado);
+			Usuario objUsuarioLogueado = ORSesion.getUsuarioBySession(session);
+			if (objUsuarioLogueado == null)
+				throw new ValidacionException("La sesión no se encuentra iniciada");
+			List<Curso> listaCursos = null;
+			switch (objUsuarioLogueado.getObjTipoUsuario().getIdTipoUsuario()) {
+			case Constantes.idTipoUsuarioAlumn:
+
+				break;
+			case Constantes.idTipoUsuarioProfe:
+				listaCursos = serviceCurso.getAllByNombreCursoBuscado(txtNombreCursoBuscado).stream()
+						.filter(item -> item.getObjUsuarioProfe().getDni() == objUsuarioLogueado.getDni())
+						.collect(Collectors.toList());
+				break;
+			case Constantes.idTipoUsuarioAdmin:
+				listaCursos = serviceCurso.getAllByNombreCursoBuscado(txtNombreCursoBuscado);
+				break;
+			default:
+				paginaJsp = Constantes.indexJsp;
+				break;
+			}
+
 			if (listaCursos.isEmpty())
 				throw new ValidacionException("No se encontraron " + message);
 			// 3- Ordenar resultados y guardar en las variables del JSP

@@ -3,7 +3,6 @@ package frgp.utn.edu.ar.controllers;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpSession;
@@ -55,7 +54,7 @@ public class CalificacionController {
 		this.serviceCurso = (ICursoService) ctx.getBean("serviceCurso");
 		this.serviceUsuario = (IUsuarioService) ctx.getBean("serviceUsuario");
 	}
-
+	
 	@RequestMapping(value = "/listarMateriasCursosAlumno" + Constantes.html, method = RequestMethod.GET)
 	public ModelAndView listarMateriasCursosAlumno(HttpSession session) {
 		// 0- declaracion de variables locales

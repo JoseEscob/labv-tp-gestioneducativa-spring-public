@@ -50,8 +50,9 @@
 										value="Modificar calificaciones" class="btn btn-warning" />
 								</form>
 							</li>
+							<!-- 
 							<c:if
-								test="${sessionScope.sessionUser.getObjTipoUsuario().idTipoUsuario eq Constantes.idTipoUsuarioAdmin}">
+								test="${sessionScope.sessionUser.getObjTipoUsuario().idTipoUsuario ne Constantes.idTipoUsuarioAlumn}">
 								<li class="list-group-item">
 									<form action="altaCalificacionMasivaLoad.html" method="POST">
 										<input type="hidden" value="${objCurso.idCurso}"
@@ -60,6 +61,7 @@
 									</form>
 								</li>
 							</c:if>
+							-->
 						</ul>
 					</div>
 				</div>

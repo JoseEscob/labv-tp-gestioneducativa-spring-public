@@ -71,9 +71,38 @@
 	</div>
 	<div class="container">
 		<br>
-
-
 	</div>
-
+	<div class="container">
+		<div class="row col-md-12">
+			<div class="card text-center col-md-6">
+				<img class="card-img-top" src="<%=ConstantesJSP.imgMenuUsuarios%>"
+					alt="ImagenMateria" height="250" width="100">
+				<div class="card-body">
+					<h5 class="card-title">Tipos de Periodo</h5>
+					<p class="card-text">Gestione y personalice los Tipos de
+						Periodo utilizados en el sistema</p>
+					<div>
+						<a href="listarTipoPeriodo.html" class="btn btn-info"
+							data-toggle="tooltip" title="Listado de Tipos de Periodo">&nbsp;Listar/
+							Gestionar Tipos de Periodo </a>
+					</div>
+				</div>
+			</div>
+			<div class="card text-center col-md-6">
+				<img class="card-img-top" src="<%=ConstantesJSP.imgMenuUsuarios%>"
+					alt="ImagenMateria" height="250" width="100">
+				<div class="card-body">
+					<h5 class="card-title">Tipos de Examen</h5>
+					<p class="card-text">Gestione y personalice los Tipos de
+						Examenes utilizados en el sistema</p>
+					<div>
+						<a href="listarTipoExamen.html" class="btn btn-info"
+							data-toggle="tooltip" title="Listado de Tipos de Examen">&nbsp;Listar/
+							Gestionar Tipos de Examen </a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

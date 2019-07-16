@@ -1,3 +1,5 @@
+ABML de tipo de Periodo [2019-07-16 04:40 josee]
+ - Se prepara gestión ABML de Tipo de Periodo
 
 Inicio Profe y Alumno[2019-07-16 03:05 josee]
  - Se prepara menú de alumno y profesor junto a sus vistas
