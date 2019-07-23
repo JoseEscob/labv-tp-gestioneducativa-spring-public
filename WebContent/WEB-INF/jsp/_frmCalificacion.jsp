@@ -37,8 +37,8 @@
 				<c:forEach items="${listaTiposExamen}" var="item">
 					<option
 						<c:if test="${objCalificacion.getObjTipoExamen().idTipoExamen eq item.idTipoExamen}">
-											 selected
-										</c:if>
+							selected
+						</c:if>
 						value="${item.idTipoExamen}">${ item.descripcion}</option>
 
 				</c:forEach>

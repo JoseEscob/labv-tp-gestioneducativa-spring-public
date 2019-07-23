@@ -25,10 +25,16 @@
 		<span style="color: RED">* </span><label>Periodo </label> <select
 			name="idPeriodo" class="form-control" required>
 			<c:forEach items="${listaPeriodos}" var="item">
-				<option value="${item.idPeriodo}">${ item.descripcion}</option>
+				<option
+					<c:if test="${objMateriaCurso.getObjTipoPeriodo().idPeriodo eq item.idPeriodo}">
+						selected
+					</c:if>
+					value="${item.idPeriodo}">${ item.descripcion}</option>
+
 			</c:forEach>
 		</select>
 	</div>
+
 </div>
 <div class="row col-md-12">
 	<div class="col-md-6 form-group">
