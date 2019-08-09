@@ -48,6 +48,17 @@ Table HTML - Add rows
 	https://www.encodedna.com/javascript/dynamically-add-remove-rows-to-html-table-using-javascript-and-save-data.htm
 	http://javahonk.com/spring-mvc-add-multiple-rows/
 	
+	
+	
+ASynch	
+	https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/async-servlet/async-servlets.html
+	https://stackoverflow.com/questions/31768349/how-does-server-sent-events-work	
+	
+Base de Datos
+	- Cómo estructurar/normalizar una Base de Datos (Bien explicado)
+		https://launchschool.com/books/sql/read/table_relationships
+	
+	************************************************************************************************
 Spring
 1) Crear proyecto
 
